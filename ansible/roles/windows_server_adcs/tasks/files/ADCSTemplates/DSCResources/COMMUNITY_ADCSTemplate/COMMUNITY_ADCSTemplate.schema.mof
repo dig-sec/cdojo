@@ -1,0 +1,10 @@
+[ClassVersion("1.0.0.0"), FriendlyName("ADCSTemplate")]
+class COMMUNITY_ADCSTemplate : OMI_BaseResource
+{
+    [Key] String DisplayName;
+    [Write] String JSON;
+    [Write] String Identity[];
+    [Write] Boolean Publish;
+    [Write] Boolean AutoEnroll;
+    [Write, ValueMap{"Present","Absent"}, Values{"Present","Absent"}] String Ensure;
+};

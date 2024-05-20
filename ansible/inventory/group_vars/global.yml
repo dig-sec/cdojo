@@ -1,0 +1,11 @@
+  # Global Variables
+  root_domain: cyberrange.local
+  domain_name: cyberrange
+  win_domain_admin: Administrator
+  win_domain_admin_pass: P@ssw0rd
+  adcs_host: win2019-adcs
+  adcs_common_name: attacklab-win2019-adcs-CA
+
+  # Ansible WinRM Configuration
+  ansible_winrm_server_cert_validation: ignore
+  ansible_winrm_scheme: http
