@@ -19,6 +19,35 @@
     firstname: Randy
     surname: Random
     password: "QJMaNJ26fg43dPTd"
+  - name: Alex Adventure
+    firstname: Alex
+    surname: Adventure
+    password: "AdventureTime2024!"
+  - name: Bella Byte
+    firstname: Bella
+    surname: Byte
+    password: "ByteMe2024!"
+  - name: Charlie Checksum
+    firstname: Charlie
+    surname: Checksum
+    password: "ChecksumCharlie2024!"
+    add_group: "Domain Admins"
+  - name: Delta Debug
+    firstname: Delta
+    surname: Debug
+    password: "DebugDelta2024!"
+  - name: Echo Encrypt
+    firstname: Echo
+    surname: Encrypt
+    password: "EncryptEcho2024!"
+  - name: Foxtrot Firewall
+    firstname: Foxtrot
+    surname: Firewall
+    password: "FirewallFoxtrot2024!"
+  - name: Golf Gateway
+    firstname: Golf
+    surname: Gateway
+    password: "GatewayGolf2024!"
   - name: Tynan Sylvester
     firstname: Tynan
     surname: Sylvester
