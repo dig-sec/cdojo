@@ -72,9 +72,11 @@ main() {
     install_vagrant
     install_gem winrm
     install_vagrant_plugin vagrant-libvirt
+    install_vagrant_plugin winrm
+    install_vagrant_plugin winrm-elevated
 
     # Add user to libvirt group and restart libvirtd
-    sudo usermod -aG libvirt "$USER"
+    sudo usermod -aG libvirt $USER
     sudo systemctl restart libvirtd
 
     # Network Configuration
@@ -87,4 +89,4 @@ main() {
     echo "Setup completed successfully!"
 }
 
-main  # Call the main function to start the script
+main
