@@ -9,11 +9,11 @@ all:
       linked_clone: true
       cpus: 2
       memory: 4096
-    win2019-adcs:
-      ip: 10.0.1.14
-      vagrant_box: jborean93/WindowsServer2019
-      box_type: windows
-      linked_clone: true
+    # win2019-adcs:
+    #   ip: 10.0.1.14
+    #   vagrant_box: jborean93/WindowsServer2019
+    #   box_type: windows
+    #   linked_clone: true
     # # win10-client:
     # #   ip: 10.0.1.25
     # #   vagrant_box: peru/windows-10-enterprise-x64-eval

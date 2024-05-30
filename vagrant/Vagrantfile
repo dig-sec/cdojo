@@ -5,33 +5,37 @@ vars = inventory['all']['vars']
 
 Vagrant.configure("2") do |config|
   inventory['all']['hosts'].each do |host, details|
-    config.vm.define host do |config|
-      host_portion = details['ip'].split(/\./)[3].to_i
-      config.vm.box = details['vagrant_box']
-      config.vm.box_version = details['box_version'] if details.key?('box_version')
-      config.vm.box_check_update = false 
-      config.vm.hostname = host
+    config.vm.define host do |vm_config|
+      host_portion = details['ip'].split('.').last.to_i
+      vm_config.vm.box = details['vagrant_box']
+      vm_config.vm.box_version = details['box_version'] if details.key?('box_version')
+      vm_config.vm.box_check_update = false
+      vm_config.vm.hostname = host
 
       if details['box_type'] == 'linux'
         ansible_port = vars['vagrant_ports']['ssh']['host'] + host_portion
-      else 
+      else
         ansible_port = vars['vagrant_ports']['winrm_http']['host'] + host_portion
-        config.vm.guest = :windows 
-        config.vm.communicator = "winrm"
-        config.vm.boot_timeout = 600 
-        config.winrm.timeout = 600 
-        config.winrm.basic_auth_only = true 
-        config.winrm.retry_limit = 20 
+        vm_config.vm.guest = :windows
+        vm_config.vm.communicator = "winrm"
+        vm_config.vm.boot_timeout = 600
+        vm_config.winrm.timeout = 600
+        vm_config.winrm.basic_auth_only = true
+        vm_config.winrm.retry_limit = 20
+        vm_config.winrm.transport = :plaintext
+        vm_config.winrm.port = ansible_port
+        vm_config.winrm.username = vars['win_domain_admin']
+        vm_config.winrm.password = vars['win_domain_admin_pass']
       end
 
-      config.vm.network :private_network, ip: details['ip']
-      vars['vagrant_ports'].each do |protocol, details|
-        config.vm.network :forwarded_port, guest: details['guest'], host: details['host'] + host_portion
+      vm_config.vm.network :private_network, ip: details['ip'], libvirt__network_name: 'virbr2'
+      vars['vagrant_ports'].each do |protocol, port_details|
+        vm_config.vm.network :forwarded_port, guest: port_details['guest'], host: port_details['host'] + host_portion
       end
 
-      config.vm.synced_folder '.', '/vagrant', disabled: true
+      vm_config.vm.synced_folder '.', '/vagrant', disabled: true
 
-      config.vm.provision "ansible" do |ansible|
+      vm_config.vm.provision "ansible" do |ansible|
         ansible.extra_vars = {
           ansible_port: ansible_port,
           ansible_winrm_scheme: vars['ansible_winrm_scheme'],
@@ -42,36 +46,26 @@ Vagrant.configure("2") do |config|
           #domain_name: vars['domain_name'],
           win_domain_admin: vars['win_domain_admin'],
           win_password: vars['win_domain_admin_pass'],
-          hostname: config.vm.hostname,
+          hostname: vm_config.vm.hostname,
           ansible_winrm_operation_timeout_sec: 120,
           ansible_winrm_read_timeout_sec: 150,
           adcs_host: vars['adcs_host'],
           adcs_common_name: vars['adcs_common_name'],
         }
-        ansible.playbook = "../ansible/hosts/#{host}.yml"
+        ansible.playbook = "../ansible/playbook/#{host}.yml"
         ansible.config_file = "../ansible/ansible.cfg"
         ansible.compatibility_mode = "2.0"
       end
-       # Libvirt/KVM provider configuration:
-      config.vm.provider :libvirt do |libvirt|
-        libvirt.driver = "kvm"  # Explicitly set the driver to KVM
 
-        # Memory and CPU settings
-        libvirt.memory = details.key?('memory') ? details['memory'] : vars['default_host']['memory']
-        libvirt.cpus = details.key?('cpus') ? details['cpus'] : vars['default_host']['cpus']
-
-        # Set the name for the VM in libvirt
-        #libvirt.domain_name = 'cr_' + host
-
-        # Optional settings for better performance or specific needs
-        libvirt.video_vram = 32  # Adjust if needed for your VMs
-        libvirt.qemu_use_session = false  # Disable if you have issues
-        libvirt.graphics_type = 'none'   # For headless VMs
-        libvirt.disk_bus = 'virtio'  # For faster disk access
-        libvirt.nic_model_type = 'virtio'  # For faster networking
-
-        # If using a bridged network:
-        # libvirt.network_name = 'your_bridge_name'  # Replace with your network name
+      if details['box_type'] == 'windows'
+        vm_config.vm.provision "shell", inline: <<-SHELL
+          winrm quickconfig -q
+          winrm set winrm/config/winrs @{MaxMemoryPerShellMB="512"}
+          winrm set winrm/config @{MaxTimeoutms="1800000"}
+          winrm set winrm/config/service @{AllowUnencrypted="true"}
+          winrm set winrm/config/service/auth @{Basic="true"}
+          netsh advfirewall firewall add rule name="WinRM HTTP" protocol=TCP dir=in localport=#{vars['vagrant_ports']['winrm_http']['guest']} action=allow
+        SHELL
       end
     end
   end

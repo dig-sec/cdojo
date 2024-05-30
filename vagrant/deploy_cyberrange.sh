@@ -75,6 +75,15 @@ main() {
     install_vagrant_plugin winrm
     install_vagrant_plugin winrm-elevated
 
+    # Add the Windows Ansible collection
+    ansible-galaxy collection install ansible.windows
+
+    # Install python3
+    sudo dnf install -y python3
+
+    # Install pip
+    sudo dnf install -y python3-pip
+
     # Add user to libvirt group and restart libvirtd
     sudo usermod -aG libvirt $USER
     sudo systemctl restart libvirtd
