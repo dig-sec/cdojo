@@ -1,0 +1,45 @@
+---
+- name: Configure Active Directory Certificate Services (AD CS) on Win2019
+  hosts: win2019-adcs
+  become: yes
+
+  tasks:
+
+    - name: Install AD CS Role and Features
+      win_feature:
+        name:
+          - ADCS-Cert-Authority
+          - ADCS-Web-Enrollment
+          - ADCS-Network-Device-Enrollment-Service
+          - RSAT-ADCS-Mgmt
+          - RSAT-ADCS-Administration
+
+    - name: Configure AD CS (Enterprise CA)
+      win_certauth:
+        config_type: Enterprise
+        ca_common_name: "YourCACommonName" # Replace with your CA's common name
+        crypto_api: CNG
+        hash_algorithm: SHA256
+        key_length: 2048
+        validity_period: 'Years'
+        validity_period_units: 5
+        database_location: "C:\\Windows\\System32\\CertLog" # Customize if needed
+        log_level: 2
+        overwrite: yes
+
+    - name: Install IIS for Web Enrollment (If not installed)
+      win_feature:
+        name:
+          - Web-Server
+          - Web-Mgmt-Console
+          - Web-Scripting-Tools
+        state: present
+
+    - name: Enable Web Enrollment
+      win_shell: "certutil -vroot -add -c CA -n {{ YourCACommonName }} -p '' localhost\\CertEnroll"
+
+    - name: Restart Active Directory Certificate Services
+      win_service:
+        name: CertSvc
+        state: restarted
+

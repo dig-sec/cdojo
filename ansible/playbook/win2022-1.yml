@@ -1,0 +1,68 @@
+---
+- name: Initial Configuration for Windows Server 2022 (win2022-1)
+  hosts: win2022-1
+  become: yes
+
+  tasks:
+
+    - name: Install Windows Updates
+      win_updates:
+        category:
+          - CriticalUpdates
+          - SecurityUpdates
+        state: installed
+        reboot: yes  # Automatically reboot if required
+
+    - name: Install Chocolatey (Package Manager)
+      win_chocolatey:
+        state: present
+
+    - name: Install IIS (If required)
+      win_feature:
+        name:
+          - Web-Server
+          - Web-Mgmt-Console
+          - Web-Scripting-Tools
+        state: present
+
+    - name: Install Common Server Tools with Chocolatey (Optional)
+      win_chocolatey:
+        name:
+          - notepadplusplus
+          - 7zip
+          - git 
+          - openssh  # For SSH access
+          # Add more tools as needed
+
+    - name: Harden Windows Firewall (Adjust based on your needs)
+      win_firewall_rule:
+        name: Allow Remote Desktop (RDP)
+        localport: 3389
+        protocol: TCP
+        action: allow
+        direction: in
+        state: present
+
+    - name: Disable Unused Services (Optional)
+      win_service:
+        name: "{{ item }}"
+        state: stopped
+        enabled: no
+      loop:
+        - Print Spooler # Example, disable if not needed
+        - Remote Registry  # Example, disable if not needed
+
+    - name: Configure Remote Desktop Settings (Optional)
+      win_regedit:
+        path: HKLM:\System\CurrentControlSet\Control\Terminal Server
+        name: fDenyTSConnections
+        data: 0
+        type: dword
+        
+    - name: Enable WinRM over HTTPS (Optional)
+      win_winrm:
+        transport: https
+        port: 5986
+        enabled: yes
+        certificate_thumbprint: 'YOUR_CERT_THUMBPRINT'  # Replace with the thumbprint of your SSL certificate
+

@@ -1,0 +1,6 @@
+- hosts: dc01
+  tasks:
+    - name: Install AD Domain Services
+      ansible.windows.win_feature:
+        name: AD-Domain-Services
+        state: present
