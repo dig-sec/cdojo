@@ -1,0 +1,10 @@
+---
+- name: Update apt cache
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Run apt update
+      become: yes
+      apt:
+        update_cache: yes

@@ -3,69 +3,134 @@ require 'yaml'
 inventory = YAML.load_file('inventory.yml')
 vars = inventory['all']['vars']
 
-Vagrant.configure("2") do |config|
-  inventory['all']['hosts'].each do |host, details|
-    config.vm.define host do |vm_config|
-      host_portion = details['ip'].split('.').last.to_i
-      vm_config.vm.box = details['vagrant_box']
-      vm_config.vm.box_version = details['box_version'] if details.key?('box_version')
-      vm_config.vm.box_check_update = false
-      vm_config.vm.hostname = host
+# Default values
+DEFAULT_CPUS = 2
+DEFAULT_MEMORY = 4096
+DEFAULT_DISK_SIZE = "40G"
 
-      if details['box_type'] == 'linux'
-        ansible_port = vars['vagrant_ports']['ssh']['host'] + host_portion
-      else
-        ansible_port = vars['vagrant_ports']['winrm_http']['host'] + host_portion
+Vagrant.configure("2") do |config|
+  config.vm.provider "libvirt" do |libvirt|
+    libvirt.driver = "kvm"
+    libvirt.storage :file, size: DEFAULT_DISK_SIZE  
+    libvirt.memory = DEFAULT_MEMORY
+    libvirt.cpus = DEFAULT_CPUS
+  end
+
+  # Firewall (fw1)
+  config.vm.define "fw1" do |fw_config|
+    fw_config.vm.box = "enrico204/opnsense"
+    fw_config.vm.guest = :freebsd
+
+    # Networks
+    fw_config.vm.network "private_network", bridge: "virbr2",
+                                            dev: "virbr2",
+                                            mode: "bridge",
+                                            type: "bridge",
+                                            ip: "10.0.1.254"
+
+    fw_config.vm.network "public_network", bridge: "eno1",
+                                           dev: "eno1"
+  end 
+
+  # Handle VMs from inventory
+  inventory['all']['hosts'].each do |host, details|
+    # Linux VMs
+    if details['box_type'] == "linux"
+      config.vm.define host do |vm_config|
+        vm_config.vm.box = details['vagrant_box']
+        vm_config.vm.guest = :linux
+
+        # # Libvirt Configuration (with defaults and overrides)
+        # vm_config.vm.provider "libvirt" do |libvirt|
+        #   libvirt.cpus = details['cpus'] || DEFAULT_CPUS  
+        #   libvirt.memory = details['memory'] || DEFAULT_MEMORY
+        # end
+
+        # # Networks
+        # if private_net_details = details['network']['private_network']
+        #   vm_config.vm.network "private_network", 
+        #                       bridge: private_net_details['bridge'],
+        #                       dev: private_net_details['dev'],
+        #                       mode: private_net_details['mode'],
+        #                       type: private_net_details['type'],
+        #                       use_dhcp_assigned_default_route: private_net_details['use_dhcp_assigned_default_route'],
+        #                       ip: private_net_details['ip']
+        # end
+
+        # Ansible provisioning
+        # vm_config.vm.provision "ansible" do |ansible|
+        #   ansible.playbook = "../ansible/playbook/#{host}.yml"
+        #   ansible.config_file = "../ansible/ansible.cfg"
+        #   ansible.compatibility_mode = "2.0"
+        # end
+      end
+
+    # Windows VMs
+    elsif details['box_type'] == "windows"
+      config.vm.define host do |vm_config|
+        vm_config.vm.box = details['vagrant_box']
         vm_config.vm.guest = :windows
         vm_config.vm.communicator = "winrm"
-        vm_config.vm.boot_timeout = 600
-        vm_config.winrm.timeout = 600
-        vm_config.winrm.basic_auth_only = true
-        vm_config.winrm.retry_limit = 20
-        vm_config.winrm.transport = :plaintext
-        vm_config.winrm.port = ansible_port
-        vm_config.winrm.username = vars['win_domain_admin']
-        vm_config.winrm.password = vars['win_domain_admin_pass']
-      end
 
-      vm_config.vm.network :private_network, ip: details['ip'], libvirt__network_name: 'virbr2'
-      vars['vagrant_ports'].each do |protocol, port_details|
-        vm_config.vm.network :forwarded_port, guest: port_details['guest'], host: port_details['host'] + host_portion
-      end
+        vm_config.winrm.timeout = 900
+        vm_config.vm.boot_timeout = 900 
+        vm_config.winrm.username = vars['win_local_admin']
+        vm_config.winrm.password = vars['win_local_admin_pass']
 
-      vm_config.vm.synced_folder '.', '/vagrant', disabled: true
+        # Libvirt Configuration (with defaults and overrides)
+        vm_config.vm.provider "libvirt" do |libvirt|
+          libvirt.cpus = details['cpus'] || DEFAULT_CPUS  
+          libvirt.memory = details['memory'] || DEFAULT_MEMORY
+        end
 
-      vm_config.vm.provision "ansible" do |ansible|
-        ansible.extra_vars = {
-          ansible_port: ansible_port,
-          ansible_winrm_scheme: vars['ansible_winrm_scheme'],
-          ansible_winrm_server_cert_validation: vars['ansible_winrm_server_cert_validation'],
-          windows_domain_controller_private_ip: inventory['all']['hosts']['dc01']['ip'],
-          win_timezone: vars['win_timezone'],
-          root_domain: vars['root_domain'],
-          #domain_name: vars['domain_name'],
-          win_domain_admin: vars['win_domain_admin'],
-          win_password: vars['win_domain_admin_pass'],
-          hostname: vm_config.vm.hostname,
-          ansible_winrm_operation_timeout_sec: 120,
-          ansible_winrm_read_timeout_sec: 150,
-          adcs_host: vars['adcs_host'],
-          adcs_common_name: vars['adcs_common_name'],
-        }
-        ansible.playbook = "../ansible/playbook/#{host}.yml"
-        ansible.config_file = "../ansible/ansible.cfg"
-        ansible.compatibility_mode = "2.0"
-      end
+        # Networks
+        if private_net_details = details['network']['private_network']
+          vm_config.vm.network "private_network", 
+                              bridge: private_net_details['bridge'],
+                              dev: private_net_details['dev'],
+                              mode: private_net_details['mode'],
+                              type: private_net_details['type'],
+                              use_dhcp_assigned_default_route: private_net_details['use_dhcp_assigned_default_route'],
+                              ip: private_net_details['ip']
+        end
 
-      if details['box_type'] == 'windows'
         vm_config.vm.provision "shell", inline: <<-SHELL
-          winrm quickconfig -q
-          winrm set winrm/config/winrs @{MaxMemoryPerShellMB="512"}
-          winrm set winrm/config @{MaxTimeoutms="1800000"}
-          winrm set winrm/config/service @{AllowUnencrypted="true"}
-          winrm set winrm/config/service/auth @{Basic="true"}
-          netsh advfirewall firewall add rule name="WinRM HTTP" protocol=TCP dir=in localport=#{vars['vagrant_ports']['winrm_http']['guest']} action=allow
+          winrm set winrm/config/service '@{AllowUnencrypted="true"}'
         SHELL
+
+        # Ansible Provisioning (only for 'dc01')
+        if host == 'dc01'
+          vm_config.vm.provision "ansible" do |ansible|
+            base_port = vars.dig('vagrant_ports', 'winrm_http', 'host') || 55985
+            private_ip = private_net_details['ip']
+
+            ansible_port = if private_ip
+                             base_port + private_ip.split('.').last.to_i
+                           else
+                             puts "Warning: No private IP found for #{host}. Using default WinRM port."
+                             5985
+                           end
+
+            ansible.extra_vars = {
+              ansible_port: ansible_port,
+              ansible_winrm_scheme: vars['ansible_winrm_scheme'],
+              ansible_winrm_server_cert_validation: vars['ansible_winrm_server_cert_validation'],
+              windows_domain_controller_private_ip: inventory['all']['hosts']['dc01']['ip'],
+              win_timezone: vars['win_timezone'],
+              root_domain: vars['root_domain'],
+              domain_name: vars['domain_name'],
+              win_domain_admin: vars['win_domain_admin'],
+              win_password: vars['win_domain_admin_pass'],
+              hostname: vm_config.vm.hostname,
+              ansible_winrm_operation_timeout_sec: 120,
+              ansible_winrm_read_timeout_sec: 150,
+            }
+
+            ansible.playbook = "../ansible/playbook/#{host}.yml"
+            ansible.config_file = "../ansible/ansible.cfg"
+            ansible.compatibility_mode = "2.0"
+          end
+        end
       end
     end
   end

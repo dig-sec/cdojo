@@ -4,7 +4,8 @@
 PACKAGES=("git" "ansible-core" "ruby" "ruby-devel" "qemu-kvm" "libvirt" "libvirt-devel" "gcc" "make" "patch") 
 BRIDGES=("virbr2" "virbr3")
 BRIDGE_CONFIG="/etc/qemu/bridge.conf"
-BRIDGE_XML_DIR="${HOME}/.config/libvirt/qemu/networks"  # Use default libvirt storage location
+BRIDGE_XML_DIR="/etc/libvirt/qemu/networks"
+#"${HOME}/.config/libvirt/qemu/networks"  # Use default libvirt storage location
 
 # Functions
 install_packages() {
@@ -57,8 +58,6 @@ update_bridge_config() {
     fi
 }
 
-
-
 # Main Script Logic
 main() {
     # Check if running as root (or with sudo)
@@ -84,8 +83,12 @@ main() {
     # Install pip
     sudo dnf install -y python3-pip
 
-    # Add user to libvirt group and restart libvirtd
+    # Install sshpass
+    sudo dnf install -y sshpass
+
+    # Add user to libvirt and qemu group and restart libvirtd
     sudo usermod -aG libvirt $USER
+    sudo usermod -aG qemu $USER
     sudo systemctl restart libvirtd
 
     # Network Configuration
@@ -94,6 +97,8 @@ main() {
 
     # Additional Plugin Installation
     install_vagrant_plugin vagrant-hostmanager
+
+    # Might need to change permissions on /etc/qemu/bridge.conf
 
     echo "Setup completed successfully!"
 }

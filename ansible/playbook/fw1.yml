@@ -1,0 +1,48 @@
+---
+- name: Configure OPNsense Firewall
+  hosts: fw1
+  gather_facts: no
+  tasks:
+    - name: Install necessary packages
+      ansible.builtin.yum:
+        name:
+          - python-requests
+        state: present
+
+    - name: Ensure OPNsense is reachable
+      ping:
+
+    - name: Configure firewall rule
+      uri:
+        url: "https://{{ inventory_hostname }}/api/firewall/rule/addRule"
+        method: POST
+        user: "{{ ansible_user }}"
+        password: "{{ ansible_password }}"
+        force_basic_auth: yes
+        body_format: json
+        body:
+          rule:
+            type: pass
+            interface: wan
+            source:
+              network: any
+            destination:
+              address: any
+            protocol: tcp
+            sourceport: any
+            destinationport: 80
+            description: "Allow HTTP traffic"
+        headers:
+          Content-Type: "application/json"
+        validate_certs: no
+
+    - name: Apply firewall configuration
+      uri:
+        url: "https://{{ inventory_hostname }}/api/firewall/rule/apply"
+        method: POST
+        user: "{{ ansible_user }}"
+        password: "{{ ansible_password }}"
+        force_basic_auth: yes
+        headers:
+          Content-Type: "application/json"
+        validate_certs: no

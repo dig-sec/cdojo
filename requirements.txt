@@ -1,2 +1,3 @@
 pypsrp
 pywinrm
+requests

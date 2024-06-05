@@ -6,9 +6,9 @@
     </nat>
   </forward>
   <bridge name='virbr3' stp='on' delay='0'/>
-  <ip address='10.10.11.1' netmask='255.255.255.0'>
+  <ip address='10.10.11.2' netmask='255.255.255.0'>
     <dhcp>
-      <range start='10.10.11.2' end='10.10.11.254'/>
+      <range start='10.10.11.3' end='10.10.11.254'/>
     </dhcp>
   </ip>
 </network>
