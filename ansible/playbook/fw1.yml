@@ -1,48 +1,33 @@
----
-- name: Configure OPNsense Firewall
-  hosts: fw1
+- hosts: fw1
   gather_facts: no
+  module_defaults:
+    group/ansibleguy.opnsense.all:
+      firewall: 'opnsense.template.ansibleguy.net'
+      api_credential_file: "{{ fw_api_credential_file }}"
+
   tasks:
-    - name: Install necessary packages
-      ansible.builtin.yum:
-        name:
-          - python-requests
-        state: present
+    - name: Reboot the box - will wait until finished
+      ansibleguy.opnsense.system:
+        action: 'reboot'
 
-    - name: Ensure OPNsense is reachable
-      ping:
+    - name: Reboot the box - don't wait
+      ansibleguy.opnsense.system:
+        action: 'reboot'
+        wait: false
 
-    - name: Configure firewall rule
-      uri:
-        url: "https://{{ inventory_hostname }}/api/firewall/rule/addRule"
-        method: POST
-        user: "{{ ansible_user }}"
-        password: "{{ ansible_password }}"
-        force_basic_auth: yes
-        body_format: json
-        body:
-          rule:
-            type: pass
-            interface: wan
-            source:
-              network: any
-            destination:
-              address: any
-            protocol: tcp
-            sourceport: any
-            destinationport: 80
-            description: "Allow HTTP traffic"
-        headers:
-          Content-Type: "application/json"
-        validate_certs: no
+    - name: Shutdown the box
+      ansibleguy.opnsense.system:
+        action: 'poweroff'
 
-    - name: Apply firewall configuration
-      uri:
-        url: "https://{{ inventory_hostname }}/api/firewall/rule/apply"
-        method: POST
-        user: "{{ ansible_user }}"
-        password: "{{ ansible_password }}"
-        force_basic_auth: yes
-        headers:
-          Content-Type: "application/json"
-        validate_certs: no
+    - name: Pull updates
+      ansibleguy.opnsense.system:
+        action: 'update'
+
+    - name: Start upgrade - will wait until finished
+      ansibleguy.opnsense.system:
+        action: 'upgrade'
+        timeout: 120  # depends on your download speed and firmware-version
+
+    - name: Run audit
+      ansibleguy.opnsense.system:
+        action: 'audit'

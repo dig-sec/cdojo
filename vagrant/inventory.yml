@@ -14,6 +14,9 @@ all:
     dc01:
       vagrant_box: jborean93/WindowsServer2019
       box_type: windows
+      cpu: 4
+      memory: 8192
+       #4096
       network:
         private_network:
           auto_config: false
@@ -60,20 +63,3 @@ all:
           type: "bridge"
           use_dhcp_assigned_default_route: true
           ip: 192.168.122.14
-
-    # win10-client:
-    #   vagrant_box: jtarpley/w11_23h2_base
-    #   box_type: windows
-    #   linked_clone: true
-    #   network:
-    #     private_network:
-    #       auto_config: false
-    #       bridge: "virbr0"
-    #       dev: "virbr0"
-    #       mode: "bridge"
-    #       type: "bridge"
-    #       use_dhcp_assigned_default_route: true
-    #       ip: 192.168.122.30
- 
-
-

@@ -9,3 +9,6 @@
   # Ansible WinRM Configuration
   ansible_winrm_server_cert_validation: ignore
   ansible_winrm_scheme: http
+
+  # fw1 Variables
+  fw_api_credential_file: /home/guy/.secret/opn.key'

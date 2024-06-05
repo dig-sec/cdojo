@@ -1,22 +1,5 @@
 - hosts: dc01
   gather_facts: false
-  tasks:
-    - name: Install AD Domain Services
-      ansible.windows.win_feature:
-        name: AD-Domain-Services
-        state: present
-
-    - name: Install DNS Server
-      ansible.windows.win_feature:
-        name: DNS
-        state: present
-
-    - name: Install Group Policy Management
-      ansible.windows.win_feature:
-        name: GPMC
-        state: present
-
-    - name: Install Remote Server Administration Tools
-      ansible.windows.win_feature:
-        name: RSAT-AD-PowerShell
-        state: present
+  roles:
+    - windows_common
+    #- windows_domain_controller
