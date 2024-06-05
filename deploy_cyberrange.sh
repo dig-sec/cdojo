@@ -149,11 +149,15 @@ main() {
   ansible-galaxy collection install ansible.windows
 
   # Opensense ansible collection https://opnsense.ansibleguy.net/
-  ansible-galaxy collection install git+https://github.com/ansibleguy/collection_opnsense.git
+  #ansible-galaxy collection install git+https://github.com/ansibleguy/collection_opnsense.git
+  # Opnsense: https://puzzle.github.io/puzzle.opnsense/collections/puzzle/opnsense/index.html#description
+  ansible-galaxy collection install puzzle.opnsense
 
   # Microsoft AD collection
   ansible-galaxy collection install microsoft.ad
 
+  # Community general collection
+  ansible-galaxy collection install community.general
 
   # Install python3
   sudo dnf install -y python3

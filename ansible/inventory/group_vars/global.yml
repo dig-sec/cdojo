@@ -3,12 +3,11 @@
   domain_name: cyberrange
   win_domain_admin: Administrator
   win_domain_admin_pass: P@ssw0rd
+  win_local_administrator: Administrator
+  win_local_administrator_password: vagrant
   adcs_host: win2019-adcs
   adcs_common_name: attacklab-win2019-adcs-CA
 
   # Ansible WinRM Configuration
   ansible_winrm_server_cert_validation: ignore
   ansible_winrm_scheme: http
-
-  # fw1 Variables
-  fw_api_credential_file: /home/guy/.secret/opn.key'

@@ -2,4 +2,4 @@
   gather_facts: false
   roles:
     - windows_common
-    #- windows_domain_controller
+    - windows_domain_controller

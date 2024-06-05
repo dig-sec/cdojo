@@ -6,7 +6,8 @@ all:
     domain_name: cyberrange
     win_domain_admin: administrator
     win_domain_admin_pass: vagrant
-
+    win_local_administrator: administrator
+    win_local_administrator_password: vagrant
     ansible_winrm_server_cert_validation: ignore
     ansible_winrm_scheme: http
 
@@ -14,9 +15,6 @@ all:
     dc01:
       vagrant_box: jborean93/WindowsServer2019
       box_type: windows
-      cpu: 4
-      memory: 8192
-       #4096
       network:
         private_network:
           auto_config: false
@@ -25,7 +23,7 @@ all:
           mode: "bridge"
           type: "bridge"
           use_dhcp_assigned_default_route: true
-          ip: 192.168.122.10
+          ip: 10.0.1.10
     win2019-adcs:
       vagrant_box: jborean93/WindowsServer2019
       box_type: windows
@@ -38,7 +36,19 @@ all:
           mode: "bridge"
           type: "bridge"
           use_dhcp_assigned_default_route: true
-          ip: 192.168.122.11
+          ip: 10.0.1.11
+    win10-client:
+      vagrant_box: jborean93/Windows10
+      box_type: windows
+      network:
+        private_network:
+          auto_config: false
+          bridge: "virbr0"
+          dev: "virbr0"
+          mode: "bridge"
+          type: "bridge"
+          use_dhcp_assigned_default_route: true
+          ip: 10.0.1.30
     linux01:
       vagrant_box: generic/ubuntu1804
       box_type: linux
@@ -50,7 +60,7 @@ all:
           mode: "bridge"
           type: "bridge"
           use_dhcp_assigned_default_route: true
-          ip: 192.168.122.249
+          ip: 10.0.1.40
     metasploitable3-ub1404:
       vagrant_box: tmarchst/metasploitable3-ub1404
       box_type: linux
@@ -62,4 +72,4 @@ all:
           mode: "bridge"
           type: "bridge"
           use_dhcp_assigned_default_route: true
-          ip: 192.168.122.14
+          ip: 10.0.1.50

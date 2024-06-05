@@ -6,12 +6,12 @@ vars = inventory['all']['vars']
 # Default values
 DEFAULT_CPUS = 2
 DEFAULT_MEMORY = 4096
-DEFAULT_DISK_SIZE = "40G"
+#DEFAULT_DISK_SIZE = "40G"
 
 Vagrant.configure("2") do |config|
   config.vm.provider "libvirt" do |libvirt|
     libvirt.driver = "kvm"
-    libvirt.storage :file, size: DEFAULT_DISK_SIZE  
+    #libvirt.storage :file, size: DEFAULT_DISK_SIZE  
     libvirt.memory = DEFAULT_MEMORY
     libvirt.cpus = DEFAULT_CPUS
   end
@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
   # Firewall (fw1)
   config.vm.define "fw1" do |fw_config|
     fw_config.vm.box = "enrico204/opnsense"
-    fw_config.vm.guest = :freebsd
+    #fw_config.vm.guest = :freebsd
     
     # Networks
     fw_config.vm.network "private_network", bridge: "virbr2",
@@ -33,11 +33,11 @@ Vagrant.configure("2") do |config|
   end
 
   # Ansible provisioning for 'fw1'
-  # config.vm.provision "ansible" do |ansible|
-  #   ansible.playbook = "../ansible/playbook/fw1.yml"
-  #   ansible.config_file = "../ansible/ansible.cfg"
-  #   ansible.compatibility_mode = "2.0"
-  # end
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "../ansible/playbook/fw1.yml"
+    ansible.config_file = "../ansible/ansible.cfg"
+    ansible.compatibility_mode = "2.0"
+  end
 
   # Handle VMs from inventory
   inventory['all']['hosts'].each do |host, details|
@@ -128,6 +128,8 @@ Vagrant.configure("2") do |config|
               domain_name: vars['domain_name'],
               win_domain_admin: vars['win_domain_admin'],
               win_password: vars['win_domain_admin_pass'],
+              win_local_administrator: vars['win_local_administrator'],
+              win_local_administrator_password: vars['win_local_administrator_password'],
               hostname: vm_config.vm.hostname,
               ansible_winrm_operation_timeout_sec: 120,
               ansible_winrm_read_timeout_sec: 150,

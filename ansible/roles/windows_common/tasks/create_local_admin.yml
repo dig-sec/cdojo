@@ -1,9 +1,9 @@
-- name: set local admin password
-  win_user:
-    name: Administrator
-    password: "{{ win_password }}"
-    #password: "{{ local_admin_password }}"
-    password_expired: no
-    groups: Administrators
+- name: Debug win_domain_admin_pass
+  debug:
+    msg: "win_domain_admin_pass is {{ win_local_administrator_password }}"
+
+- name: Create and set local Administrator password 
+  microsoft.ad.user:
+    name: "{{ win_local_administrator }}"
+    password: "{{ win_local_administrator_password }}" 
     state: present
-  ignore_errors: true # if we rerun the playbook, this will fail the whole playbook, so don't worry about it if it fails

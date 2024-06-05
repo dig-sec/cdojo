@@ -1,13 +1,9 @@
-- name: Disable firewall for Domain, Public and Private profiles
-  win_firewall:
-    state: disabled
-    profiles:
-    - Domain
-    - Private
-    - Public
-  tags: disable_firewall
-  when: ansible_facts['distribution_major_version'] != "6"
+- name: Disable Windows Firewall (for Windows Server 2012 and newer)
+  community.windows.win_firewall_rule:  
+    name: 'Windows Firewall'
+    state: absent
+  when: ansible_facts['os_family'] == "Windows" and ansible_facts['distribution_major_version'] >= "6"
 
-- name: Disable firewall for Win7
+- name: Disable firewall for Windows 7
   win_shell: NetSh Advfirewall set allprofiles state off
-  when: ansible_facts['distribution_major_version'] == "6"
+  when: ansible_facts['os_family'] == "Windows" and ansible_facts['distribution_major_version'] == "6"

@@ -1,33 +1,49 @@
 - hosts: fw1
-  gather_facts: no
-  module_defaults:
-    group/ansibleguy.opnsense.all:
-      firewall: 'opnsense.template.ansibleguy.net'
-      api_credential_file: "{{ fw_api_credential_file }}"
+  become: yes
+  gather_facts: yes
+
+  # module_defaults:
+  #   group/ansibleguy.opnsense.all:
+  #     firewall: '192.168.122.191'
 
   tasks:
-    - name: Reboot the box - will wait until finished
-      ansibleguy.opnsense.system:
-        action: 'reboot'
+    - name: Set hostname
+      puzzle.opnsense.system_settings_general:
+        hostname: "fw1"
 
-    - name: Reboot the box - don't wait
-      ansibleguy.opnsense.system:
-        action: 'reboot'
-        wait: false
+    - name: Add OPNsense user
+      puzzle.opnsense.system_access_users:
+        username: johndoe
+        password: secret
+        full_name: John Doe
+        email: johndoe@example.com
+        groups:
+          - admins
+        state: present
+      register: result
 
-    - name: Shutdown the box
-      ansibleguy.opnsense.system:
-        action: 'poweroff'
+    - name: Create new assignment
+      puzzle.opnsense.interfaces_assignments:
+        identifier: "LAN"
+        device: "vtnet1"
+        description: "lan_interface"
 
-    - name: Pull updates
-      ansibleguy.opnsense.system:
-        action: 'update'
+    - name: Create new assignment
+      puzzle.opnsense.interfaces_assignments:
+        identifier: "WAN"
+        device: "vtnet2"
+        description: "wan_interface"
 
-    - name: Start upgrade - will wait until finished
-      ansibleguy.opnsense.system:
-        action: 'upgrade'
-        timeout: 120  # depends on your download speed and firmware-version
-
-    - name: Run audit
-      ansibleguy.opnsense.system:
-        action: 'audit'
+    - name: Allow all outbound trafic from LAN Network
+      puzzle.opnsense.firewall_rules:
+        interface: "LAN"
+        action: "pass"
+        direction: "out"
+        protocol: "any"
+        description: "Allow all outbound trafic from LAN Network"
+    
+    # - name: Pulling routes
+    #   ansibleguy.opnsense.list:
+    #     target: 'route'
+    #   register: existing_routes
+        
