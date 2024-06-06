@@ -12,7 +12,7 @@
     dns_domain_name: "{{ root_domain }}"
     hostname: "{{ hostname }}"
     domain_admin_user: "{{ win_domain_admin }}@{{ root_domain }}"
-    domain_admin_password: "{{ win_password }}"
+    domain_admin_password: "{{ win_domain_admin_pass }}"
     state: "domain"
   register: domain_state
 

@@ -108,18 +108,18 @@ Vagrant.configure("2") do |config|
         # Ansible Provisioning (only for 'dc01')
         if host == 'dc01'
           vm_config.vm.provision "ansible" do |ansible|
-            base_port = vars.dig('vagrant_ports', 'winrm_http', 'host') || 55985
-            private_ip = private_net_details['ip']
+            # base_port = vars.dig('vagrant_ports', 'winrm_http', 'host') || 5985
+            # private_ip = private_net_details['ip']
 
-            ansible_port = if private_ip
-                             base_port + private_ip.split('.').last.to_i
-                           else
-                             puts "Warning: No private IP found for #{host}. Using default WinRM port."
-                             5985
-                           end
+            # ansible_port = if private_ip
+            #                  base_port + private_ip.split('.').last.to_i
+            #                else
+            #                  puts "Warning: No private IP found for #{host}. Using default WinRM port."
+            #                  5985
+            #                end
 
             ansible.extra_vars = {
-              ansible_port: ansible_port,
+              #ansible_port: ansible_port,
               ansible_winrm_scheme: vars['ansible_winrm_scheme'],
               ansible_winrm_server_cert_validation: vars['ansible_winrm_server_cert_validation'],
               windows_domain_controller_private_ip: inventory['all']['hosts']['dc01']['ip'],
@@ -127,7 +127,7 @@ Vagrant.configure("2") do |config|
               root_domain: vars['root_domain'],
               domain_name: vars['domain_name'],
               win_domain_admin: vars['win_domain_admin'],
-              win_password: vars['win_domain_admin_pass'],
+              win_domain_admin_pass: vars['win_domain_admin_pass'],
               win_local_administrator: vars['win_local_administrator'],
               win_local_administrator_password: vars['win_local_administrator_password'],
               hostname: vm_config.vm.hostname,

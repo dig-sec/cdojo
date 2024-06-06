@@ -1,4 +1,7 @@
-- ansible.builtin.import_tasks: domain_setup.yml
-#- ansible.builtin.import_tasks: add_domain_users.yml
-- ansible.builtin.import_tasks: set_constrainment.yml
-- ansible.builtin.import_tasks: set_roasting.yml
+# Setup domain
+#- ansible.builtin.import_tasks: domain_setup.yml
+- ansible.builtin.import_tasks: add_domain_users.yml
+
+# Implement vulnerabilties
+#- ansible.builtin.import_tasks: set_constrainment.yml
+#- ansible.builtin.import_tasks: set_roasting.yml

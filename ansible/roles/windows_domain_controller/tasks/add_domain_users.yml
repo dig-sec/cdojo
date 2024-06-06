@@ -1,71 +1,72 @@
-- name: Create domain user accounts
+- name: Create user account
   microsoft.ad.user:
     name: "{{ item.name }}"
     password: "{{ item.password }}"
-    given_name: "{{ item.firstname | default('') }}"
+    firstname: "{{ item.firstname | default('') }}"
     surname: "{{ item.surname | default ('') }}"
-    user_principal_name: "{{ item.firstname }}.{{ item.surname }}@{{ root_domain }}"
-    groups: "{{ item.add_group | default('Domain Users') }}"
-  register: create_accounts
+    upn: "{{ item.firstname }}.{{ item.surname }}@{{ root_domain }}"
+    #groups: "{{ item.add_group | default(['Domain Users']) }}"
+    update_password: always
   retries: 30
   delay: 15
-  until: create_accounts is successful
+  until: create_account_result is successful
+  register: create_account_result
   loop:
-  - name: Phoebe Chillax
-    firstname: Phoebe
-    surname: Chillax
-    password: "summer2021!"
-  - name: Randy Random
-    firstname: Randy
-    surname: Random
-    password: "QJMaNJ26fg43dPTd"
-  - name: Alex Adventure
-    firstname: Alex
-    surname: Adventure
-    password: "AdventureTime2024!"
-  - name: Bella Byte
-    firstname: Bella
-    surname: Byte
-    password: "ByteMe2024!"
-  - name: Charlie Checksum
-    firstname: Charlie
-    surname: Checksum
-    password: "ChecksumCharlie2024!"
-    add_group: "Domain Admins"
-  - name: Delta Debug
-    firstname: Delta
-    surname: Debug
-    password: "DebugDelta2024!"
-  - name: Echo Encrypt
-    firstname: Echo
-    surname: Encrypt
-    password: "EncryptEcho2024!"
-  - name: Foxtrot Firewall
-    firstname: Foxtrot
-    surname: Firewall
-    password: "FirewallFoxtrot2024!"
-  - name: Golf Gateway
-    firstname: Golf
-    surname: Gateway
-    password: "GatewayGolf2024!"
-  - name: Tynan Sylvester
-    firstname: Tynan
-    surname: Sylvester
-    password: "RimworldIsTheBest2021!"
-    add_group: "Domain Admins"
-  - name: Unconstrained User
-    firstname: Unconstrained
-    surname: User
-    password: "Iamunconstrained2021!"
-  - name: Constrained User
-    firstname: Constrained
-    surname: User
-    password: "Iamconstrained2021!"
-  - name: Kerberoast Me
-    firstname: Kerberoast
-    surname: Me
-    password: "P@ssw0rd!"
-  - name: AsrepRoast Me
-    firstname: AsrepRoast
-    surname: Me
-    password: "P@ssw0rd!"
+    - name: Phoebe Chillax
+      firstname: Phoebe
+      surname: Chillax
+      password: "Summer2021!"
+    - name: Randy Random
+      firstname: Randy
+      surname: Random
+      password: "QJMaNJ26fg43dPTd"
+    - name: Alex Adventure
+      firstname: Alex
+      surname: Adventure
+      password: "AdventureTime2024!"
+    - name: Bella Byte
+      firstname: Bella
+      surname: Byte
+      password: "ByteMe2024!"
+    - name: Charlie Checksum
+      firstname: Charlie
+      surname: Checksum
+      password: "ChecksumCharlie2024!"
+      add_group: ["Domain Admins"]
+    - name: Delta Debug
+      firstname: Delta
+      surname: Debug
+      password: "DebugDelta2024!"
+    - name: Echo Encrypt
+      firstname: Echo
+      surname: Encrypt
+      password: "EncryptEcho2024!"
+    - name: Foxtrot Firewall
+      firstname: Foxtrot
+      surname: Firewall
+      password: "FirewallFoxtrot2024!"
+    - name: Golf Gateway
+      firstname: Golf
+      surname: Gateway
+      password: "GatewayGolf2024!"
+    - name: Tynan Sylvester
+      firstname: Tynan
+      surname: Sylvester
+      password: "RimworldIsTheBest2021!"
+      add_group: ["Domain Admins"]
+    - name: Unconstrained User
+      firstname: Unconstrained
+      surname: User
+      password: "Iamunconstrained2021!"
+    - name: Constrained User
+      firstname: Constrained
+      surname: User
+      password: "Iamconstrained2021!"
+    - name: Kerberoast Me
+      firstname: Kerberoast
+      surname: Me
+      password: "P@ssw0rd!"
+    - name: AsrepRoast Me
+      firstname: AsrepRoast
+      surname: Me
+      password: "P@ssw0rd!"

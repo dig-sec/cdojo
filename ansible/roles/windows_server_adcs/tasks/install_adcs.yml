@@ -43,7 +43,7 @@
     error_action: stop
     parameters:
       domain_username: "{{ root_domain }}\\{{ win_domain_admin }}"
-      domain_password: "{{ win_password }}"
+      domain_password: "{{ win_domain_admin_pass }}"
       ca_common_name: "{{ adcs_common_name }}"
 
 # ESC 8

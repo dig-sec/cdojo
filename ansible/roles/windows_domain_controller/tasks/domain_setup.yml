@@ -1,76 +1,91 @@
 ---
-- name: Set upstream DNS server
+# Set Google's DNS servers as the upstream DNS server
+- name: Configure upstream DNS server
   win_dns_client:
     adapter_names: '*'
     ipv4_addresses:
       - '8.8.8.8'
       - '8.8.4.4'
 
-- name: features | Installing RSAT AD Admin Center
+# Install RSAT AD Admin Center feature
+- name: Install RSAT AD Admin Center feature
   win_feature:
     name: RSAT-AD-AdminCenter
     state: present
 
-- name: features | Installing AD Domain Services
+# Install AD Domain Services feature along with management tools and sub features
+- name: Install AD Domain Services feature
   win_feature:
     name: AD-Domain-Services
     include_management_tools: yes
     include_sub_features: yes
     state: present
 
-- name: reboot | Rebooting Server (AD-Domain-Services)
+# Reboot the server after installing AD-Domain-Services
+- name: Reboot server after installing AD-Domain-Services
   win_reboot:
     connect_timeout: 15
     post_reboot_delay: 15
     reboot_timeout: 120
 
-- name: Creating a Windows Domain
+# Create a new Windows domain
+- name: Create a new Windows domain
   microsoft.ad.domain:
-    name: "{{ root_domain }}"
-    safe_mode_password: "{{ win_password }}"
+    dns_domain_name: "{{ root_domain }}"
+    safe_mode_password: "{{ win_domain_admin_pass }}"
+    install_dns: yes
+    reboot: yes
   register: domain_install
 
-- name: reboot | Rebooting Server after creating Windows Domain
+# Reboot the server after creating the Windows domain if required
+- name: Reboot server after creating Windows domain if required
   win_reboot:
     connect_timeout: 15
     post_reboot_delay: 150
     msg: "Reboot after domain creation"
   when: domain_install.reboot_required
 
-- name: Wait for system to become reachable over WinRM
+# Wait for the system to become reachable over WinRM after reboot
+- name: Wait for system to become reachable over WinRM after reboot
   wait_for_connection:
     timeout: 900
 
+# Install ActiveDirectory PowerShell module
 - name: Install ActiveDirectory PowerShell module
   win_shell: Install-WindowsFeature RSAT-AD-PowerShell
 
-- name: Managing Domain Controller Membership
+# Add the current host to the domain controller
+- name: Add host to domain controller
   microsoft.ad.domain_controller:
-    name: "{{ ansible_hostname }}"
+    #name: dc01.cyberrange.local #"{{ ansible_hostname }}"
     dns_domain_name: "{{ root_domain }}"
     domain_admin_user: "{{ win_domain_admin }}@{{ root_domain }}"
-    domain_admin_password: "{{ win_password }}"
-    safe_mode_password: "{{ win_password }}"
+    domain_admin_password: "{{ win_domain_admin_pass }}"
+    safe_mode_password: "{{ win_domain_admin_pass }}"
     state: domain_controller
   register: add_dc_result
 
-- name: reboot | Rebooting Server (domain finalization)
+# Reboot the server for domain finalization if required
+- name: Reboot server for domain finalization if required
   win_reboot:
     connect_timeout: 15
     post_reboot_delay: 15
     reboot_timeout: 120
   when: add_dc_result.reboot_required
 
-- name: Wait for system to become reachable over WinRM
+# Wait for the system to become reachable over WinRM after final reboot
+- name: Wait for system to become reachable over WinRM after final reboot
   wait_for_connection:
     timeout: 900
 
-- name: Setting DNS Servers
+# Set the DNS server to localhost
+- name: Configure localhost as DNS server
   win_dns_client:
     adapter_names: "*"
     ipv4_addresses: "127.0.0.1" 
 
-- name: Set autologon for DA
+# Set autologon for Domain Administrator
+- name: Configure autologon for Domain Administrator
   community.windows.win_auto_logon:
     username: "{{ root_domain }}\\{{ win_domain_admin }}"
-    password: "{{ win_password }}"
+    password: "{{ win_domain_admin_pass }}"

@@ -28,7 +28,7 @@
     ansible_become_method: runas
     domain_name: "{{ root_domain }}"
     ansible_become_user: "{{ root_domain }}\\{{ win_domain_admin }}"
-    ansible_become_password: "{{ win_password }}"
+    ansible_become_password: "{{ win_domain_admin_pass }}"
   with_items:
     - ESC1
     - ESC2
@@ -43,6 +43,6 @@
     ansible_become: yes
     ansible_become_method: runas
     ansible_become_user: "{{win_domain_admin}}"
-    ansible_become_password: "{{win_password}}"
+    ansible_become_password: "{{win_domain_admin_pass}}"
     cauthority_server: "{{adcs_host}}"
     cauthority_common_name: "{{adcs_common_name}}"

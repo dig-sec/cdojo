@@ -1,9 +1,9 @@
-- name: Debug win_domain_admin_pass
-  debug:
-    msg: "win_domain_admin_pass is {{ win_local_administrator_password }}"
-
-- name: Create and set local Administrator password 
-  microsoft.ad.user:
-    name: "{{ win_local_administrator }}"
-    password: "{{ win_local_administrator_password }}" 
+- name: Create local user account
+  win_user:
+    name: "{{ win_local_administrator }}"  
+    password: "{{ win_local_administrator_password }}"   
     state: present
+    groups:
+      - Administrators
+      - Remote Desktop Users
+  ignore_errors: true

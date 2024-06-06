@@ -6,8 +6,8 @@ all:
     domain_name: cyberrange
     win_domain_admin: administrator
     win_domain_admin_pass: vagrant
-    win_local_administrator: administrator
-    win_local_administrator_password: vagrant
+    win_local_administrator: Administrator
+    win_local_administrator_password: Vagrant!"#
     ansible_winrm_server_cert_validation: ignore
     ansible_winrm_scheme: http
 
