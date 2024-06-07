@@ -106,17 +106,6 @@ Vagrant.configure("2") do |config|
         vm_config.vm.provision "shell", inline: <<-SHELL
           winrm set winrm/config/service '@{AllowUnencrypted="true"}'
         SHELL
-
-        # WinRM set hostname and reboot
-        # vm_config.vm.provision "shell", inline: <<-SHELL
-        #   $hostname = "#{host}"
-        #   $password = "#{vars['win_local_admin_pass']}"
-        #   $username = "#{vars['win_local_admin']}"
-        #   $securePassword = ConvertTo-SecureString -String $password -AsPlainText -Force
-        #   $credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $securePassword
-        #   $credential | Export-Clixml -Path "C:\vagrant\credential.xml"
-        #   Rename-Computer -NewName $hostname -Force -Restart -Confirm:$false
-        # SHELL
         
         vm_config.vm.provision "ansible" do |ansible|       
           ansible.extra_vars = YAML.load_file("../ansible/inventory/group_vars/global.yml")
