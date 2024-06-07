@@ -1,16 +1,4 @@
 all:
-  vars:
-    win_local_admin: vagrant
-    win_local_admin_pass: vagrant
-    root_domain: cyberrange.local
-    domain_name: cyberrange
-    win_domain_admin: administrator
-    win_domain_admin_pass: vagrant
-    win_local_administrator: Administrator
-    win_local_administrator_password: Vagrant!"#
-    ansible_winrm_server_cert_validation: ignore
-    ansible_winrm_scheme: http
-
   hosts:
     dc01:
       vagrant_box: jborean93/WindowsServer2019

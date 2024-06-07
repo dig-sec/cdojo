@@ -1,7 +1,8 @@
 require 'yaml'
 
 inventory = YAML.load_file('inventory.yml')
-vars = inventory['all']['vars']
+vars = YAML.load_file('../ansible/inventory/group_vars/global.yml')
+#inventory['all']['vars']
 
 # Default values
 DEFAULT_CPUS = 2
@@ -43,8 +44,8 @@ Vagrant.configure("2") do |config|
   inventory['all']['hosts'].each do |host, details|
     # Linux VMs
     if details['box_type'] == "linux"
-      config.vm.define host do |vm_config|
-        vm_config.vm.box = details['vagrant_box']
+       config.vm.define host do |vm_config|
+      #   vm_config.vm.box = details['vagrant_box']
         vm_config.vm.guest = :linux
 
         # # Libvirt Configuration (with defaults and overrides)
@@ -75,10 +76,10 @@ Vagrant.configure("2") do |config|
     # Windows VMs
     elsif details['box_type'] == "windows"
       config.vm.define host do |vm_config|
+        vm_config.vm.hostname = host
         vm_config.vm.box = details['vagrant_box']
         vm_config.vm.guest = :windows
         vm_config.vm.communicator = "winrm"
-
         vm_config.winrm.timeout = 900
         vm_config.vm.boot_timeout = 900 
         vm_config.winrm.username = vars['win_local_admin']
@@ -101,44 +102,27 @@ Vagrant.configure("2") do |config|
                               ip: private_net_details['ip']
         end
 
+        # WinRM Configuration
         vm_config.vm.provision "shell", inline: <<-SHELL
           winrm set winrm/config/service '@{AllowUnencrypted="true"}'
         SHELL
 
-        # Ansible Provisioning (only for 'dc01')
-        if host == 'dc01'
-          vm_config.vm.provision "ansible" do |ansible|
-            # base_port = vars.dig('vagrant_ports', 'winrm_http', 'host') || 5985
-            # private_ip = private_net_details['ip']
-
-            # ansible_port = if private_ip
-            #                  base_port + private_ip.split('.').last.to_i
-            #                else
-            #                  puts "Warning: No private IP found for #{host}. Using default WinRM port."
-            #                  5985
-            #                end
-
-            ansible.extra_vars = {
-              #ansible_port: ansible_port,
-              ansible_winrm_scheme: vars['ansible_winrm_scheme'],
-              ansible_winrm_server_cert_validation: vars['ansible_winrm_server_cert_validation'],
-              windows_domain_controller_private_ip: inventory['all']['hosts']['dc01']['ip'],
-              win_timezone: vars['win_timezone'],
-              root_domain: vars['root_domain'],
-              domain_name: vars['domain_name'],
-              win_domain_admin: vars['win_domain_admin'],
-              win_domain_admin_pass: vars['win_domain_admin_pass'],
-              win_local_administrator: vars['win_local_administrator'],
-              win_local_administrator_password: vars['win_local_administrator_password'],
-              hostname: vm_config.vm.hostname,
-              ansible_winrm_operation_timeout_sec: 120,
-              ansible_winrm_read_timeout_sec: 150,
-            }
-
-            ansible.playbook = "../ansible/playbook/#{host}.yml"
-            ansible.config_file = "../ansible/ansible.cfg"
-            ansible.compatibility_mode = "2.0"
-          end
+        # WinRM set hostname and reboot
+        # vm_config.vm.provision "shell", inline: <<-SHELL
+        #   $hostname = "#{host}"
+        #   $password = "#{vars['win_local_admin_pass']}"
+        #   $username = "#{vars['win_local_admin']}"
+        #   $securePassword = ConvertTo-SecureString -String $password -AsPlainText -Force
+        #   $credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $securePassword
+        #   $credential | Export-Clixml -Path "C:\vagrant\credential.xml"
+        #   Rename-Computer -NewName $hostname -Force -Restart -Confirm:$false
+        # SHELL
+        
+        vm_config.vm.provision "ansible" do |ansible|       
+          ansible.extra_vars = YAML.load_file("../ansible/inventory/group_vars/global.yml")
+          ansible.playbook = "../ansible/playbook/#{host}.yml"
+          ansible.config_file = "../ansible/ansible.cfg"
+          ansible.compatibility_mode = "2.0"
         end
       end
     end

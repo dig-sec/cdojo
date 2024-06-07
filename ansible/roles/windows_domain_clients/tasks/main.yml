@@ -1,7 +1,6 @@
 ---
 - name: Change dns server to domain controller
   win_dns_client:
-    adapter_names: "{{ ansible_interfaces.1.connection_name }}"
     ipv4_addresses: "{{ windows_domain_controller_private_ip }}"
 
 - name: reboot | Rebooting after setting DNS server
@@ -10,7 +9,7 @@
 - name: Join domain
   win_domain_membership:
     dns_domain_name: "{{ root_domain }}"
-    hostname: "{{ hostname }}"
+    hostname: "{{ windows_domain_controller_hostname }}.{{ root_domain }}"
     domain_admin_user: "{{ win_domain_admin }}@{{ root_domain }}"
     domain_admin_password: "{{ win_domain_admin_pass }}"
     state: "domain"

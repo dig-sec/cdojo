@@ -1,5 +1,5 @@
 # Setup domain
-#- ansible.builtin.import_tasks: domain_setup.yml
+- ansible.builtin.import_tasks: domain_setup.yml
 - ansible.builtin.import_tasks: add_domain_users.yml
 
 # Implement vulnerabilties

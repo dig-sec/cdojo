@@ -1,13 +1,34 @@
-  # Global Variables
-  root_domain: cyberrange.local
-  domain_name: cyberrange
-  win_domain_admin: Administrator
-  win_domain_admin_pass: P@ssw0rd
-  win_local_administrator: Administrator
-  win_local_administrator_password: vagrant
-  adcs_host: win2019-adcs
-  adcs_common_name: attacklab-win2019-adcs-CA
+# Global Variables
 
-  # Ansible WinRM Configuration
-  ansible_winrm_server_cert_validation: ignore
-  ansible_winrm_scheme: http
+# Domain settings
+root_domain: cyberrange.local
+domain_name: cyberrange
+
+windows_domain_controller_private_ip: 10.0.1.10
+windows_domain_controller_hostname: dc01
+
+win_domain_admin: Administrator
+win_domain_admin_pass: Vagrant!"#
+
+# Timezone settings
+win_timezone: "Eastern Standard Time"
+
+# Windows General Settings
+win_local_admin: vagrant
+win_local_admin_pass: vagrant
+
+# Windows Server Settings
+win_local_administrator: Administrator
+win_local_administrator_password: Vagrant!"#
+
+
+# ADCS Settings
+adcs_host: win2019-adcs
+adcs_common_name: attacklab-win2019-adcs-CA
+adcs_cert_authority_password: Vagrant!"#
+
+# Ansible WinRM Configuration
+ansible_winrm_server_cert_validation: ignore
+ansible_winrm_scheme: http
+ansible_winrm_transport: basic
+ansible_port: 5985

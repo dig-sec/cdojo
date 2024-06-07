@@ -7,5 +7,5 @@
     datatype: dword
     data: 1
 
-- name: restart machine
-  win_reboot:
+# - name: restart machine
+#   win_reboot:

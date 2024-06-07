@@ -1,0 +1,15 @@
+- hosts: fw1
+  become: yes
+  gather_facts: no
+
+# python interpreter
+  vars:
+    ansible_python_interpreter: ../.venv/cyberrange/bin/python
+  # module_defaults:
+  #   group/ansibleguy.opnsense.all:
+  #     firewall: '192.168.122.191'
+
+  tasks:
+    - name: Reboot the box - will wait until finished
+      ansibleguy.opnsense.system:
+        action: 'reboot'

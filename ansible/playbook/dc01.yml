@@ -1,5 +1,9 @@
 - hosts: dc01
   gather_facts: false
-  roles:
-    #- windows_common
-    - windows_domain_controller
+
+  tasks:
+    - import_role:
+        name: windows_common 
+
+    - import_role:
+        name: windows_domain_controller
