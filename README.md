@@ -1,8 +1,13 @@
-## CyberRange
+## Cyber Dojo
 
-<p align="center">
-    <img src="docs/images/cyber-dojo-cat.jpg" alt="Logo" width="40%" style="display: block; margin: 0 auto; border-radius: 50%;">
-</p>
+<div style="
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: url('docs/images/cyber-dojo-cat.jpg');
+    background-size: cover;
+    background-position: center;
+"></div>
 
 
 This script streamlines the installation and configuration of the CyberRange virtual environment using Vagrant and libvirt on Fedora-based systems.
