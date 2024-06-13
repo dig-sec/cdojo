@@ -1,6 +1,6 @@
 **CyberRange**
 
-![Cyber Dojo Cat](docs/images/cyber-dojo-cat.jpg)
+![Cyber Dojo Cat](docs/images/cyber-dojo-cat.jpg){: width="30%"}
 
 This script streamlines the installation and configuration of the CyberRange virtual environment using Vagrant and libvirt on Fedora-based systems. It automates the process of setting up dependencies, cloning the CyberRange repository, configuring network bridges, and starting the Vagrant machines.
 
