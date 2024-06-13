@@ -1,7 +1,7 @@
 ## Cyber Dojo
 
 <p align="center">
-    <img src="docs/images/cyber-dojo.jpg" alt="Logo" width="40%" style="display: block; margin: 0 auto">
+    <img src="docs/images/cyber-dojo.png" alt="Logo" width="40%" style="display: block; margin: 0 auto">
 </p>
 
 
