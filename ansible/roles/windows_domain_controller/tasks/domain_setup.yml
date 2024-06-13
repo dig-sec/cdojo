@@ -57,7 +57,7 @@
 # Add the current host to the domain controller
 - name: Add host to domain controller
   microsoft.ad.domain_controller:
-    #name: dc01.cyberrange.local #"{{ ansible_hostname }}"
+    #name: dc01.cdojo.local #"{{ ansible_hostname }}"
     dns_domain_name: "{{ root_domain }}"
     domain_admin_user: "{{ win_domain_admin }}@{{ root_domain }}"
     domain_admin_password: "{{ win_domain_admin_pass }}"

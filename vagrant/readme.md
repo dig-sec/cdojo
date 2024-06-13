@@ -1,6 +1,6 @@
 # How to Use
-1. Make it executable: `chmod +x cyberrange_setup.sh`.
-2. Run it as root: `sudo ./cyberrange_setup.sh`.
+1. Make it executable: `chmod +x deploy_cyber_dojo.sh`.
+2. Run it as root: `sudo ./deploy_cyber_dojo.sh`.
 
 3. Change ansible/ansible.cfg
 

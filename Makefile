@@ -10,7 +10,7 @@ all: install ansible-galaxy-install
 install-packages:
 	sudo apt-get install python3-pip git libffi-dev libssl-dev ansible
 
-VENV := ./.venv/cyberrange
+VENV := ./.venv/cdojo
 VENV_BIN := $(VENV)/bin
 PYTHON := $(VENV_BIN)/python
 PIP := $(VENV_BIN)/python -m pip

@@ -1,8 +1,8 @@
 # Global Variables
 
 # Domain settings
-root_domain: cyberrange.local
-domain_name: cyberrange
+root_domain: cdojo.local
+domain_name: cdojo
 
 windows_domain_controller_private_ip: 10.0.1.10
 windows_domain_controller_hostname: dc01

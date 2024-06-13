@@ -4,7 +4,7 @@
 
 # python interpreter
   vars:
-    ansible_python_interpreter: ../.venv/cyberrange/bin/python
+    ansible_python_interpreter: ../.venv/cdojo/bin/python
   # module_defaults:
   #   group/ansibleguy.opnsense.all:
   #     firewall: '192.168.122.191'
