@@ -1,7 +1,7 @@
 ## CyberRange
 
 <p align="center">
-  <img src="docs/images/cyber-dojo-cat.jpg" alt="Logo" width="40%" style="display: block; margin: 0 auto; border-radius: 50%;">
+    <img src="docs/images/cyber-dojo-cat.jpg" alt="Logo" width="40%" style="display: block; margin: 0 auto; border-radius: 50%;">
 </p>
 
 
@@ -44,5 +44,5 @@ Contributions are welcome! If you find any issues or have improvements, feel fre
 
 **Acknowledgments**
 
-https://github.com/Marshall-Hallenbeck/red_team_attack_lab/tree/main
-https://github.com/Orange-Cyberdefense/GOAD
+* https://github.com/Marshall-Hallenbeck/red_team_attack_lab/tree/main
+* https://github.com/Orange-Cyberdefense/GOAD
