@@ -1,3 +1,3 @@
-# Setup AD CS
+# Setup ADCS
 - ansible.builtin.import_tasks: install_adcs.yml
 - ansible.builtin.import_tasks: create_templates.yml

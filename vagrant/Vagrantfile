@@ -1,105 +1,48 @@
 require 'yaml'
 
-inventory = YAML.load_file('inventory.yml')
-vars = YAML.load_file('../ansible/inventory/group_vars/global.yml')
-#inventory['all']['vars']
+inventory = YAML.load_file('../ansible/inventory/hosts.yml')
+vars = YAML.load_file('../ansible/inventory/group_vars/all.yml')
 
 # Default values
 DEFAULT_CPUS = 2
 DEFAULT_MEMORY = 4096
-#DEFAULT_DISK_SIZE = "40G"
 
 Vagrant.configure("2") do |config|
   config.vm.provider "libvirt" do |libvirt|
     libvirt.driver = "kvm"
-    #libvirt.storage :file, size: DEFAULT_DISK_SIZE  
     libvirt.memory = DEFAULT_MEMORY
     libvirt.cpus = DEFAULT_CPUS
   end
 
-  # Firewall (fw1)
-  config.vm.define "fw1" do |fw_config|
-    fw_config.vm.box = "enrico204/opnsense"
-    #fw_config.vm.guest = :freebsd
-    
-    # Networks
-    fw_config.vm.network "private_network", bridge: "virbr2",
-                                            dev: "virbr2",
-                                            mode: "bridge",
-                                            type: "bridge",
-                                            ip: "10.0.1.254"
 
-    fw_config.vm.network "public_network", bridge: "eno1",
-                                           dev: "eno1"
-  end
 
-  # Ansible provisioning for 'fw1'
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "../ansible/playbook/fw1.yml"
-    ansible.config_file = "../ansible/ansible.cfg"
-    ansible.compatibility_mode = "2.0"
-  end
-
-  # Handle VMs from inventory
-  inventory['all']['hosts'].each do |host, details|
-    # Linux VMs
-    if details['box_type'] == "linux"
-       config.vm.define host do |vm_config|
-      #   vm_config.vm.box = details['vagrant_box']
-        vm_config.vm.guest = :linux
-
-        # # Libvirt Configuration (with defaults and overrides)
-        # vm_config.vm.provider "libvirt" do |libvirt|
-        #   libvirt.cpus = details['cpus'] || DEFAULT_CPUS  
-        #   libvirt.memory = details['memory'] || DEFAULT_MEMORY
-        # end
-
-        # # Networks
-        # if private_net_details = details['network']['private_network']
-        #   vm_config.vm.network "private_network", 
-        #                       bridge: private_net_details['bridge'],
-        #                       dev: private_net_details['dev'],
-        #                       mode: private_net_details['mode'],
-        #                       type: private_net_details['type'],
-        #                       use_dhcp_assigned_default_route: private_net_details['use_dhcp_assigned_default_route'],
-        #                       ip: private_net_details['ip']
-        # end
-
-        # Ansible provisioning
-        # vm_config.vm.provision "ansible" do |ansible|
-        #   ansible.playbook = "../ansible/playbook/#{host}.yml"
-        #   ansible.config_file = "../ansible/ansible.cfg"
-        #   ansible.compatibility_mode = "2.0"
-        # end
-      end
-
-    # Windows VMs
-    elsif details['box_type'] == "windows"
+  # Iterate through host groups (windows and linux)
+  inventory['all']['children'].each do |group_name, group_details|
+    group_details['hosts'].each do |host, details|
       config.vm.define host do |vm_config|
         vm_config.vm.hostname = host
         vm_config.vm.box = details['vagrant_box']
-        vm_config.vm.guest = :windows
         vm_config.vm.communicator = "winrm"
         vm_config.winrm.timeout = 900
         vm_config.vm.boot_timeout = 900 
-        vm_config.winrm.username = vars['win_local_admin']
-        vm_config.winrm.password = vars['win_local_admin_pass']
+        vm_config.winrm.username = "vagrant"
+        vm_config.winrm.password = "vagrant"
 
-        # Libvirt Configuration (with defaults and overrides)
+        # Libvirt Configuration
         vm_config.vm.provider "libvirt" do |libvirt|
-          libvirt.cpus = details['cpus'] || DEFAULT_CPUS  
+          libvirt.cpus = details['cpus'] || DEFAULT_CPUS
           libvirt.memory = details['memory'] || DEFAULT_MEMORY
         end
 
         # Networks
         if private_net_details = details['network']['private_network']
-          vm_config.vm.network "private_network", 
-                              bridge: private_net_details['bridge'],
-                              dev: private_net_details['dev'],
-                              mode: private_net_details['mode'],
-                              type: private_net_details['type'],
-                              use_dhcp_assigned_default_route: private_net_details['use_dhcp_assigned_default_route'],
-                              ip: private_net_details['ip']
+          vm_config.vm.network "private_network",
+                               bridge: private_net_details['bridge'],
+                               dev: private_net_details['dev'],
+                               mode: private_net_details['mode'],
+                               type: private_net_details['type'],
+                               use_dhcp_assigned_default_route: private_net_details['use_dhcp_assigned_default_route'],
+                               ip: private_net_details['ip']
         end
 
         # WinRM Configuration
@@ -107,9 +50,12 @@ Vagrant.configure("2") do |config|
           winrm set winrm/config/service '@{AllowUnencrypted="true"}'
         SHELL
         
-        vm_config.vm.provision "ansible" do |ansible|       
-          ansible.extra_vars = YAML.load_file("../ansible/inventory/group_vars/global.yml")
+        # Provisioning with Ansible
+        vm_config.vm.provision "ansible" do |ansible|
+          # Merge group vars and host vars
+          ansible.extra_vars = vars.merge(details)
           ansible.extra_vars['host'] = host
+
           ansible.playbook = "../ansible/playbook/#{host}.yml"
           ansible.config_file = "../ansible/ansible.cfg"
           ansible.compatibility_mode = "2.0"

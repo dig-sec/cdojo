@@ -1,7 +1,9 @@
----
+- name: Refresh
+  ansible.windows.win_command: gpupdate /force
+
 - name: Install ADCSTemplate Module
   win_copy:
-    src: files/ADCSTemplate
+    src: ../roles/windows_server_adcs/files/ADCSTemplate
     dest: "C:\\Program Files\\WindowsPowerShell\\Modules"
 
 - name: create a directory for templates
@@ -26,9 +28,9 @@
   vars:
     ansible_become: yes
     ansible_become_method: runas
-    domain_name: "{{ root_domain }}"
-    ansible_become_user: "{{ root_domain }}\\{{ win_domain_admin }}"
-    ansible_become_password: "{{ win_domain_admin_pass }}"
+    domain_name: "{{domain}}"
+    ansible_become_user: "{{domain_username}}"
+    ansible_become_password: "{{domain_password}}"
   with_items:
     - ESC1
     - ESC2
@@ -42,7 +44,10 @@
   vars:
     ansible_become: yes
     ansible_become_method: runas
-    ansible_become_user: "{{win_domain_admin}}"
-    ansible_become_password: "{{win_domain_admin_pass}}"
-    cauthority_server: "{{adcs_host}}"
-    cauthority_common_name: "{{adcs_common_name}}"
+    ansible_become_user: "{{domain_username}}"
+    ansible_become_password: "{{domain_password}}"
+    cauthority_server: "{{ca_host}}"
+    cauthority_common_name: "{{ca_common_name}}"
+
+- name: Refresh
+  ansible.windows.win_command: gpupdate /force

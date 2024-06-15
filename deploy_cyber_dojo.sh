@@ -40,14 +40,45 @@ EOF
 )
 
 print_ascii_banner() {
-  echo "   _______       __               _______                         "
-  echo "  |   _   .--.--|  |--.-----.----|   _   .---.-.-----.-----.-----."
-  echo "  |.  1___|  |  |  _  |  -__|   _|.  l   |  _  |     |  _  |  -__|"
-  echo "  |.  |___|___  |_____|_____|__| |.  _   |___._|__|__|___  |_____|"
-  echo "  |:  1   |_____|                |:  |   |           |_____|      "
-  echo "  |::.. . |                      |::.|:. |                        "
-  echo "   ------                         --- ---                         "
-  echo "                                                      @pabi 2024  "
+echo "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWXXWMWNWWWWWKKX0OXXK0NWWWWNWMWXXWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"
+echo "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWWNXKXW0lcdkKK00000000KKKOdlckNNXXWWWWWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"
+echo "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMWNNX00KXXl,:;:lok0000000Oolc;:,:0XK0KXXNWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"
+echo "MMMMMMMMMMMMMMMMMMMMMMWMMWWWNK0000KKKk;::..:c::clllc::cc'.,:,oKKK00000XWWWWMWWMMMWWMMMMMMMMMMMMMMMMM"
+echo "MMMMMMMMMMMMMMMWWMMMMMMWWNKOO0000OOOOd,;,  .;dooxxxdodc.  .;,l0OO0000OOO0NWWWWMMMWWMMMMMMMMMMMMMMMMM"
+echo "MMMMMMMMMMMMMMMNK0KNWWWN0OO00OkkkOOkOx;'..,cdxdoxkxddxdl;...,dOkOOOOOO00Ok0XWWWWK0KNWWWWMMMMMMMMMMMM"
+echo "MMMMMMMMMMMMWNk:;ccxKX0kO0OkxkOOkOkk0kc..lkkkxdONNX0dxxkOd' ,x0OkOOOOkkkO0kkOXXklc;;xNMMMMMMMMMMMMMM"
+echo "MMMMMMMMMMMMMKc..:o:cxk00kxkkkkkxkOkxx:.;l::;,cOWWW0l;;::lc.,xxxOkxkkkkOkkO0kxo:ll..;0MMMMMMMMMMMMMM"
+echo "MMMMMMMMMMMMMW0c. ...ckkxkkkkOxdkOOxdc.'lc;:,..oNWNk' .;,co;.cdxkOkdxkkkkOkxOo,....;OWMMMMMMMMMMMMMM"
+echo "MMMMMMMMMMMMMMWKl. ..':dkddxkkkkkkkxl'.'colll:;xNWW0c;clldo,..lxxkkkkkOxddkxc,.. .c0WMMMMMMMMMMMMMMM"
+echo "MMMMMMMMMMMMMWWWXl. ..':dkxkxxkkxxxdc..;odddOKKxllld0X0xddd:..:dxxxkkxxkkxdc,'. .:KWWMMMMMMMMMMMMMMM"
+echo "MMMMMMMMMMMMWWWNKkl' ..':oxxxxxkkkko:,''cdxkO0XO;'cxKKOkxdl,',;lxkkkxxxxxd:,.. .ck0XWNWMMMMMMMMMMMMM"
+echo "MMMMMMMMMMMMWNNko0O:.  .';okxddxdkxodxc..'cxOkkkdodxkkOkl,..;ddoxxdxooxko:'.. .;kKddXNWMMMMMMMMMMMMM"
+echo "MMMMMMMMMMMWWW0lkKOd:.. .';oxdoxdxxoddc,'. .'ckKWWNXOl;.  .,:odoxxdxdoxo:'.. .;ok0OckWWWMMMMMMMMMMMM"
+echo "MMMMMMMMMMWNNXoo0xoxdl'. .',ldxddOkdd:':o;..';;:lllc;;,. ,oc':odkOxdxxl,'. ..:ddod0ocKNNWMMMMMMMMMMM"
+echo "MMMMMMMMMMWXNO:xOododxo,  .',:lc;:llo:'.;c;'ck0xolodOOo,,c;'.;lll:::c:,'.  'lxoodokk:xNXWMMMMMMMMMMM"
+echo "MMMMMMMMMMMWWd:Oxcddxxkd' .','';lodkkd;..,c::xXX0O0XXOc:c;..,lxxdol:''''. .okxxddld0clNMMMMMMMMMMMMM"
+echo "MMMMMMMMMMK0XxdKxokddxol:,''.'oOkoc:;::'..':c;dXWWWNk:;c,..';:;;:lxOd;...';loxxdxddKxoK00WMMMMMMMMMM"
+echo "MMMMMMMMMWXXNoo0dokooxo;,:. 'x0xl,...',,'..'::,cO0Oo,:c,..',,,...':dOO; .,;;lxdokdoKxlKXXWMMMMMMMMMM"
+echo "MMMMMMMMMX0NNcc0o:oddddooxl.ckl:,'.. .',,'...,;',,.'::'..',''.  ..,:cxo.:ddddddddcc0l;KN0XWMMMMMMMMM"
+echo "MMMMMMMMMWNNNl;Oo:lddooooo:,dd:;'..   ........''..;:;........   ..';:od,,oooooddo:lOc:XNXWMWMMMMMMMM"
+echo "MMMMMMMMMMXXWd'xxclodolloc'ldc:;...    .........';,,........    ...;c:ol,:olloddocdk,lWNXWMMMMMMMMMM"
+echo "MMMMMMMMMMWNW0,cklcloollo,,c;;;,...  .ckOkl'. ..'...  ..cxOko.   ..,;;,c;,llcoolcckl'kWWWWWMMMMMMMMM"
+echo "MMMMMMMMWMMNNWo'xxccc::lc.';',,'...  .cdkOl,.,lc;...',.,ckOxo,   ..',,,;,.:o::cccxk,cNWNWMMMMMMMMMMM"
+echo "MMMMMMMMWWMWXKK;,ko;cc;::.',.,,,,,::.....'..,dkOOxdddo'..'.....;:;,,,,','.;:;::;lO:,0KKWMMMMMMMMMMMM"
+echo "MMMMMMMMMWMWK0WO,:x:.co:;'...';;;;;',xo'ckxc'';clodddc;lkOd'cx;.,;;;;'....,;lc.,xl'kW00WMMMMMMMMMMMM"
+echo "MMMMMMMMMMMMMMX0k,:x:':,........',..oOc,dxdoc;'.....';:lodx;;kx,.',........,:,;xc'x0KMWMMMMMMMMMMMMM"
+echo "MMMMMMMMMWMMMWK0N0;;dl,':o;. .......:c;,;:c;,..     ..';::;,,::'..'.... .:c;':d:,kNKKWWWMMMMMMMMMMMM"
+echo "MMMMMMMMWWMMWKkxdxd:cdc:c.      ....,,',...             ...''',.....     .'::do:oxdxkKWWMMMMMMMMMMMM"
+echo "MMMMMMMMMWWKc..........   ..  .......,,..... .....       ....'.. ....       ..........:OWMMMMMMMMMMM"
+echo "MMMMMMMMMMX: .dOxkk,.lk, 'xo.;0Odxx; ;0Oxxd'.x0xdkOo.   ;0Odxx,.:xdxOl.    .dx.,kkkOx' ;KMMMMMMMMMMM"
+echo "MMMMMMMMMM0' cNo.,o; .Ok,d0, :Nd.:Xd.cNo... .OO'.kMK,   :Xd.:Xd,OO,,OO'    .kO'oNl.oNl .OMMMMMMMMMMM"
+echo "MMMMMMMMMM0' cNl      ,0X0:  :NKxOXl cW0do' .OXxxKWO.   :No ;Kd,Ok..kO'    .kO'oN: lNl .OMMMMMMMMMMM"
+echo "MMMMMMMMMM0' :0:  ..   cKo.  ;0x,cOo.:Kd;,. .kOcxK0c    ;0l ,0o'kx..xk. .. .xk'l0; :0c .OMMMMMMMMMMM"
+echo "MMMMMMMMMM0, ;Ol.:kl   ;Oc   ;Oo.;Od.;0l.....xx.'OXo.   ;Oo.:Ol'xk,,kx.,kl.,kx.c0c.l0: .OMMMMMMMMMMM"
+echo "MMMMMMMMMMNc .cdddo'   'd;   'ddool' ,ddooo'.ll. :xd'   'ddodl' ,oddd; .cdddd, .lddxl. ;KMMMMMMMMMMM"
+echo "MMMMMMMMMWMXo'......;. ..... ......   .......................  .. ....,'......;'......lKMMMMMMMMMMMM"
+echo "MMMMMMMMMMWMMN0kkkOXNKOOOO00OOOko,...,dx:,'..'.''''''.''.',od;....cxOKWN0OkkOXWX0kkkOXWMMMMMMMMMMMMM"
+echo "                                                                                          @pabi 2024"
 }
 
 # Functions
@@ -78,28 +109,6 @@ install_vagrant_plugin() {
     }
     echo "Vagrant plugin $plugin_name installed successfully."
 }
-
-# configure_bridges() {
-#     mkdir -p "$BRIDGE_XML_DIR"  # Create the directory if it doesn't exist
-#     for bridge in "${BRIDGES[@]}"; do
-#         echo -n "Checking bridge $bridge..."
-#         if virsh net-info "$bridge" &>/dev/null; then
-#             echo "already active."
-#         else
-#             echo -n "defining and starting..."
-#             sudo virsh net-define "${BRIDGE_XML_DIR}/${bridge}.xml" 
-#             sudo virsh net-autostart "$bridge"  # Enable autostart
-#             sudo virsh net-start "$bridge"
-#             echo "done."
-#         fi
-#     done
-# }
-
-# update_bridge_config() {
-#     if ! sudo grep -q 'allow all' "$BRIDGE_CONFIG"; then
-#         echo "allow all" | sudo tee -a "$BRIDGE_CONFIG" >/dev/null
-#     fi
-# }
 
 # Function to check if bridges are active
 check_bridge_status() {
@@ -158,6 +167,7 @@ main() {
 
   # Community general collection
   ansible-galaxy collection install community.general
+  ansible-galaxy collection install community.windows
 
   # Install python3
   sudo dnf install -y python3
@@ -180,11 +190,8 @@ main() {
   # Additional Plugin Installation
   install_vagrant_plugin vagrant-hostmanager
 
-  # Might need to change permissions on /etc/qemu/bridge.conf
-  sudo chmod 644 /etc/qemu/bridge.conf
-
-  # git clone the cyberrange repo
-  git clone git@github.com:dig-sec/CyberRange.git
+  # # Might need to change permissions on /etc/qemu/bridge.conf
+  # sudo chmod 644 /etc/qemu/bridge.conf
 
   echo "Setup completed successfully!"
 }

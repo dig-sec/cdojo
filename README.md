@@ -45,3 +45,4 @@ Contributions are welcome! If you find any issues or have improvements, feel fre
 
 * https://github.com/Marshall-Hallenbeck/red_team_attack_lab/tree/main
 * https://github.com/Orange-Cyberdefense/GOAD
+* https://github.com/clong/detectionlab
