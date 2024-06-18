@@ -2,6 +2,6 @@
 - hosts: win2019-adcs
   gather_facts: false
   roles:
-    #- windows_common
-    #- windows_domain_clients
+    - windows_common
+    - windows_domain_clients
     - windows_server_adcs

@@ -32,7 +32,7 @@
 - name: Create a new Windows domain
   microsoft.ad.domain:
     dns_domain_name: "{{ root_domain }}"
-    safe_mode_password: "{{ domain_admin_password }}"
+    safe_mode_password: "{{ domain_administrator_password }}"
     install_dns: yes
     reboot: yes
   register: domain_install
@@ -60,8 +60,8 @@
     #name: dc01.cdojo.local #"{{ ansible_hostname }}"
     dns_domain_name: "{{ root_domain }}"
     domain_admin_user: "{{ domain_administrator }}@{{ root_domain }}"
-    domain_admin_password: "{{ domain_admin_password }}"
-    safe_mode_password: "{{ domain_admin_password }}"
+    domain_admin_password: "{{ domain_administrator_password }}"
+    safe_mode_password: "{{ domain_administrator_password }}"
     state: domain_controller
   register: add_dc_result
 
@@ -88,4 +88,4 @@
 - name: Configure autologon for Domain Administrator
   community.windows.win_auto_logon:
     username: "{{ root_domain }}\\{{ domain_administrator }}"
-    password: "{{ domain_admin_password }}"
+    password: "{{ domain_administrator_password }}"

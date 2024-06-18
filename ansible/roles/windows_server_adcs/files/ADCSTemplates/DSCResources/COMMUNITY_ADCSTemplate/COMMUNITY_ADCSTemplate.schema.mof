@@ -8,3 +8,4 @@ class COMMUNITY_ADCSTemplate : OMI_BaseResource
     [Write] Boolean AutoEnroll;
     [Write, ValueMap{"Present","Absent"}, Values{"Present","Absent"}] String Ensure;
 };
+

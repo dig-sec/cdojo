@@ -34,23 +34,23 @@
           - openssh  # For SSH access
           # Add more tools as needed
 
-    - name: Harden Windows Firewall (Adjust based on your needs)
-      win_firewall_rule:
-        name: Allow Remote Desktop (RDP)
-        localport: 3389
-        protocol: TCP
-        action: allow
-        direction: in
-        state: present
+    # - name: Harden Windows Firewall (Adjust based on your needs)
+    #   win_firewall_rule:
+    #     name: Allow Remote Desktop (RDP)
+    #     localport: 3389
+    #     protocol: TCP
+    #     action: allow
+    #     direction: in
+    #     state: present
 
-    - name: Disable Unused Services (Optional)
-      win_service:
-        name: "{{ item }}"
-        state: stopped
-        enabled: no
-      loop:
-        - Print Spooler # Example, disable if not needed
-        - Remote Registry  # Example, disable if not needed
+    # - name: Disable Unused Services (Optional)
+    #   win_service:
+    #     name: "{{ item }}"
+    #     state: stopped
+    #     enabled: no
+    #   loop:
+    #     - Print Spooler
+    #     - Remote Registry
 
     - name: Configure Remote Desktop Settings (Optional)
       win_regedit:

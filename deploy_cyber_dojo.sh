@@ -6,7 +6,7 @@ BRIDGES=("virbr2" "virbr3")
 BRIDGE_CONFIG="/etc/qemu/bridge.conf"
 BRIDGE_XML_DIR="/etc/libvirt/qemu/networks"
 
-# Bridge configurations
+# Default bridge configurations
 DEFAULT_BRIDGE_CONFIG=$(cat <<EOF
 <network>
   <name>default</name>
@@ -21,6 +21,7 @@ DEFAULT_BRIDGE_CONFIG=$(cat <<EOF
 EOF
 )
 
+# Corporate
 VIRBR2_BRIDGE_CONFIG=$(cat <<EOF
 <network>
   <name>virbr2</name>
@@ -30,14 +31,44 @@ VIRBR2_BRIDGE_CONFIG=$(cat <<EOF
     </nat>
   </forward>
   <bridge name='virbr2' stp='on' delay='0'/>
-  <ip address='10.0.1.2' netmask='255.255.255.0'>
-    <dhcp>
-      <range start='10.0.1.3' end='10.0.1.254'/>
-    </dhcp>
+  <ip address='10.0.1.1' netmask='255.255.255.0'>
   </ip>
 </network>
 EOF
 )
+
+# Secret
+VIRBR3_BRIDGE_CONFIG=$(cat <<EOF
+<network>
+  <name>virbr3</name>
+  <forward mode='nat'>
+    <nat>
+      <port start='1024' end='65535'/>
+    </nat>
+  </forward>
+  <bridge name='virbr3' stp='on' delay='0'/>
+  <ip address='10.0.2.1' netmask='255.255.255.0'>
+  </ip>
+</network>
+EOF
+)
+
+# Monitoring
+VIRBR4_BRIDGE_CONFIG=$(cat <<EOF
+<network>
+  <name>virbr4</name>
+  <forward mode='nat'>
+    <nat>
+      <port start='1024' end='65535'/>
+    </nat>
+  </forward>
+  <bridge name='virbr4' stp='on' delay='0'/>
+  <ip address='172.16.0.1' netmask='255.255.255.0'>
+  </ip>
+</network>
+EOF
+)
+
 
 print_ascii_banner() {
 echo "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWXXWMWNWWWWWKKX0OXXK0NWWWWNWMWXXWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"

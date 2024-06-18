@@ -1,12 +1,12 @@
-- name: Refresh
-  ansible.windows.win_command: gpupdate /force
+# - name: Refresh
+#   ansible.windows.win_command: gpupdate /force
 
 - name: Install ADCSTemplate Module
   win_copy:
-    src: ../roles/windows_server_adcs/files/ADCSTemplate
+    src: "files/ADCSTemplates"
     dest: "C:\\Program Files\\WindowsPowerShell\\Modules"
 
-- name: create a directory for templates
+- name: Create a directory for templates
   win_file: 
     path: c:\setup
     state: directory
@@ -22,15 +22,20 @@
     - ESC3-CRA
     - ESC4
 
+- name: Ensure ADCSAdministration module is present
+  win_psmodule:
+    name: ADCSAdministration
+    state: present
+
 - name: Install templates
   win_shell: |
     if (-not(Get-ADCSTemplate -DisplayName "{{item}}")) { New-ADCSTemplate -DisplayName "{{item}}" -JSON (Get-Content c:\setup\{{item}}.json -Raw) -Identity "{{domain_name}}\Domain Users" -Publish }
   vars:
     ansible_become: yes
     ansible_become_method: runas
-    domain_name: "{{domain}}"
-    ansible_become_user: "{{domain_username}}"
-    ansible_become_password: "{{domain_password}}"
+    domain_name: "{{ root_domain }}"
+    ansible_become_user: "{{ root_domain }}\\{{ domain_administrator }}"
+    ansible_become_password: "{{ domain_administrator_password }}"
   with_items:
     - ESC1
     - ESC2
@@ -40,14 +45,14 @@
 
 - name: "Configure ATTRIBUTESUBJECTALTNAME2 on CA - ESC6"
   win_shell: |
-    certutil -config "{{cauthority_server}}\{{cauthority_common_name}}" -setreg policy\Editflags +EDITF_ATTRIBUTESUBJECTALTNAME2
+    certutil -config "{{adcs_host}}\{{adcs_common_name}}" -setreg policy\Editflags +EDITF_ATTRIBUTESUBJECTALTNAME2
   vars:
     ansible_become: yes
     ansible_become_method: runas
-    ansible_become_user: "{{domain_username}}"
-    ansible_become_password: "{{domain_password}}"
-    cauthority_server: "{{ca_host}}"
-    cauthority_common_name: "{{ca_common_name}}"
+    ansible_become_user: "{{domain_administrator}}"
+    ansible_become_password: "{{domain_administrator_password}}"
+    cauthority_server: "{{adcs_host}}"
+    cauthority_common_name: "{{adcs_common_name}}"
 
 - name: Refresh
   ansible.windows.win_command: gpupdate /force

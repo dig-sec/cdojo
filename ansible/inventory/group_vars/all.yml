@@ -9,7 +9,7 @@ windows_domain_controller_hostname: dc01
 windows_domain_controller_fqdn: "{{ windows_domain_controller_hostname }}.{{ root_domain }}"
 
 domain_administrator: Administrator
-domain_admin_password: Vagrant!"#
+domain_administrator_password: DomainVagrant!"#
 
 # DHCP Settings
 dhcp_ip_from: 10.0.1.100
@@ -23,8 +23,8 @@ dhcp_dns_ip: 10.0.1.10
 win_timezone: "Eastern Standard Time"
 
 # Windows Server Settings
-win_local_administrator: Administrator
-win_local_administrator_password: Vagrant!"#
+# win_local_administrator: Administrator
+# win_local_administrator_password: LocalVagrant!"#
 
 
 # ADCS Settings

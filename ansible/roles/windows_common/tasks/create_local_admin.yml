@@ -1,7 +1,7 @@
 - name: Create local user account
   win_user:
-    name: "{{ win_local_administrator }}"  
-    password: "{{ win_local_administrator_password }}"   
+    name: "{{ domain_administrator }}"  
+    password: "{{ domain_administrator_password }}"   
     state: present
     groups:
       - Administrators

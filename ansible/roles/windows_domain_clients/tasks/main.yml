@@ -11,7 +11,7 @@
     dns_domain_name: "{{ root_domain }}"
     hostname: "{{ host }}"
     domain_admin_user: "{{ domain_administrator }}@{{ root_domain }}"
-    domain_admin_password: "{{ domain_admin_password }}"
+    domain_admin_password: "{{ domain_administrator_password }}"
     state: "domain"
   register: domain_state
 

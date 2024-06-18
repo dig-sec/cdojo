@@ -27,12 +27,12 @@
           $domain_administrator,
 
           [String]
-          $domain_admin_password,
+          $domain_administrator_password,
 
           [String]
           $ca_common_name
       )
-      $pass = ConvertTo-SecureString $domain_admin_password -AsPlainText -Force
+      $pass = ConvertTo-SecureString $domain_administrator_password -AsPlainText -Force
       $Cred = New-Object System.Management.Automation.PSCredential ($domain_administrator, $pass)
       try {
         Install-AdcsCertificationAuthority -Credential $Cred -CAType EnterpriseRootCA -CryptoProviderName "RSA#Microsoft Software Key Storage Provider" -KeyLength 2048 -HashAlgorithmName SHA256 -ValidityPeriod Years -ValidityPeriodUnits 5 -CACommonName $ca_common_name -Force
@@ -43,7 +43,7 @@
     error_action: stop
     parameters:
       domain_administrator: "{{domain_administrator}}"
-      domain_admin_password: "{{domain_admin_password}}"
+      domain_administrator_password: "{{ domain_administrator_password }}"
       ca_common_name: "{{root_domain}}"
 
 # ESC 8
@@ -61,5 +61,7 @@
       }
   when: ca_web_enrollment
 
-- name: Refresh
-  ansible.windows.win_command: gpupdate /force
+- name: reboot | Rebooting Server
+  win_reboot:
+    connect_timeout: 15
+    post_reboot_delay: 15
