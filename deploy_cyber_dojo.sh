@@ -1,75 +1,5 @@
 #!/bin/bash
 
-# Constants and Configuration
-PACKAGES=("git" "ansible-core" "ruby" "ruby-devel" "qemu-kvm" "libvirt" "libvirt-devel" "gcc" "make" "patch") 
-BRIDGES=("virbr2" "virbr3")
-BRIDGE_CONFIG="/etc/qemu/bridge.conf"
-BRIDGE_XML_DIR="/etc/libvirt/qemu/networks"
-
-# Default bridge configurations
-DEFAULT_BRIDGE_CONFIG=$(cat <<EOF
-<network>
-  <name>default</name>
-  <bridge name='virbr0' stp='on' delay='0'/>
-  <mac address='52:54:00:0a:cd:20'/>
-  <ip address='192.168.122.1' netmask='255.255.255.0'>
-    <dhcp>
-      <range start='192.168.122.2' end='192.168.122.254'/>
-    </dhcp>
-  </ip>
-</network>
-EOF
-)
-
-# Corporate
-VIRBR2_BRIDGE_CONFIG=$(cat <<EOF
-<network>
-  <name>virbr2</name>
-  <forward mode='nat'>
-    <nat>
-      <port start='1024' end='65535'/>
-    </nat>
-  </forward>
-  <bridge name='virbr2' stp='on' delay='0'/>
-  <ip address='10.0.1.1' netmask='255.255.255.0'>
-  </ip>
-</network>
-EOF
-)
-
-# Secret
-VIRBR3_BRIDGE_CONFIG=$(cat <<EOF
-<network>
-  <name>virbr3</name>
-  <forward mode='nat'>
-    <nat>
-      <port start='1024' end='65535'/>
-    </nat>
-  </forward>
-  <bridge name='virbr3' stp='on' delay='0'/>
-  <ip address='10.0.2.1' netmask='255.255.255.0'>
-  </ip>
-</network>
-EOF
-)
-
-# Monitoring
-VIRBR4_BRIDGE_CONFIG=$(cat <<EOF
-<network>
-  <name>virbr4</name>
-  <forward mode='nat'>
-    <nat>
-      <port start='1024' end='65535'/>
-    </nat>
-  </forward>
-  <bridge name='virbr4' stp='on' delay='0'/>
-  <ip address='172.16.0.1' netmask='255.255.255.0'>
-  </ip>
-</network>
-EOF
-)
-
-
 print_ascii_banner() {
 echo "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWXXWMWNWWWWWKKX0OXXK0NWWWWNWMWXXWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"
 echo "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWWNXKXW0lcdkKK00000000KKKOdlckNNXXWWWWWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"
@@ -112,10 +42,77 @@ echo "MMMMMMMMMMWMMN0kkkOXNKOOOO00OOOko,...,dx:,'..'.''''''.''.',od;....cxOKWN0O
 echo "                                                                                          @pabi 2024"
 }
 
+# Constants and Configuration
+PACKAGES=(
+    "git" "ansible-core" "ruby" "ruby-devel" "qemu-kvm" "libvirt" 
+    "libvirt-devel" "gcc" "make" "patch" "python3" "python3-pip" "sshpass"
+)
+BRIDGES=("virbr2" "virbr3" "virbr4" "default")
+BRIDGE_CONFIG="/etc/qemu/bridge.conf"
+BRIDGE_XML_DIR="/etc/libvirt/qemu/networks"
+
+# Default bridge configurations
+DEFAULT_BRIDGE_CONFIG=$(cat <<EOF
+<network>
+  <name>default</name>
+  <bridge name='virbr0' stp='on' delay='0'/>
+  <mac address='52:54:00:0a:cd:20'/>
+  <ip address='192.168.122.1' netmask='255.255.255.0'>
+    <dhcp>
+      <range start='192.168.122.2' end='192.168.122.100'/>
+    </dhcp>
+  </ip>
+</network>
+EOF
+)
+
+# Bridge configurations
+BRIDGE_CONFIGS=(
+    ["virbr2"]=$(cat <<EOF
+<network>
+  <name>virbr2</name>
+  <forward mode='nat'>
+    <nat>
+      <port start='1024' end='65535'/>
+    </nat>
+  </forward>
+  <bridge name='virbr2' stp='on' delay='0'/>
+  <ip address='10.0.1.1' netmask='255.255.255.0'/>
+</network>
+EOF
+)
+    ["virbr3"]=$(cat <<EOF
+<network>
+  <name>virbr3</name>
+  <forward mode='nat'>
+    <nat>
+      <port start='1024' end='65535'/>
+    </nat>
+  </forward>
+  <bridge name='virbr3' stp='on' delay='0'/>
+  <ip address='10.0.2.1' netmask='255.255.255.0'/>
+</network>
+EOF
+)
+    ["virbr4"]=$(cat <<EOF
+<network>
+  <name>virbr4</name>
+  <forward mode='nat'>
+    <nat>
+      <port start='1024' end='65535'/>
+    </nat>
+  </forward>
+  <bridge name='virbr4' stp='on' delay='0'/>
+  <ip address='172.16.0.1' netmask='255.255.255.0'/>
+</network>
+EOF
+)
+)
+
 # Functions
 install_packages() {
     echo "Installing dependencies..."
-    sudo dnf install -y "${PACKAGES[@]}" || { echo "Error installing packages. Exiting."; exit 1; } 
+    sudo dnf install -y "${PACKAGES[@]}" || { echo "Error installing packages. Exiting."; exit 1; }
 }
 
 install_vagrant() {
@@ -141,7 +138,6 @@ install_vagrant_plugin() {
     echo "Vagrant plugin $plugin_name installed successfully."
 }
 
-# Function to check if bridges are active
 check_bridge_status() {
     for bridge in "${BRIDGES[@]}"; do
         echo -n "Checking bridge $bridge..."
@@ -153,7 +149,32 @@ check_bridge_status() {
     done
 }
 
-# Function to enable autostart for bridges
+configure_bridges() {
+    echo "Configuring bridges..."
+    for bridge in "${!BRIDGE_CONFIGS[@]}"; do
+        if virsh net-info "$bridge" &>/dev/null; then
+            echo "Bridge $bridge already exists."
+        else
+            echo "Creating bridge $bridge..."
+            echo "${BRIDGE_CONFIGS[$bridge]}" | sudo tee "$BRIDGE_XML_DIR/$bridge.xml" >/dev/null
+            sudo virsh net-define "$BRIDGE_XML_DIR/$bridge.xml"
+            sudo virsh net-start "$bridge"
+        fi
+    done
+}
+
+update_bridge_config() {
+    echo "Updating bridge configuration..."
+    if [[ -f "$BRIDGE_CONFIG" ]]; then
+        echo "Bridge configuration file $BRIDGE_CONFIG already exists."
+    else
+        echo "Creating bridge configuration file $BRIDGE_CONFIG..."
+        for bridge in "${BRIDGES[@]}"; do
+            echo "allow $bridge" | sudo tee -a "$BRIDGE_CONFIG" >/dev/null
+        done
+    fi
+}
+
 enable_autostart() {
     for bridge in "${BRIDGES[@]}"; do
         sudo virsh net-autostart "$bridge" >/dev/null 2>&1
@@ -161,70 +182,41 @@ enable_autostart() {
     done
 }
 
-# Main Script Logic
 main() {
-  print_ascii_banner
-  # Check if running as root (or with sudo)
-  if [[ $EUID -ne 0 ]]; then
-      echo "This script needs to be run with sudo or as root." >&2
-      exit 1
-  fi
+    print_ascii_banner
+    # Check if running as root (or with sudo)
+    if [[ $EUID -ne 0 ]]; then
+        echo "This script needs to be run with sudo or as root." >&2
+        exit 1
+    fi
 
-  # Bridge configuration
-  mkdir -p "$BRIDGE_XML_DIR"
-  echo "$DEFAULT_BRIDGE_CONFIG" | sudo tee "$BRIDGE_XML_DIR/default.xml" >/dev/null
-  echo "$VIRBR2_BRIDGE_CONFIG" | sudo tee "$BRIDGE_XML_DIR/virbr2.xml" >/dev/null
-  check_bridge_status
-  enable_autostart
+    # Create bridge XML directory
+    mkdir -p "$BRIDGE_XML_DIR"
+    echo "$DEFAULT_BRIDGE_CONFIG" | sudo tee "$BRIDGE_XML_DIR/default.xml" >/dev/null
+    configure_bridges
+    enable_autostart
+    update_bridge_config
+    check_bridge_status
 
-  # Installation Steps
-  install_packages
-  install_vagrant
-  install_gem winrm
-  install_vagrant_plugin vagrant-libvirt
-  install_vagrant_plugin winrm
-  install_vagrant_plugin winrm-elevated
+    # Installation Steps
+    install_packages
+    install_vagrant
+    install_gem winrm
+    install_vagrant_plugin vagrant-libvirt
+    install_vagrant_plugin winrm
+    install_vagrant_plugin winrm-elevated
+    install_vagrant_plugin vagrant-hostmanager
 
-  # Add the Windows Ansible collection
-  ansible-galaxy collection install ansible.windows
+    # Install Ansible collections
+    echo "Installing Ansible collections..."
+    ansible-galaxy collection install ansible.windows puzzle.opnsense microsoft.ad community.general community.windows
 
-  # Opensense ansible collection https://opnsense.ansibleguy.net/
-  #ansible-galaxy collection install git+https://github.com/ansibleguy/collection_opnsense.git
-  # Opnsense: https://puzzle.github.io/puzzle.opnsense/collections/puzzle/opnsense/index.html#description
-  ansible-galaxy collection install puzzle.opnsense
+    # Add user to libvirt and qemu groups and restart libvirtd
+    sudo usermod -aG libvirt "$USER"
+    sudo usermod -aG qemu "$USER"
+    sudo systemctl restart libvirtd
 
-  # Microsoft AD collection
-  ansible-galaxy collection install microsoft.ad
-
-  # Community general collection
-  ansible-galaxy collection install community.general
-  ansible-galaxy collection install community.windows
-
-  # Install python3
-  sudo dnf install -y python3
-
-  # Install pip
-  sudo dnf install -y python3-pip
-
-  # Install sshpass
-  sudo dnf install -y sshpass
-
-  # Add user to libvirt and qemu group and restart libvirtd
-  sudo usermod -aG libvirt $USER
-  sudo usermod -aG qemu $USER
-  sudo systemctl restart libvirtd
-
-  # Network Configuration
-  configure_bridges
-  update_bridge_config
-
-  # Additional Plugin Installation
-  install_vagrant_plugin vagrant-hostmanager
-
-  # # Might need to change permissions on /etc/qemu/bridge.conf
-  # sudo chmod 644 /etc/qemu/bridge.conf
-
-  echo "Setup completed successfully!"
+    echo "Setup completed successfully!"
 }
 
 main

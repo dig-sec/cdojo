@@ -1,6 +1,3 @@
-# - name: Refresh
-#   ansible.windows.win_command: gpupdate /force
-
 - name: Install ADCSTemplate Module
   win_copy:
     src: "files/ADCSTemplates"

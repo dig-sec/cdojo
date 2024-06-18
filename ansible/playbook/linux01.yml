@@ -1,24 +1,10 @@
+---
 - hosts: linux01
   gather_facts: false
   become: true
 
   tasks:
-    - name: Update apt cache
-      apt:
-        update_cache: yes
-
-    - name: Install essential packages
-      apt:
-        name:
-          - vim
-          - git
-          - curl
-        state: present
-
-    - name: Configure firewall
-      ufw:
-        rule:
-          - allow: ssh
-          - allow: http
-          - allow: https
-        state: enabled
+  - name: Update apt cache
+    apt:
+      update_cache: true
+    ignore_errors: true 
