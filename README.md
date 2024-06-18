@@ -25,21 +25,9 @@ This script streamlines the installation and configuration of the Cyber Dojo vir
 2. **Make Executable:** Give the script execution permissions: `chmod +x deploy_cyber_dojo.sh`
 3. **Run as Root:** Execute the script with root privileges: `sudo ./deploy_cyber_dojo.sh`
 
-**Configuration**
-
-**Usage**
-
-After running the script, you can manage your Cyber Dojo virtual environment using standard Vagrant commands:
-
-* `vagrant status`: Check the status of the virtual machines.
-* `vagrant ssh <machine-name>`: SSH into a specific virtual machine.
-* `vagrant halt`: Stop the virtual machines.
-* `vagrant destroy`: Destroy the virtual machines.
-
 **Contributing**
 
-Contributions are welcome! If you find any issues or have improvements, feel free to submit a pull request.
-
+Contributions are welcome!
 
 **Acknowledgments**
 
