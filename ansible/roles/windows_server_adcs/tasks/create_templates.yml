@@ -39,7 +39,8 @@
     - ESC3
     - ESC3-CRA
     - ESC4
-
+  ignore_errors: true
+  
 - name: "Configure ATTRIBUTESUBJECTALTNAME2 on CA - ESC6"
   win_shell: |
     certutil -config "{{adcs_host}}\{{adcs_common_name}}" -setreg policy\Editflags +EDITF_ATTRIBUTESUBJECTALTNAME2
@@ -50,6 +51,7 @@
     ansible_become_password: "{{domain_administrator_password}}"
     cauthority_server: "{{adcs_host}}"
     cauthority_common_name: "{{adcs_common_name}}"
-
+  ignore_errors: true
+    
 - name: Refresh
   ansible.windows.win_command: gpupdate /force

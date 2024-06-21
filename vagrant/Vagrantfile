@@ -1,98 +1,27 @@
-require 'yaml'
-
-inventory = YAML.load_file('../ansible/inventory/hosts.yml')
-vars = YAML.load_file('../ansible/inventory/group_vars/all.yml')
-
-# Default values
-DEFAULT_CPUS = 2
-DEFAULT_MEMORY = 4096
-
 Vagrant.configure("2") do |config|
-  config.vm.provider "libvirt" do |libvirt|
-    libvirt.driver = "kvm"
-    libvirt.memory = DEFAULT_MEMORY
-    libvirt.cpus = DEFAULT_CPUS
-  end
-
-  # Define firewall (fw1)
-  config.vm.define "fw1" do |fw_config|
-    fw_config.vm.box = "enrico204/opnsense"
-    fw_config.vm.guest = :freebsd
-
-    # Networks
-    fw_config.vm.network "private_network", bridge: "virbr0", ip: "192.168.122.254"
-    fw_config.vm.network "public_network", bridge: "eno1", dev: "eno1"
-    fw_config.vm.network "private_network", bridge: "virbr2", ip: "10.0.1.254"
-    # fw_config.vm.network "private_network", bridge: "virbr3", ip: "10.0.2.254"
-  end
-
-  # Ansible provisioning for 'fw1'
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "../ansible/playbook/fw1.yml"
-    ansible.config_file = "../ansible/ansible.cfg"
-    ansible.compatibility_mode = "2.0"
-  end
-
-  # Iterate through host groups
-  inventory['all']['children'].each do |group_name, group_details|
-    group_details['hosts'].each do |host, details|
-      config.vm.define host do |vm_config|
-        vm_config.vm.hostname = host
-        vm_config.vm.box = details['vagrant_box']
-
-        # Determine communicator based on group
-        if group_name == 'windows'
-          vm_config.vm.communicator = "winrm"
-          vm_config.winrm.timeout = 900
-          vm_config.vm.boot_timeout = 900
-          vm_config.winrm.username = "vagrant"
-          vm_config.winrm.password = "vagrant"
-        elsif group_name == 'linux'
-          vm_config.vm.communicator = "ssh"
-          vm_config.ssh.username = "vagrant"
-          vm_config.ssh.password = "vagrant"
-        end
-
-        # Libvirt Configuration
-        vm_config.vm.provider "libvirt" do |libvirt|
-          libvirt.cpus = details['cpus'] || DEFAULT_CPUS
-          libvirt.memory = details['memory'] || DEFAULT_MEMORY
-        end
-
-        # Networks
-        if private_net_details = details.dig('network', 'private_network')
-          vm_config.vm.network "private_network",
-                               bridge: private_net_details['bridge'],
-                               dev: private_net_details['dev'],
-                               mode: private_net_details['mode'],
-                               type: private_net_details['type'],
-                               use_dhcp_assigned_default_route: private_net_details['use_dhcp_assigned_default_route'],
-                               ip: private_net_details['ip']
-        end
-
-        # WinRM Configuration for Windows
-        if group_name == 'windows'
-          vm_config.vm.provision "shell", inline: <<-SHELL
-            winrm set winrm/config/service '@{AllowUnencrypted="true"}'
-          SHELL
-        end
-
-        # Provisioning with Ansible
-        vm_config.vm.provision "ansible" do |ansible|
-          # Merge group vars and host vars
-          ansible.extra_vars = vars.merge(details)
-          ansible.extra_vars['host'] = host
-
-
-          if group_name == 'linux'
-            ansible.extra_vars['ansible_port'] = 22
-          end
-          
-          ansible.playbook = "../ansible/playbook/#{host}.yml"
-          ansible.config_file = "../ansible/ansible.cfg"
-          ansible.compatibility_mode = "2.0"
-        end
+    config.vm.define "windows-server" do |server|
+      server.vm.box = "windows-server-2022"
+  
+      server.vm.provider :libvirt do |libvirt|
+        libvirt.driver = "kvm"
+        libvirt.memory = 8192
+        libvirt.cpus = 4
       end
+    
+      # dhcp address network configuration
+      server.vm.network "private_network", type: "bridge", bridge: "virbr0", ip: "192.168.122.99"
+      # Uncomment and adjust the port forwarding as needed
+      # server.vm.network "forwarded_port", guest: 3389, host: 3389, id: "rdp" 
+
+      # Shell echo hello world
+      server.vm.provision "shell", inline: "echo Hello World"
+        
+      # If using WinRM for provisioning:
+      server.vm.communicator = "winrm"
+      server.winrm.username = "vagrant"
+      server.winrm.password = "vagrant"
+      server.winrm.transport = :plaintext
+      server.winrm.timeout = 1800
     end
   end
-end
+  
