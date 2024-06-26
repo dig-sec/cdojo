@@ -4,19 +4,16 @@
   become: true
 
   tasks:
-    # Update hostname
     - name: Set new hostname
       hostname:
         name: "linux-production-server"
 
-    # Update IP configuration
     - name: Update network configuration file
       lineinfile:
         path: /etc/network/interfaces
         regexp: "^iface eth1 inet.*"
         line: "iface eth1 inet static\naddress 10.0.1.50\nnetmask 255.255.255.0\ngateway 10.0.1.254"
 
-    # Restart networking for the changes to take effect
     - name: Restart networking
       service:
         name: networking

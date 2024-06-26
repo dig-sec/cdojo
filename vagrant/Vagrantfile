@@ -1,27 +1,87 @@
-Vagrant.configure("2") do |config|
-    config.vm.define "windows-server" do |server|
-      server.vm.box = "windows-server-2022"
-  
-      server.vm.provider :libvirt do |libvirt|
-        libvirt.driver = "kvm"
-        libvirt.memory = 8192
-        libvirt.cpus = 4
-      end
-    
-      # dhcp address network configuration
-      server.vm.network "private_network", type: "bridge", bridge: "virbr0", ip: "192.168.122.99"
-      # Uncomment and adjust the port forwarding as needed
-      # server.vm.network "forwarded_port", guest: 3389, host: 3389, id: "rdp" 
+require 'yaml'
 
-      # Shell echo hello world
-      server.vm.provision "shell", inline: "echo Hello World"
+inventory = YAML.load_file('../ansible/inventory/hosts.yml')
+vars = YAML.load_file('../ansible/inventory/group_vars/all.yml')
+
+# Default values
+DEFAULT_CPUS = 2
+DEFAULT_MEMORY = 4096
+
+Vagrant.configure("2") do |config|
+  config.vm.provider "libvirt" do |libvirt|
+    libvirt.driver = "kvm"
+    libvirt.memory = DEFAULT_MEMORY
+    libvirt.cpus = DEFAULT_CPUS
+  end
+
+  inventory['all']['children'].each do |group_name, group_details|
+    group_details['hosts'].each do |host, details|
+      config.vm.define host do |vm_config|
+        vm_config.vm.box = details['vagrant_box']
+
+        if group_name == 'windows'
+          vm_config.vm.hostname = host
+          vm_config.vm.communicator = "winrm"
+          vm_config.winrm.timeout = 900
+          vm_config.vm.boot_timeout = 900
+          vm_config.winrm.username = "vagrant"
+          vm_config.winrm.password = "vagrant"
+          #vm_config.winrm.port = 5985  # WinRM HTTP port
+          #vm_config.winrm.guest_port = 5985  # Guest port for WinRM
+          vm_config.winrm.transport = :plaintext
+          vm_config.winrm.max_tries = 300
+          vm_config.winrm.retry_delay = 2
+          vm_config.winrm.basic_auth_only = true
+          #vm_config.winrm.ssl_peer_verification = false
+          # https://github.com/vagrant-libvirt/vagrant-libvirt/issues/715s
+          vm_config.vm.synced_folder ".", "/vagrant", disabled: true
+          vm_config.vm.synced_folder ".", "/vagrant", disabled: true, type: "rsync"
+
+        elsif group_name == 'linux'
+          vm_config.vm.hostname = host
+          vm_config.vm.communicator = "ssh"
+          vm_config.ssh.username = "vagrant"
+          vm_config.ssh.password = "vagrant"
+
+        elsif group_name == 'firewall' and host == 'fw1'
+          vm_config.vm.communicator = "ssh"
+          vm_config.ssh.username = "vagrant"
+          vm_config.ssh.password = "vagrant"
+          vm_config.vm.network "private_network", bridge: "virbr0", ip: "192.168.122.254", nic_model_type: "virtio"
+          vm_config.vm.network "public_network", bridge: "eno1", dev: "eno1", nic_model_type: "virtio"
+          vm_config.vm.network "private_network", bridge: "virbr2", ip: "10.0.1.254", nic_model_type: "virtio"
+          vm_config.vm.network "private_network", bridge: "virbr3", ip: "10.0.2.254", nic_model_type: "virtio"
+        end
+
+        vm_config.vm.provider "libvirt" do |libvirt|
+          libvirt.cpus = details['cpus'] || DEFAULT_CPUS
+          libvirt.memory = details['memory'] || DEFAULT_MEMORY
+          if group_name == 'windows'
+            libvirt.nic_model_type = "e1000"
+          end
+        end
+
+        if private_net_details = details.dig('network', 'private_network')
+          vm_config.vm.network "private_network",
+                               bridge: private_net_details['bridge'],
+                               dev: private_net_details['dev'],
+                               nic_model_type: private_net_details['model_type'],
+                               ip: private_net_details['ip']
+        end
         
-      # If using WinRM for provisioning:
-      server.vm.communicator = "winrm"
-      server.winrm.username = "vagrant"
-      server.winrm.password = "vagrant"
-      server.winrm.transport = :plaintext
-      server.winrm.timeout = 1800
+        vm_config.vm.provision "ansible" do |ansible|
+          ansible.extra_vars = vars.merge(details)
+          ansible.extra_vars['host'] = host
+
+            if group_name == 'linux' || group_name == 'firewall'
+            ansible.extra_vars['ansible_port'] = 22
+            end
+         
+          ansible.playbook = "../ansible/playbook/#{host}.yml"
+          ansible.config_file = "../ansible/ansible.cfg"
+          ansible.compatibility_mode = "2.0"
+        end
+      end
     end
   end
-  
+end

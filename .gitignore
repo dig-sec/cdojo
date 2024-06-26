@@ -2,3 +2,4 @@ vagrant/.vagrant
 .venv
 .vscode
 archive
+machines

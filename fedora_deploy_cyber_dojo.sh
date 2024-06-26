@@ -206,6 +206,7 @@ main() {
     install_vagrant_plugin winrm
     install_vagrant_plugin winrm-elevated
     install_vagrant_plugin vagrant-hostmanager
+    install_vagrant_plugin mutate
 
     # Install Ansible collections
     echo "Installing Ansible collections..."
