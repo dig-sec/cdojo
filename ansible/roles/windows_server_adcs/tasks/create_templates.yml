@@ -12,7 +12,7 @@
   win_copy:
     src: "files/{{item}}.json"
     dest: "C:\\setup\\{{item}}.json"
-  with_items:
+  loop:
     - ESC1
     - ESC2
     - ESC3
@@ -26,24 +26,30 @@
 
 - name: Install templates
   win_shell: |
-    if (-not(Get-ADCSTemplate -DisplayName "{{item}}")) { New-ADCSTemplate -DisplayName "{{item}}" -JSON (Get-Content c:\setup\{{item}}.json -Raw) -Identity "{{domain_name}}\Domain Users" -Publish }
+    Import-Module ADCSAdministration
+    $template = Get-ADCSTemplate -DisplayName "{{item}}" -ErrorAction SilentlyContinue
+    if (-not $template) { 
+      New-ADCSTemplate -DisplayName "{{item}}" -JSON (Get-Content c:\setup\{{item}}.json -Raw) -Identity "{{domain_name}}\Domain Users" -Publish 
+    }
   vars:
     ansible_become: yes
     ansible_become_method: runas
     domain_name: "{{ root_domain }}"
     ansible_become_user: "{{ root_domain }}\\{{ domain_administrator }}"
-    ansible_become_password: "{{ domain_administrator_password }}"
-  with_items:
+    ansible_become_password: "{{domain_administrator_password}}"
+  loop:
     - ESC1
     - ESC2
     - ESC3
     - ESC3-CRA
     - ESC4
-  ignore_errors: true
-  
+
 - name: "Configure ATTRIBUTESUBJECTALTNAME2 on CA - ESC6"
   win_shell: |
-    certutil -config "{{adcs_host}}\{{adcs_common_name}}" -setreg policy\Editflags +EDITF_ATTRIBUTESUBJECTALTNAME2
+    $config = certutil -config "{{cauthority_server}}\{{cauthority_common_name}}" -getreg policy\Editflags
+    if ($config -notcontains "EDITF_ATTRIBUTESUBJECTALTNAME2") {
+      certutil -config "{{cauthority_server}}\{{cauthority_common_name}}" -setreg policy\Editflags +EDITF_ATTRIBUTESUBJECTALTNAME2
+    }
   vars:
     ansible_become: yes
     ansible_become_method: runas
@@ -51,7 +57,6 @@
     ansible_become_password: "{{domain_administrator_password}}"
     cauthority_server: "{{adcs_host}}"
     cauthority_common_name: "{{adcs_common_name}}"
-  ignore_errors: true
-    
+
 - name: Refresh
   ansible.windows.win_command: gpupdate /force

@@ -1,0 +1,14 @@
+---
+- name: Install Kibana
+  become: yes
+  apt:
+    name: kibana
+    state: present
+    update_cache: yes
+
+- name: Ensure Kibana service is started and enabled
+  become: yes
+  systemd:
+    name: kibana
+    enabled: yes
+    state: started

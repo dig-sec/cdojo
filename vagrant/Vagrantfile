@@ -51,6 +51,7 @@ Vagrant.configure("2") do |config|
           vm_config.vm.network "public_network", bridge: "eno1", dev: "eno1", nic_model_type: "virtio"
           vm_config.vm.network "private_network", bridge: "virbr2", ip: "10.0.1.254", nic_model_type: "virtio"
           vm_config.vm.network "private_network", bridge: "virbr3", ip: "10.0.2.254", nic_model_type: "virtio"
+          vm_config.vm.network "forwarded_port", guest: 443, host: 9443
         end
 
         vm_config.vm.provider "libvirt" do |libvirt|
@@ -65,10 +66,16 @@ Vagrant.configure("2") do |config|
           vm_config.vm.network "private_network",
                                bridge: private_net_details['bridge'],
                                dev: private_net_details['dev'],
-                               nic_model_type: private_net_details['model_type'],
-                               ip: private_net_details['ip']
+                               ip: private_net_details['ip'],
+                               netmask: private_net_details['netmask'],
+                               gateway: private_net_details['gateway']
         end
-        
+
+        if group_name == 'windows'
+          vm_config.vm.provision "shell", path: "scripts/Install-WMF3Hotfix.ps1", privileged: false
+          vm_config.vm.provision "shell", path: "scripts/ConfigureRemotingForAnsible.ps1", privileged: false
+        end
+
         vm_config.vm.provision "ansible" do |ansible|
           ansible.extra_vars = vars.merge(details)
           ansible.extra_vars['host'] = host

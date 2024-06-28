@@ -1,0 +1,14 @@
+---
+- name: Install Elastic Agent
+  become: yes
+  apt:
+    name: elastic-agent
+    state: present
+    update_cache: yes
+
+- name: Ensure Elastic Agent service is started and enabled
+  become: yes
+  systemd:
+    name: elastic-agent
+    enabled: yes
+    state: started

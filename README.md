@@ -25,6 +25,9 @@ This script streamlines the installation and configuration of the Cyber Dojo vir
 2. **Make Executable:** Give the script execution permissions: `chmod +x deploy_cyber_dojo.sh`
 3. **Run as Root:** Execute the script with root privileges: `sudo ./deploy_cyber_dojo.sh`
 
+** Good info **
+vm_config.vm.network "forwarded_port", guest: 443, host: 9443
+
 **Contributing**
 
 Contributions are welcome!

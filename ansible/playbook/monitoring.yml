@@ -1,0 +1,8 @@
+- hosts: monitoring
+  gather_facts: false
+
+  roles:
+    - linux_deb_common
+    - elasticsearch
+    - kibana
+    - fleet

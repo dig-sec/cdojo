@@ -3,9 +3,6 @@
   hosts: win11-client
   gather_facts: false
 
-  roles:
-    - windows_common
-    - windows_domain_clients
 
   tasks:
     - name: Configure Windows Firewall
@@ -23,3 +20,7 @@
         name: DisableAntiSpyware
         type: dword
         data: 1
+
+  roles:
+    - windows_common
+    - windows_domain_clients

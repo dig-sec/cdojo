@@ -1,15 +1,22 @@
 # Global Variables
 
+# OPNsense FW1
+opnsense_admin_username: corp
+opnsense_admin_password: DomainVagrant123#
+
 # Domain settings
-root_domain: cdojo.local
-domain_name: cdojo
+root_domain: corp.local
+domain_name: corp
+
+secondary_root_domain: bank.local
+secondary_domain_name: bank
 
 windows_domain_controller_private_ip: 10.0.1.10
 windows_domain_controller_hostname: dc01
 windows_domain_controller_fqdn: "{{ windows_domain_controller_hostname }}.{{ root_domain }}"
 
 domain_administrator: Administrator
-domain_administrator_password: DomainVagrant!"#
+domain_administrator_password: DomainVagrant123#
 
 # DHCP Settings
 dhcp_ip_from: 10.0.1.100
@@ -20,20 +27,22 @@ dhcp_dns_ip: 10.0.1.10
 
 
 # Timezone settings
-win_timezone: "Eastern Standard Time"
+win_timezone: "Coordinated Universal Time" #"Eastern Standard Time"
 
 # Windows Server Settings
 # win_local_administrator: Administrator
 # win_local_administrator_password: LocalVagrant!"#
 
-
 # ADCS Settings
-adcs_host: win2019-adcs
-adcs_common_name: attacklab-win2019-adcs-CA
-adcs_cert_authority_password: Vagrant!"#
+adcs_host: adcs01
+adcs_common_name: "{{ domain_name }}-adcs-CA"
+adcs_cert_authority_password: DomainVagrant123#
 
 # ADCS Web Enrollment Settings
 ca_web_enrollment: True
+
+# Monitoring
+es_version: 8.x
 
 # Ansible WinRM Configuration
 ansible_winrm_server_cert_validation: ignore

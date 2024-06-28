@@ -1,0 +1,36 @@
+---
+- name: Install dependencies for Elasticsearch
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - apt-transport-https
+    - gnupg
+  become: yes
+
+- name: Add Elasticsearch GPG key
+  apt_key:
+    url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+    state: present
+  become: yes
+
+- name: Add Elasticsearch repository
+  apt_repository:
+    repo: "deb https://artifacts.elastic.co/packages/{{ es_version }}/apt stable main"
+    state: present
+    update_cache: yes
+  become: yes
+
+- name: Install Elasticsearch
+  apt:
+    name: elasticsearch
+    state: present
+    update_cache: yes
+  become: yes
+
+- name: Ensure Elasticsearch is started and enabled
+  systemd:
+    name: elasticsearch
+    enabled: yes
+    state: started
+  become: yes

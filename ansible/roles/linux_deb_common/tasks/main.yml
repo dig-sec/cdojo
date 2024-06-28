@@ -1,0 +1,11 @@
+---
+- name: Update apt package cache
+  apt:
+    update_cache: yes
+  become: yes
+
+- name: Upgrade all packages to the latest version
+  apt:
+    upgrade: dist
+    update_cache: yes
+  become: yes

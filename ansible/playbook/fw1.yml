@@ -10,35 +10,55 @@
 
     - name: Add OPNsense user
       puzzle.opnsense.system_access_users:
-        username: johndoe
-        password: secret
-        full_name: John Doe
-        email: johndoe@example.com
+        username: "{{ opnsense_admin_username }}"
+        password: "{{ opnsense_admin_password }}"
+        full_name: cdojo
         groups:
           - admins
         state: present
       register: result
 
-    - name: Create new assignment
-      puzzle.opnsense.interfaces_assignments:
-        identifier: "LAN"
-        device: "vtnet1"
-        description: "lan_interface"
-
-    - name: Create new assignment
+    - name: Create WAN assignment
       puzzle.opnsense.interfaces_assignments:
         identifier: "WAN"
         device: "vtnet2"
         description: "wan_interface"
 
-    - name: Allow all outbound trafic from LAN Network
-      puzzle.opnsense.firewall_rules:
-        interface: "LAN"
-        action: "pass"
-        direction: "out"
-        protocol: "any"
-        description: "Allow all outbound trafic from LAN Network"
-    
+    - name: Create CORP assignment
+      puzzle.opnsense.interfaces_assignments:
+        identifier: "CORP"
+        device: "vtnet3"
+        description: "corporate"
+
+    - name: Create BANK assignment
+      puzzle.opnsense.interfaces_assignments:
+        identifier: "Bank"
+        device: "vtnet4"
+        description: "bank"
+
+    # - name: Allow all outbound trafic from LAN Network
+    #   puzzle.opnsense.firewall_rules:
+    #     interface: "LAN"
+    #     action: "pass"
+    #     direction: "out"
+    #     protocol: "any"
+    #     description: "Allow all outbound trafic from LAN Network"
+
+    # - name: Allow all outbound trafic from corporate Network
+    #   puzzle.opnsense.firewall_rules:
+    #     interface: "CORP"
+    #     action: "pass"
+    #     direction: "out"
+    #     protocol: "any"
+    #     description: "Allow all outbound trafic from corporate Network"
+        
+    - name: Remove OPNsense Vagrant user
+      puzzle.opnsense.system_access_users:
+        username: vagrant
+        password: vagrant
+        state: absent
+      register: result
+      
     # - name: Pulling routes
     #   ansibleguy.opnsense.list:
     #     target: 'route'

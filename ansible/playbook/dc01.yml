@@ -1,12 +1,7 @@
 - hosts: dc01
   gather_facts: false
 
-  tasks:
-    - import_role:
-        name: windows_common
-
-    - import_role:
-        name: windows_domain_controller
-
-    - import_role:
-        name: windows_dhcp_server
+  roles:
+    - windows_common
+    - windows_domain_controller
+    - windows_dhcp_server
