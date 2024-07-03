@@ -1,0 +1,111 @@
+first_names:
+  - John
+  - Jane
+  - Michael
+  - Emily
+  - Chris
+  - Sarah
+  - David
+  - Jessica
+  - Daniel
+  - Laura
+  - Matthew
+  - Olivia
+  - Andrew
+  - Sophia
+  - James
+  - Isabella
+  - Robert
+  - Mia
+  - William
+  - Charlotte
+  - Benjamin
+  - Lily
+  - Samuel
+  - Ava
+  - Ethan
+  - Grace
+  - Alexander
+  - Harper
+
+last_names:
+  - Smith
+  - Johnson
+  - Williams
+  - Brown
+  - Jones
+  - Garcia
+  - Miller
+  - Davis
+  - Rodriguez
+  - Martinez
+  - Hernandez
+  - Lopez
+  - Gonzalez
+  - Wilson
+  - Anderson
+  - Thomas
+  - Taylor
+  - Moore
+  - Jackson
+  - White
+  - Harris
+  - Martin
+  - Thompson
+  - Flores
+
+groups:
+  - Finance
+  - IT
+  - HR
+  - Marketing
+  - Sales
+  - Support
+  - Engineering
+  - Operations
+  - Research
+
+project_groups:
+  - Retail Banking
+  - Corporate Banking
+  - Investment Banking
+  - Private Banking
+  - Asset Management
+  - Insurance
+  - Real Estate
+  - E-commerce
+  - Healthcare
+  - Education
+  - Manufacturing
+  - Shark Tank
+  - Dragon's Den
+
+common_passwords:
+  - Password123!
+  - Qwerty456$
+  - Abc123!
+  - Admin789#
+  - Letmein987$
+  - Welcome123!
+  - Login654#
+  - Passw0rd!
+  - 1qazZAQ!
+  - MySecret2022$
+  - P@ssw0rd!
+  - 1qaz2wsx!
+  - Summer2023#
+  - Winter2024!
+  - Spring2025$
+  - Autumn2021!
+
+company_machines:
+  - DC01
+  - FS01
+  - EX01
+  - SQL01
+  - WEB01
+  - APP01
+  - ITWRK1
+  - FINWRK1
+  - FINWRK2
+  - ITRK2

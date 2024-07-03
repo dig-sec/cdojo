@@ -1,3 +1,4 @@
+---
 # Global Variables
 
 # OPNsense FW1
@@ -41,11 +42,28 @@ adcs_cert_authority_password: DomainVagrant123#
 # ADCS Web Enrollment Settings
 ca_web_enrollment: True
 
-# Monitoring
-es_version: 8.x
-
 # Ansible WinRM Configuration
 ansible_winrm_server_cert_validation: ignore
 ansible_winrm_scheme: http
 ansible_winrm_transport: basic
 ansible_port: 5985
+
+# Ansible SSH Configuration
+ansible_ssh_user: vagrant
+ansible_ssh_pass: vagrant
+ansible_ssh_port: 22
+
+# Monitoring
+es_version: 8.x
+elastic_stack_version: 8.14.1
+es_cluster_name: "monitoring"
+es_node_name: "node-1"
+es_network_host: "0.0.0.0"
+es_port: 9200
+es_host: "localhost"
+elasticsearch_url: "https://{{ es_host }}:{{ es_port }}"
+elasticsearch_ca_path: /etc/elasticsearch/certs/http_ca.crt
+
+kibana_version: "8.x"
+kibana_server_host: "0.0.0.0"
+kibana_server_port: 5601

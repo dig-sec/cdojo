@@ -1,14 +1,59 @@
 ---
 - name: Install Elastic Agent
-  become: yes
   apt:
-    name: elastic-agent
-    state: present
-    update_cache: yes
-
-- name: Ensure Elastic Agent service is started and enabled
+    deb: "https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-{{ elastic_stack_version }}-amd64.deb"
   become: yes
+
+- name: Configure Elastic Agent
+  template:
+    src: elastic-agent.yml.j2
+    dest: /etc/elastic-agent/elastic-agent.yml
+  become: yes
+  notify: Restart Elastic Agent
+
+- name: Ensure Fleet Server is enabled in Elasticsearch
+  command: >
+    curl -X POST "http://localhost:9200/_security/role/fleet_server"
+    -H 'Content-Type: application/json'
+    -d '{"cluster":["monitor","manage_api_key"],"indices":[{"names":["logs-*","metrics-*","traces-*",".logs-endpoint.diagnostic.collection-*"],"privileges":["write","create_index","auto_configure"]}]}'
+    -u elastic:{{ elastic_password }}
+  when: setup_fleet_server
+  become: yes
+  no_log: true
+
+- name: Generate Fleet Server policy
+  command: >
+    elastic-agent enroll --url={{ kibana_url }} --enrollment-token={{ fleet_enrollment_token }} --force
+  when: setup_fleet_server
+  become: yes
+  no_log: true
+
+- name: Start Fleet Server
   systemd:
     name: elastic-agent
-    enabled: yes
     state: started
+    enabled: yes
+  become: yes
+
+- name: Wait for Fleet Server to start
+  wait_for:
+    port: "{{ fleet_server_port }}"
+    delay: 10
+  when: setup_fleet_server
+
+- name: Enroll Elastic Agent with Fleet (if not Fleet Server)
+  command: >
+    elastic-agent enroll --url={{ fleet_server_url }} --enrollment-token={{ fleet_enrollment_token }} --force
+  when: not setup_fleet_server
+  become: yes
+  no_log: true
+
+- name: Ensure Elastic Agent is started and enabled
+  systemd:
+    name: elastic-agent
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Ensure Fleet Server is restarted if configuration changed
+  meta: flush_handlers

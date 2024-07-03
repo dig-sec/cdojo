@@ -1,0 +1,14 @@
+server.host: "{{ kibana_server_host | default('0.0.0.0') }}"
+server.port: "{{ kibana_server_port | default(5601) }}"
+server.name: "{{ server_name | default('kibana') }}"
+
+elasticsearch.hosts: ["{{ elasticsearch_url | default('https://localhost') }}:{{ elasticsearch_port | default(9200) }}"]
+elasticsearch.username: "kibana_system"
+elasticsearch.password: "{{ kibana_system_password }}"
+
+server.ssl.enabled: true
+server.ssl.keystore.path: "{{ kibana_keystore_path | default('kibana.keystore') }}"
+elasticsearch.ssl.verificationMode: certificate
+elasticsearch.ssl.certificateAuthorities: "{{ elasticsearch_ca_path | default('config/elasticsearch-ca.pem') }}"
+
+xpack.security.enabled: true

@@ -1,11 +1,10 @@
 ---
 - name: Install dependencies for Elasticsearch
   apt:
-    name: "{{ item }}"
+    name: 
+      - apt-transport-https
+      - gnupg
     state: present
-  loop:
-    - apt-transport-https
-    - gnupg
   become: yes
 
 - name: Add Elasticsearch GPG key
@@ -23,9 +22,40 @@
 
 - name: Install Elasticsearch
   apt:
-    name: elasticsearch
+    name: "elasticsearch"
     state: present
     update_cache: yes
+  become: yes
+
+- name: Configure Elasticsearch
+  template:
+    src: elasticsearch.yml.j2
+    dest: /etc/elasticsearch/elasticsearch.yml
+  become: yes
+  notify: Restart Elasticsearch
+
+- name: Ensure Elasticsearch directories have correct permissions
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: elasticsearch
+    group: elasticsearch
+    mode: '0750'
+  loop:
+    - /etc/elasticsearch
+    - /var/lib/elasticsearch
+    - /var/log/elasticsearch
+  become: yes
+
+- name: Increase system limits for elasticsearch
+  pam_limits:
+    domain: elasticsearch
+    limit_type: "{{ item.limit_type }}"
+    limit_item: "{{ item.limit_item }}"
+    value: "{{ item.value }}"
+  loop:
+    - { limit_type: '-', limit_item: 'nofile', value: 65535 }
+    - { limit_type: '-', limit_item: 'memlock', value: unlimited }
   become: yes
 
 - name: Ensure Elasticsearch is started and enabled
@@ -34,3 +64,13 @@
     enabled: yes
     state: started
   become: yes
+
+- name: Generate elastic user password
+  command: /usr/share/elasticsearch/bin/elasticsearch-setup-passwords auto -b
+  register: elastic_passwords
+  become: yes
+  run_once: true
+
+- name: Display Elasticsearch passwords
+  debug:
+    msg: "{{ elastic_passwords.stdout_lines }}"

@@ -1,6 +1,6 @@
 ---
-- name: Install webserver
-  hosts: webserver
+- name: Install web01
+  hosts: web01
   gather_facts: false
 
   tasks:
