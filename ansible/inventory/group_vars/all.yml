@@ -67,3 +67,5 @@ elasticsearch_ca_path: /etc/elasticsearch/certs/http_ca.crt
 kibana_version: "8.x"
 kibana_server_host: "0.0.0.0"
 kibana_server_port: 5601
+
+logstash_port: 5044

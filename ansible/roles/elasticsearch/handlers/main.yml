@@ -1,6 +1,0 @@
----
-- name: Restart Elasticsearch
-  systemd:
-    name: elasticsearch
-    state: restarted
-  become: yes

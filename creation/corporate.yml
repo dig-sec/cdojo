@@ -109,3 +109,15 @@ company_machines:
   - FINWRK1
   - FINWRK2
   - ITRK2
+
+subnets:
+  IT: 10.0.3.0/24
+  Secure: 10.0.2.0/24
+  Default: 10.0.1.0/24
+
+vulns:
+  windows: ["disable_firewall", "disable_uac", "disable_windows_defender", "disable_windows_update"]
+  linux: ["disable_firewall", "disable_selinux", "disable_apparmor", "disable_ufw"]
+  AD: []
+  DNS: []
+  ADCS: []

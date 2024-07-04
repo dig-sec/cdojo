@@ -1,0 +1,14 @@
+input {
+  beats {
+    port => {{ logstash_port }}
+  }
+}
+
+output {
+  elasticsearch {
+    hosts => {{ elasticsearch_url | to_json }}
+    user => "elastic"
+    password => "{{ elastic_password }}"
+    ssl => false
+    }
+}

@@ -3,7 +3,5 @@
 
   roles:
     - linux_deb_common
-    - elasticsearch
-    - kibana
-    - logstash
+    - elk
     #- fleet

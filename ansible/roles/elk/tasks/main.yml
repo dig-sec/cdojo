@@ -1,0 +1,170 @@
+---
+- name: Install dependencies for Elasticsearch
+  apt:
+    name: 
+      - apt-transport-https
+      - gnupg
+    state: present
+  become: yes
+
+- name: Add Elasticsearch GPG key
+  apt_key:
+    url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+    state: present
+  become: yes
+
+- name: Add Elasticsearch repository
+  apt_repository:
+    repo: "deb https://artifacts.elastic.co/packages/{{ es_version }}/apt stable main"
+    state: present
+    update_cache: yes
+  become: yes
+
+- name: Install Elasticsearch
+  apt:
+    name: "elasticsearch"
+    state: present
+    update_cache: yes
+  become: yes
+
+- name: Configure Elasticsearch
+  template:
+    src: elasticsearch.yml.j2
+    dest: /etc/elasticsearch/elasticsearch.yml
+  become: yes
+  notify: Restart Elasticsearch
+
+- name: Ensure Elasticsearch directories have correct permissions
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: elasticsearch
+    group: elasticsearch
+    mode: '0750'
+  loop:
+    - /etc/elasticsearch
+    - /var/lib/elasticsearch
+    - /var/log/elasticsearch
+  become: yes
+
+- name: Increase system limits for elasticsearch
+  pam_limits:
+    domain: elasticsearch
+    limit_type: "{{ item.limit_type }}"
+    limit_item: "{{ item.limit_item }}"
+    value: "{{ item.value }}"
+  loop:
+    - { limit_type: '-', limit_item: 'nofile', value: 65535 }
+    - { limit_type: '-', limit_item: 'memlock', value: unlimited }
+  become: yes
+
+- name: Ensure Elasticsearch is started and enabled
+  systemd:
+    name: elasticsearch
+    enabled: yes
+    state: started
+  become: yes
+
+- name: Reset password for elastic user
+  shell: "/usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic -b -s"
+  register: reset_elastic_password
+  become: yes
+
+- name: Store new elastic password
+  set_fact:
+    elastic_password: "{{ reset_elastic_password.stdout_lines[-1] }}"
+  become: yes
+
+- name: Reset password for kibana_system user
+  shell: "/usr/share/elasticsearch/bin/elasticsearch-reset-password -u kibana_system -b -s"
+  register: reset_kibana_system_password
+  become: yes
+
+- name: Store new kibana_system password
+  set_fact:
+    kibana_system_password: "{{ reset_kibana_system_password.stdout_lines[-1] }}"
+  become: yes
+
+- name: Output new passwords
+  debug:
+    msg: "Elastic password: {{ elastic_password }}, Kibana_system password: {{ kibana_system_password }}"
+
+- name: Install Kibana
+  become: yes
+  apt:
+    name: kibana
+    state: present
+    update_cache: yes
+
+- name: Configure Kibana
+  template:
+    src: kibana.yml.j2
+    dest: /etc/kibana/kibana.yml
+  become: yes
+  vars:
+    kibana_system_password: "{{ kibana_system_password }}" 
+  notify: Restart Kibana
+
+- name: Ensure Kibana directories have correct permissions
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: kibana
+    group: kibana
+    mode: '0750'
+  loop:
+    - /etc/kibana
+    - /var/lib/kibana
+    - /var/log/kibana
+  become: yes
+
+- name: Ensure Kibana service is started and enabled
+  become: yes
+  systemd:
+    name: kibana
+    enabled: yes
+    state: started
+
+- name: Install Logstash
+  apt:
+    name: "logstash"
+    state: present
+    update_cache: yes
+  become: yes
+
+- name: Create Logstash pipeline configuration
+  template:
+    src: logstash_pipeline.conf.j2
+    dest: /etc/logstash/conf.d/logstash_pipeline.conf
+  become: yes
+  vars:
+    elastic_password: "{{ elastic_password }}"
+  notify: Restart Logstash
+
+- name: Ensure Logstash directories have correct permissions
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: logstash
+    group: logstash
+    mode: '0750'
+  loop:
+    - /etc/logstash
+    - /var/lib/logstash
+    - /var/log/logstash
+  become: yes
+
+- name: Ensure Logstash service is started and enabled
+  systemd:
+    name: logstash
+    enabled: yes
+    state: started
+  become: yes
+
+- name: Wait for Logstash to start
+  wait_for:
+    port: "{{ logstash_port }}"
+    delay: 10
+
+- name: Ensure Logstash is restarted if configuration changed
+  meta: flush_handlers

@@ -6,16 +6,7 @@ from typing import List, Dict, Any
 CONFIG = {
     'num_users': 100,
     'domain': 'example.com',
-    'subnets': {
-        'IT': '192.168.1.0/24',
-        'Finance': '192.168.2.0/24',
-        'HR': '192.168.3.0/24',
-        'Marketing': '192.168.4.0/24',
-        'Sales': '192.168.5.0/24',
-        'Default': '192.168.0.0/24'
-    }
 }
-
 
 def load_data(file_path: str) -> Dict[str, Any]:
     try:
@@ -27,6 +18,36 @@ def load_data(file_path: str) -> Dict[str, Any]:
 
 def generate_email(firstname: str, lastname: str, domain: str) -> str:
     return f"{firstname.lower()}.{lastname.lower()}@{domain}"
+
+def generate_file_shares(groups: List[str]) -> Dict[str, Dict[str, List[str]]]:
+    file_shares = {
+        "Company-Wide": {
+            "Public": ["Announcement_Q2_2024.docx", "Company_Directory.xlsx", "Holiday_Schedule_2024.pdf"],
+            "Templates": ["Invoice_Template.docx", "Report_Template.pptx", "Expense_Form.xlsx"],
+            "Policies": ["Employee_Handbook.pdf", "IT_Security_Policy.docx", "Travel_Policy.pdf"]
+        }
+    }
+    
+    for group in groups:
+        file_shares[group] = {
+            f"{group} Documents": [
+                f"{group}_Strategic_Plan.docx",
+                f"{group}_Budget_2024.xlsx",
+                f"{group}_Meeting_Minutes.docx"
+            ],
+            f"{group} Projects": [
+                f"Project_{group[:3].upper()}001_Proposal.pptx",
+                f"Project_{group[:3].upper()}002_Timeline.xlsx",
+                f"Project_{group[:3].upper()}003_Report.docx"
+            ],
+            f"{group} Resources": [
+                f"{group}_Training_Manual.pdf",
+                f"{group}_Best_Practices.docx",
+                f"{group}_Tools_Guide.pdf"
+            ]
+        }
+    
+    return file_shares
 
 def assign_role() -> str:
     roles = ["Employee", "Manager", "Director", "VP", "C-Level"]
@@ -44,16 +65,16 @@ def assign_groups(department: str, role: str, groups: List[str], project_groups:
     user_groups.extend(random.sample(available_project_groups, random.randint(0, 2)))
     return user_groups
 
-def assign_machine(role: str, department: str) -> Dict[str, str]:
+def assign_machine(department: str, subnets: Dict[str, str]) -> Dict[str, str]:
     machine_types = ["Desktop", "Laptop", "Workstation"]
     machine_type = random.choice(machine_types)
     hostname = f"{department[:3].upper()}-{machine_type[:3].upper()}-{random.randint(1000, 9999)}"
-    subnet = CONFIG['subnets'].get(department, CONFIG['subnets']['Default'])
+    subnet = subnets.get(department, subnets['Default'])
     ip = str(ipaddress.IPv4Address(subnet.split('/')[0]) + random.randint(10, 250))
     
     return {"hostname": hostname, "ip": ip, "type": machine_type}
 
-def assign_software_licenses(role: str, department: str) -> List[str]:
+def assign_software_licenses(department: str) -> List[str]:
     common_software = ["Office365", "Zoom", "Slack"]
     dept_software = {
         "IT": ["Visual Studio", "AWS", "Docker"],
@@ -82,8 +103,8 @@ def generate_users(data: Dict[str, Any]) -> List[Dict[str, Any]]:
             "department": department,
             "password": random.choice(data['common_passwords']),
             "groups": assign_groups(department, role, data['groups'], data['project_groups']),
-            "machine": assign_machine(role, department),
-            "software_licenses": assign_software_licenses(role, department)
+            #"machine": assign_machine(department, CONFIG['subnets']),
+            "software_licenses": assign_software_licenses(department)
         }
         
         if department == "IT":
@@ -117,24 +138,19 @@ def main():
         return
 
     all_users = generate_users(data)
-    regular_users = [user for user in all_users if not user.get('is_admin_account')]
-    admin_users = [user for user in all_users if user.get('is_admin_account')]
-
     file_shares = generate_file_shares(data['groups'])
 
+    # Create environment output (without machines)
     environment = {
-        "regular_users": regular_users,
-        "admin_users": admin_users,
-        "file_shares": file_shares,
-        "domain": CONFIG['domain'],
-        "subnets": CONFIG['subnets']
+        "Domain": CONFIG['domain'],
+        "Users": all_users,
+        "File_shares": file_shares,
+        "Subnets": data['subnets']
     }
+    environment_output = yaml.dump(environment, default_flow_style=False, sort_keys=False)
 
-    output = yaml.dump(environment, default_flow_style=False, sort_keys=False)
-    print(output)
-
-if __name__ == "__main__":
-    main()
+    print("\n--- Environment ---")
+    print(environment_output)
 
 if __name__ == "__main__":
     main()

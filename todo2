@@ -1,4 +1,3 @@
-elasticsearch.yml.j2
 vuln, script in vagrant file
 
 Goal:

@@ -1,3 +1,0 @@
----
-- name: Restart Kibana
-  command: systemctl restart kibana

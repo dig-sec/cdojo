@@ -1,0 +1,9 @@
+server.host: "{{ kibana_server_host | default('0.0.0.0') }}"
+server.port: "{{ kibana_server_port | default(5601) }}"
+server.name: "{{ host | default('kibana') }}"
+
+elasticsearch.hosts: ["{{ elasticsearch_url | default('https://localhost:9200') }}"]
+elasticsearch.username: "kibana_system"
+elasticsearch.password: "{{ kibana_system_password }}"
+
+elasticsearch.ssl.verificationMode: none

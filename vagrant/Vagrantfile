@@ -19,6 +19,11 @@ Vagrant.configure("2") do |config|
       config.vm.define host do |vm_config|
         vm_config.vm.box = details['vagrant_box']
 
+        # If fowarded port configure it on host
+        if details['forwarded_port']
+          vm_config.vm.network "forwarded_port", guest: details['forwarded_port'][0], host: details['forwarded_port'][1]
+        end
+
         if group_name == 'windows'
           vm_config.vm.hostname = host
           vm_config.vm.communicator = "winrm"
@@ -72,8 +77,15 @@ Vagrant.configure("2") do |config|
         end
 
         if group_name == 'windows'
+          # Default scripts
           vm_config.vm.provision "shell", path: "scripts/Install-WMF3Hotfix.ps1", privileged: false
           vm_config.vm.provision "shell", path: "scripts/ConfigureRemotingForAnsible.ps1", privileged: false
+
+          # Host custom scripts
+          details['scripts']&.each do |script|
+            next unless script.end_with?('.ps1')
+            vm_config.vm.provision "shell", path: "scripts/#{script}", privileged: false
+          end
         end
 
         vm_config.vm.provision "ansible" do |ansible|
