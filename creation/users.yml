@@ -1,953 +1,859 @@
 users:
+- department: Finance
+  email: matthew.garcia@corp.com
+  groups:
+  - Finance
+  - Management
+  - Manufacturing
+  - Dragon's Den
+  machine:
+    hostname: FIN-WOR-5046
+    ip: 10.0.1.113
+    type: Workstation
+  name: Matthew Garcia
+  password: 1qaz2wsx!
+  role: Manager
+  software_licenses:
+  - Slack
+  - Excel Advanced
+  upn: matthew.garcia@corp.local
 - department: Support
-  email: samuel.thomas@corp.com
+  email: ethan.johnson@corp.com
   groups:
   - Support
-  - E-commerce
-  - Shark Tank
+  - Manufacturing
+  - Private Banking
   machine:
-    hostname: SUP-LAP-7764
-    ip: 10.0.1.129
-    type: Laptop
-  name: Samuel Thomas
+    hostname: SUP-DES-9140
+    ip: 10.0.1.144
+    type: Desktop
+  name: Ethan Johnson
   password: Password123!
   role: Employee
   software_licenses:
-  - Slack
-  - Office365
-  upn: samuel.thomas@corp.local
-- department: Support
-  email: grace.moore@corp.com
-  groups:
-  - Support
-  - Management
-  machine:
-    hostname: SUP-DES-3027
-    ip: 10.0.1.194
-    type: Desktop
-  name: Grace Moore
-  password: Abc123!
-  role: Manager
-  software_licenses:
-  - Office365
-  - Zoom
-  upn: grace.moore@corp.local
-- admin_rights:
-  - Domain Admin
-  department: IT
-  email: laura.harris.admin@corp.com
-  groups:
-  - Domain Admins
-  name: Admin.Laura.Harris
-  password: 1qaz2wsx!
-  role: Employee
-  upn: admin.laura.harris@corp.local
-- admin_rights:
-  - Local Admin
-  department: IT
-  email: laura.harris@corp.com
-  groups:
-  - IT
-  - E-commerce
-  - Retail Banking
-  machine:
-    hostname: IT-LAP-9439
-    ip: 10.0.3.150
-    type: Laptop
-  name: Laura Harris
-  password: MySecret2022$
-  role: Employee
-  software_licenses:
-  - Zoom
-  - Visual Studio
-  upn: laura.harris@corp.local
-- department: Research
-  email: benjamin.flores@corp.com
-  groups:
-  - Research
-  machine:
-    hostname: RES-LAP-1856
-    ip: 10.0.1.104
-    type: Laptop
-  name: Benjamin Flores
-  password: Qwerty456$
-  role: Employee
-  software_licenses:
-  - Zoom
-  - Slack
-  upn: benjamin.flores@corp.local
-- admin_rights:
-  - Local Admin
-  department: HR
-  email: harper.williams@corp.com
-  groups:
-  - HR
-  - Manufacturing
-  machine:
-    hostname: HR-DES-9664
-    ip: 10.0.1.124
-    type: Desktop
-  name: Harper Williams
-  password: Letmein987$
-  role: Employee
-  software_licenses:
-  - Office365
-  - Slack
-  - Workday
-  - Zoom
-  - BambooHR
-  upn: harper.williams@corp.local
-- admin_rights:
-  - Local Admin
-  department: Operations
-  email: benjamin.thomas@corp.com
-  groups:
-  - Operations
-  - E-commerce
-  - Education
-  machine:
-    hostname: OPE-LAP-9787
-    ip: 10.0.1.113
-    type: Laptop
-  name: Benjamin Thomas
-  password: P@ssw0rd!
-  role: Employee
-  software_licenses:
-  - Slack
-  - Zoom
-  upn: benjamin.thomas@corp.local
-- department: Engineering
-  email: john.hernandez@corp.com
-  groups:
-  - Engineering
-  - Dragon's Den
-  - Real Estate
-  machine:
-    hostname: ENG-WOR-9524
-    ip: 10.0.1.162
-    type: Workstation
-  name: John Hernandez
-  password: Letmein987$
-  role: Employee
-  software_licenses:
-  - Slack
-  - Office365
-  upn: john.hernandez@corp.local
-- department: Sales
-  email: james.jackson@corp.com
-  groups:
-  - Sales
-  - Asset Management
-  - Investment Banking
-  machine:
-    hostname: SAL-DES-2429
-    ip: 10.0.1.160
-    type: Desktop
-  name: James Jackson
-  password: Spring2025$
-  role: Employee
-  software_licenses:
-  - Zoom
-  - Office365
-  - HubSpot
-  - Slack
-  - Salesforce
-  upn: james.jackson@corp.local
-- department: Marketing
-  email: benjamin.jackson@corp.com
-  groups:
-  - Marketing
-  - Real Estate
-  machine:
-    hostname: MAR-DES-9314
-    ip: 10.0.1.150
-    type: Desktop
-  name: Benjamin Jackson
-  password: P@ssw0rd!
-  role: Employee
-  software_licenses:
-  - Adobe Creative Suite
-  - Office365
-  - Zoom
-  - Slack
-  - Hootsuite
-  upn: benjamin.jackson@corp.local
-- department: HR
-  email: michael.martin@corp.com
-  groups:
-  - HR
-  - Real Estate
-  - E-commerce
-  machine:
-    hostname: HR-LAP-8059
-    ip: 10.0.1.107
-    type: Laptop
-  name: Michael Martin
-  password: Passw0rd!
-  role: Employee
-  software_licenses:
-  - Office365
-  - BambooHR
-  - Workday
-  - Zoom
-  - Slack
-  upn: michael.martin@corp.local
-- department: Marketing
-  email: grace.jones@corp.com
-  groups:
-  - Marketing
-  machine:
-    hostname: MAR-WOR-4741
-    ip: 10.0.1.160
-    type: Workstation
-  name: Grace Jones
-  password: Letmein987$
-  role: Employee
-  software_licenses:
-  - Slack
-  - Adobe Creative Suite
-  upn: grace.jones@corp.local
-- admin_rights:
-  - Domain Admin
-  department: IT
-  email: olivia.smith.admin@corp.com
-  groups:
-  - Domain Admins
-  name: Admin.Olivia.Smith
-  password: P@ssw0rd!
-  role: VP
-  upn: admin.olivia.smith@corp.local
-- admin_rights:
-  - Local Admin
-  department: IT
-  email: olivia.smith@corp.com
-  groups:
-  - IT
-  - Management
-  - Private Banking
-  machine:
-    hostname: IT-WOR-5778
-    ip: 10.0.3.195
-    type: Workstation
-  name: Olivia Smith
-  password: Admin789#
-  role: VP
-  software_licenses:
-  - Office365
-  - Slack
-  upn: olivia.smith@corp.local
-- department: Finance
-  email: matthew.jones@corp.com
-  groups:
-  - Finance
-  - Management
-  machine:
-    hostname: FIN-WOR-9448
-    ip: 10.0.1.158
-    type: Workstation
-  name: Matthew Jones
-  password: Letmein987$
-  role: Director
-  software_licenses:
-  - Zoom
-  - Excel Advanced
-  - Office365
-  - QuickBooks
-  upn: matthew.jones@corp.local
-- department: HR
-  email: grace.white@corp.com
-  groups:
-  - HR
-  - Management
-  - Manufacturing
-  machine:
-    hostname: HR-WOR-9119
-    ip: 10.0.1.191
-    type: Workstation
-  name: Grace White
-  password: 1qaz2wsx!
-  role: Manager
-  software_licenses:
   - Zoom
   - Slack
   - Office365
-  upn: grace.white@corp.local
-- department: Sales
-  email: chris.wilson@corp.com
-  groups:
-  - Sales
-  - Healthcare
-  machine:
-    hostname: SAL-WOR-2290
-    ip: 10.0.1.170
-    type: Workstation
-  name: Chris Wilson
-  password: Qwerty456$
-  role: Employee
-  software_licenses:
-  - Slack
-  - Salesforce
-  - Office365
-  - HubSpot
-  - Zoom
-  upn: chris.wilson@corp.local
-- department: Sales
-  email: sophia.jones@corp.com
-  groups:
-  - Sales
-  machine:
-    hostname: SAL-LAP-6051
-    ip: 10.0.1.120
-    type: Laptop
-  name: Sophia Jones
-  password: Letmein987$
-  role: Employee
-  software_licenses:
-  - HubSpot
-  - Salesforce
-  - Slack
-  upn: sophia.jones@corp.local
-- department: Operations
-  email: mia.thomas@corp.com
-  groups:
-  - Operations
-  - Education
-  - Insurance
-  machine:
-    hostname: OPE-DES-4257
-    ip: 10.0.1.103
-    type: Desktop
-  name: Mia Thomas
-  password: 1qaz2wsx!
-  role: Employee
-  software_licenses:
-  - Slack
-  - Zoom
-  - Office365
-  upn: mia.thomas@corp.local
-- admin_rights:
-  - Domain Admin
-  department: IT
-  email: grace.thompson.admin@corp.com
-  groups:
-  - Domain Admins
-  name: Admin.Grace.Thompson
-  password: 1qaz2wsx!
-  role: Manager
-  upn: admin.grace.thompson@corp.local
+  upn: ethan.johnson@corp.local
 - department: IT
-  email: grace.thompson@corp.com
+  groups:
+  - Domain Admins
+  name: Adm.James
+  password: Abc123!
+  role: Employee
+  upn: adm.james@corp.local
+- department: IT
+  email: james.wilson@corp.com
   groups:
   - IT
-  - Management
-  - Real Estate
-  - Private Banking
-  machine:
-    hostname: IT-DES-2933
-    ip: 10.0.3.113
-    type: Desktop
-  name: Grace Thompson
-  password: 1qaz2wsx!
-  role: Manager
-  software_licenses:
-  - AWS
-  - Docker
-  - Office365
-  - Slack
-  - Zoom
-  upn: grace.thompson@corp.local
-- department: Sales
-  email: ava.miller@corp.com
-  groups:
-  - Sales
-  - Management
+  - E-commerce
   - Education
-  - Retail Banking
   machine:
-    hostname: SAL-LAP-6271
-    ip: 10.0.1.192
+    hostname: IT-LAP-1372
+    ip: 10.0.3.191
     type: Laptop
-  name: Ava Miller
-  password: MySecret2022$
-  role: Manager
-  software_licenses:
-  - Salesforce
-  - HubSpot
-  - Slack
-  - Office365
-  upn: ava.miller@corp.local
-- department: Engineering
-  email: mia.brown@corp.com
-  groups:
-  - Engineering
-  - Manufacturing
-  machine:
-    hostname: ENG-WOR-4407
-    ip: 10.0.1.172
-    type: Workstation
-  name: Mia Brown
-  password: P@ssw0rd!
-  role: Employee
-  software_licenses:
-  - Office365
-  - Zoom
-  upn: mia.brown@corp.local
-- department: Engineering
-  email: emily.johnson@corp.com
-  groups:
-  - Engineering
-  machine:
-    hostname: ENG-LAP-6131
-    ip: 10.0.1.101
-    type: Laptop
-  name: Emily Johnson
-  password: Login654#
-  role: Employee
-  software_licenses:
-  - Slack
-  - Zoom
-  upn: emily.johnson@corp.local
-- department: Finance
-  email: ethan.brown@corp.com
-  groups:
-  - Finance
-  - Retail Banking
-  - Shark Tank
-  machine:
-    hostname: FIN-DES-5930
-    ip: 10.0.1.158
-    type: Desktop
-  name: Ethan Brown
-  password: Welcome123!
-  role: Employee
-  software_licenses:
-  - QuickBooks
-  - Slack
-  - Office365
-  - Zoom
-  upn: ethan.brown@corp.local
-- department: HR
-  email: mia.thompson@corp.com
-  groups:
-  - HR
-  - Retail Banking
-  - Healthcare
-  machine:
-    hostname: HR-LAP-4728
-    ip: 10.0.1.130
-    type: Laptop
-  name: Mia Thompson
-  password: 1qaz2wsx!
-  role: Employee
-  software_licenses:
-  - Zoom
-  - Slack
-  upn: mia.thompson@corp.local
-- admin_rights:
-  - Local Admin
-  department: Sales
-  email: benjamin.lopez@corp.com
-  groups:
-  - Sales
-  - Shark Tank
-  machine:
-    hostname: SAL-LAP-7265
-    ip: 10.0.1.176
-    type: Laptop
-  name: Benjamin Lopez
-  password: 1qaz2wsx!
-  role: Employee
-  software_licenses:
-  - Zoom
-  - Office365
-  - HubSpot
-  - Slack
-  - Salesforce
-  upn: benjamin.lopez@corp.local
-- department: Research
-  email: robert.harris@corp.com
-  groups:
-  - Research
-  - Management
-  machine:
-    hostname: RES-LAP-2243
-    ip: 10.0.1.197
-    type: Laptop
-  name: Robert Harris
-  password: Letmein987$
-  role: Manager
-  software_licenses:
-  - Zoom
-  - Office365
-  - Slack
-  upn: robert.harris@corp.local
-- department: Engineering
-  email: william.johnson@corp.com
-  groups:
-  - Engineering
-  - Management
-  - Healthcare
-  machine:
-    hostname: ENG-WOR-2126
-    ip: 10.0.1.163
-    type: Workstation
-  name: William Johnson
-  password: 1qazZAQ!
-  role: Manager
-  software_licenses:
-  - Slack
-  - Office365
-  upn: william.johnson@corp.local
-- department: Engineering
-  email: michael.thomas@corp.com
-  groups:
-  - Engineering
-  - Insurance
-  machine:
-    hostname: ENG-LAP-7491
-    ip: 10.0.1.191
-    type: Laptop
-  name: Michael Thomas
+  name: James Wilson
   password: Winter2024!
   role: Employee
   software_licenses:
   - Slack
-  - Office365
-  upn: michael.thomas@corp.local
-- department: Finance
-  email: andrew.thompson@corp.com
-  groups:
-  - Finance
-  - Management
-  - Manufacturing
-  - Retail Banking
-  machine:
-    hostname: FIN-DES-7450
-    ip: 10.0.1.138
-    type: Desktop
-  name: Andrew Thompson
-  password: Admin789#
-  role: Manager
-  software_licenses:
-  - Office365
-  - QuickBooks
-  - Slack
-  - Zoom
-  - SAP
-  upn: andrew.thompson@corp.local
-- admin_rights:
-  - Domain Admin
-  department: IT
-  email: charlotte.rodriguez.admin@corp.com
-  groups:
-  - Domain Admins
-  name: Admin.Charlotte.Rodriguez
-  password: Admin789#
-  role: Employee
-  upn: admin.charlotte.rodriguez@corp.local
-- department: IT
-  email: charlotte.rodriguez@corp.com
-  groups:
-  - IT
-  - E-commerce
-  machine:
-    hostname: IT-LAP-2840
-    ip: 10.0.3.141
-    type: Laptop
-  name: Charlotte Rodriguez
-  password: Admin789#
-  role: Employee
-  software_licenses:
-  - Zoom
-  - Slack
-  - Office365
-  - Docker
-  - Visual Studio
   - AWS
-  upn: charlotte.rodriguez@corp.local
-- department: Marketing
-  email: emily.thompson@corp.com
+  - Office365
+  upn: james.wilson@corp.local
+- department: Operations
+  email: samuel.white@corp.com
   groups:
-  - Marketing
-  - Asset Management
-  - Retail Banking
+  - Operations
   machine:
-    hostname: MAR-LAP-6285
-    ip: 10.0.1.181
-    type: Laptop
-  name: Emily Thompson
-  password: Spring2025$
+    hostname: OPE-DES-3409
+    ip: 10.0.1.130
+    type: Desktop
+  name: Samuel White
+  password: MySecret2022$
+  role: Employee
+  software_licenses:
+  - Office365
+  - Zoom
+  - Slack
+  upn: samuel.white@corp.local
+- department: Research
+  email: andrew.harris@corp.com
+  groups:
+  - Research
+  - Education
+  machine:
+    hostname: RES-WOR-2579
+    ip: 10.0.1.140
+    type: Workstation
+  name: Andrew Harris
+  password: Qwerty456$
   role: Employee
   software_licenses:
   - Slack
   - Office365
   - Zoom
-  - Hootsuite
-  upn: emily.thompson@corp.local
+  upn: andrew.harris@corp.local
 - department: Engineering
-  email: charlotte.jones@corp.com
+  email: matthew.miller@corp.com
   groups:
   - Engineering
+  - Private Banking
   machine:
-    hostname: ENG-LAP-4362
+    hostname: ENG-DES-5426
     ip: 10.0.1.115
+    type: Desktop
+  name: Matthew Miller
+  password: Letmein987$
+  role: Employee
+  software_licenses:
+  - Zoom
+  - Slack
+  - Office365
+  upn: matthew.miller@corp.local
+- department: Operations
+  email: olivia.hernandez@corp.com
+  groups:
+  - Operations
+  - Management
+  - Real Estate
+  machine:
+    hostname: OPE-LAP-5568
+    ip: 10.0.1.145
     type: Laptop
-  name: Charlotte Jones
+  name: Olivia Hernandez
+  password: Passw0rd!
+  role: C-Level
+  software_licenses:
+  - Office365
+  - Zoom
+  upn: olivia.hernandez@corp.local
+- department: Support
+  email: david.flores@corp.com
+  groups:
+  - Support
+  - Management
+  - Asset Management
+  machine:
+    hostname: SUP-LAP-2966
+    ip: 10.0.1.182
+    type: Laptop
+  name: David Flores
+  password: Autumn2021!
+  role: Manager
+  software_licenses:
+  - Slack
+  - Zoom
+  upn: david.flores@corp.local
+- department: HR
+  email: alexander.johnson@corp.com
+  groups:
+  - HR
+  - Management
+  machine:
+    hostname: HR-DES-4405
+    ip: 10.0.1.101
+    type: Desktop
+  name: Alexander Johnson
+  password: Login654#
+  role: Manager
+  software_licenses:
+  - BambooHR
+  - Office365
+  - Slack
+  - Zoom
+  - Workday
+  upn: alexander.johnson@corp.local
+- department: Support
+  email: michael.taylor@corp.com
+  groups:
+  - Support
+  machine:
+    hostname: SUP-WOR-5285
+    ip: 10.0.1.134
+    type: Workstation
+  name: Michael Taylor
   password: Abc123!
   role: Employee
   software_licenses:
   - Slack
   - Zoom
   - Office365
-  upn: charlotte.jones@corp.local
-- admin_rights:
-  - Local Admin
-  department: Research
-  email: chris.johnson@corp.com
+  upn: michael.taylor@corp.local
+- department: Support
+  email: grace.thompson@corp.com
+  groups:
+  - Support
+  - Management
+  - Private Banking
+  machine:
+    hostname: SUP-DES-6564
+    ip: 10.0.1.160
+    type: Desktop
+  name: Grace Thompson
+  password: Qwerty456$
+  role: Manager
+  software_licenses:
+  - Slack
+  - Office365
+  - Zoom
+  upn: grace.thompson@corp.local
+- department: Research
+  email: william.wilson@corp.com
+  groups:
+  - Research
+  machine:
+    hostname: RES-LAP-1610
+    ip: 10.0.1.145
+    type: Laptop
+  name: William Wilson
+  password: Spring2025$
+  role: Employee
+  software_licenses:
+  - Office365
+  - Slack
+  - Zoom
+  upn: william.wilson@corp.local
+- department: Sales
+  email: jane.martinez@corp.com
+  groups:
+  - Sales
+  - Insurance
+  - Investment Banking
+  machine:
+    hostname: SAL-DES-2390
+    ip: 10.0.1.141
+    type: Desktop
+  name: Jane Martinez
+  password: Summer2023#
+  role: Employee
+  software_licenses:
+  - HubSpot
+  - Slack
+  upn: jane.martinez@corp.local
+- department: Engineering
+  email: charlotte.garcia@corp.com
+  groups:
+  - Engineering
+  machine:
+    hostname: ENG-WOR-2328
+    ip: 10.0.1.153
+    type: Workstation
+  name: Charlotte Garcia
+  password: Summer2023#
+  role: Employee
+  software_licenses:
+  - Office365
+  - Slack
+  upn: charlotte.garcia@corp.local
+- department: Research
+  email: david.hernandez@corp.com
   groups:
   - Research
   - Investment Banking
   - Manufacturing
   machine:
-    hostname: RES-WOR-7757
-    ip: 10.0.1.150
-    type: Workstation
-  name: Chris Johnson
+    hostname: RES-DES-5755
+    ip: 10.0.1.120
+    type: Desktop
+  name: David Hernandez
+  password: Qwerty456$
+  role: Employee
+  software_licenses:
+  - Office365
+  - Slack
+  upn: david.hernandez@corp.local
+- department: Finance
+  email: sophia.white@corp.com
+  groups:
+  - Finance
+  machine:
+    hostname: FIN-LAP-3136
+    ip: 10.0.1.167
+    type: Laptop
+  name: Sophia White
   password: Welcome123!
   role: Employee
   software_licenses:
-  - Office365
+  - SAP
   - Zoom
-  upn: chris.johnson@corp.local
+  - Excel Advanced
+  - Office365
+  - QuickBooks
+  upn: sophia.white@corp.local
+- department: Research
+  email: samuel.brown@corp.com
+  groups:
+  - Research
+  - Management
+  - Dragon's Den
+  machine:
+    hostname: RES-LAP-1077
+    ip: 10.0.1.166
+    type: Laptop
+  name: Samuel Brown
+  password: Welcome123!
+  role: Manager
+  software_licenses:
+  - Office365
+  - Slack
+  upn: samuel.brown@corp.local
 - department: Sales
-  email: samuel.martin@corp.com
+  email: harper.moore@corp.com
   groups:
   - Sales
-  - Shark Tank
-  - E-commerce
   machine:
-    hostname: SAL-WOR-1976
-    ip: 10.0.1.164
-    type: Workstation
-  name: Samuel Martin
+    hostname: SAL-DES-3370
+    ip: 10.0.1.154
+    type: Desktop
+  name: Harper Moore
+  password: Passw0rd!
+  role: Employee
+  software_licenses:
+  - Slack
+  - HubSpot
+  - Office365
+  upn: harper.moore@corp.local
+- department: Research
+  email: laura.jackson@corp.com
+  groups:
+  - Research
+  - Private Banking
+  machine:
+    hostname: RES-DES-2048
+    ip: 10.0.1.148
+    type: Desktop
+  name: Laura Jackson
+  password: Password123!
+  role: Employee
+  software_licenses:
+  - Slack
+  - Office365
+  - Zoom
+  upn: laura.jackson@corp.local
+- department: HR
+  email: john.garcia@corp.com
+  groups:
+  - HR
+  - Investment Banking
+  machine:
+    hostname: HR-LAP-8968
+    ip: 10.0.1.154
+    type: Laptop
+  name: John Garcia
   password: Admin789#
   role: Employee
   software_licenses:
-  - HubSpot
-  - Salesforce
+  - Zoom
   - Slack
-  upn: samuel.martin@corp.local
-- department: Sales
-  email: robert.lopez@corp.com
+  upn: john.garcia@corp.local
+- department: Finance
+  email: sophia.martin@corp.com
   groups:
-  - Sales
-  - Real Estate
+  - Finance
   machine:
-    hostname: SAL-LAP-8264
-    ip: 10.0.1.117
-    type: Laptop
-  name: Robert Lopez
-  password: Password123!
-  role: Employee
-  software_licenses:
-  - Office365
-  - HubSpot
-  upn: robert.lopez@corp.local
-- department: Operations
-  email: benjamin.anderson@corp.com
-  groups:
-  - Operations
-  - Investment Banking
-  - Corporate Banking
-  machine:
-    hostname: OPE-DES-4146
-    ip: 10.0.1.139
+    hostname: FIN-DES-8193
+    ip: 10.0.1.166
     type: Desktop
-  name: Benjamin Anderson
-  password: Login654#
+  name: Sophia Martin
+  password: Spring2025$
   role: Employee
   software_licenses:
-  - Office365
-  - Zoom
+  - SAP
   - Slack
-  upn: benjamin.anderson@corp.local
-- department: Sales
-  email: isabella.garcia@corp.com
+  upn: sophia.martin@corp.local
+- department: HR
+  email: james.jackson@corp.com
   groups:
-  - Sales
-  - Corporate Banking
-  - Dragon's Den
+  - HR
+  - Retail Banking
   machine:
-    hostname: SAL-LAP-8041
-    ip: 10.0.1.109
-    type: Laptop
-  name: Isabella Garcia
-  password: Password123!
-  role: Employee
-  software_licenses:
-  - Zoom
-  - Slack
-  upn: isabella.garcia@corp.local
-- admin_rights:
-  - Domain Admin
-  department: IT
-  email: ava.thompson.admin@corp.com
-  groups:
-  - Domain Admins
-  name: Admin.Ava.Thompson
-  password: Passw0rd!
-  role: Employee
-  upn: admin.ava.thompson@corp.local
-- department: IT
-  email: ava.thompson@corp.com
-  groups:
-  - IT
-  - Investment Banking
-  - Shark Tank
-  machine:
-    hostname: IT-LAP-7649
-    ip: 10.0.3.102
-    type: Laptop
-  name: Ava Thompson
-  password: Password123!
-  role: Employee
-  software_licenses:
-  - Office365
-  - Visual Studio
-  - Slack
-  upn: ava.thompson@corp.local
-- department: Operations
-  email: sophia.miller@corp.com
-  groups:
-  - Operations
-  - E-commerce
-  - Asset Management
-  machine:
-    hostname: OPE-LAP-3793
-    ip: 10.0.1.183
-    type: Laptop
-  name: Sophia Miller
+    hostname: HR-DES-4931
+    ip: 10.0.1.121
+    type: Desktop
+  name: James Jackson
   password: Autumn2021!
   role: Employee
   software_licenses:
   - Zoom
+  - Slack
+  - Workday
+  upn: james.jackson@corp.local
+- department: Operations
+  email: robert.martinez@corp.com
+  groups:
+  - Operations
+  - Management
+  - Insurance
+  - Manufacturing
+  machine:
+    hostname: OPE-WOR-4900
+    ip: 10.0.1.180
+    type: Workstation
+  name: Robert Martinez
+  password: Qwerty456$
+  role: Manager
+  software_licenses:
   - Office365
-  upn: sophia.miller@corp.local
+  - Zoom
+  - Slack
+  upn: robert.martinez@corp.local
 - department: Marketing
-  email: ava.flores@corp.com
+  email: mia.brown@corp.com
   groups:
   - Marketing
   - Management
-  - E-commerce
+  - Manufacturing
+  - Shark Tank
   machine:
-    hostname: MAR-LAP-8325
-    ip: 10.0.1.166
-    type: Laptop
-  name: Ava Flores
-  password: Abc123!
+    hostname: MAR-WOR-7523
+    ip: 10.0.1.162
+    type: Workstation
+  name: Mia Brown
+  password: Winter2024!
   role: Manager
   software_licenses:
-  - Hootsuite
-  - Slack
   - Adobe Creative Suite
-  - Office365
   - Zoom
-  upn: ava.flores@corp.local
+  - Hootsuite
+  upn: mia.brown@corp.local
 - department: Marketing
-  email: harper.johnson@corp.com
+  email: samuel.jones@corp.com
   groups:
   - Marketing
-  - Retail Banking
+  - E-commerce
+  - Investment Banking
   machine:
-    hostname: MAR-DES-2244
-    ip: 10.0.1.166
+    hostname: MAR-LAP-5370
+    ip: 10.0.1.171
+    type: Laptop
+  name: Samuel Jones
+  password: Spring2025$
+  role: Employee
+  software_licenses:
+  - Zoom
+  - Adobe Creative Suite
+  upn: samuel.jones@corp.local
+- department: Operations
+  email: olivia.jackson@corp.com
+  groups:
+  - Operations
+  machine:
+    hostname: OPE-DES-7446
+    ip: 10.0.1.145
     type: Desktop
-  name: Harper Johnson
+  name: Olivia Jackson
+  password: Admin789#
+  role: Employee
+  software_licenses:
+  - Zoom
+  - Office365
+  upn: olivia.jackson@corp.local
+- department: Operations
+  email: benjamin.gonzalez@corp.com
+  groups:
+  - Operations
+  - Management
+  machine:
+    hostname: OPE-LAP-7000
+    ip: 10.0.1.133
+    type: Laptop
+  name: Benjamin Gonzalez
+  password: Password123!
+  role: Director
+  software_licenses:
+  - Slack
+  - Zoom
+  upn: benjamin.gonzalez@corp.local
+- department: Operations
+  email: matthew.rodriguez@corp.com
+  groups:
+  - Operations
+  machine:
+    hostname: OPE-DES-3381
+    ip: 10.0.1.198
+    type: Desktop
+  name: Matthew Rodriguez
   password: Password123!
   role: Employee
   software_licenses:
-  - Slack
-  - Office365
-  - Zoom
-  - Hootsuite
-  upn: harper.johnson@corp.local
-- department: Research
-  email: michael.rodriguez@corp.com
-  groups:
-  - Research
-  machine:
-    hostname: RES-WOR-9298
-    ip: 10.0.1.130
-    type: Workstation
-  name: Michael Rodriguez
-  password: Summer2023#
-  role: Employee
-  software_licenses:
   - Zoom
   - Office365
-  upn: michael.rodriguez@corp.local
-- department: Support
-  email: laura.jones@corp.com
+  upn: matthew.rodriguez@corp.local
+- department: Sales
+  email: laura.thomas@corp.com
   groups:
-  - Support
+  - Sales
+  - Investment Banking
   - Education
   machine:
-    hostname: SUP-LAP-2896
-    ip: 10.0.1.145
-    type: Laptop
-  name: Laura Jones
-  password: Abc123!
+    hostname: SAL-WOR-2534
+    ip: 10.0.1.182
+    type: Workstation
+  name: Laura Thomas
+  password: 1qazZAQ!
   role: Employee
   software_licenses:
+  - Salesforce
+  - Slack
+  - Zoom
+  - HubSpot
+  upn: laura.thomas@corp.local
+- department: HR
+  email: harper.brown@corp.com
+  groups:
+  - HR
+  - Private Banking
+  machine:
+    hostname: HR-DES-3006
+    ip: 10.0.1.193
+    type: Desktop
+  name: Harper Brown
+  password: Welcome123!
+  role: Employee
+  software_licenses:
+  - Workday
+  - Slack
   - Zoom
   - Office365
-  upn: laura.jones@corp.local
+  upn: harper.brown@corp.local
 - department: Finance
-  email: chris.martinez@corp.com
+  email: andrew.taylor@corp.com
   groups:
   - Finance
-  - Healthcare
+  - Dragon's Den
+  - Insurance
   machine:
-    hostname: FIN-DES-1630
-    ip: 10.0.1.160
-    type: Desktop
-  name: Chris Martinez
-  password: Winter2024!
+    hostname: FIN-WOR-6140
+    ip: 10.0.1.198
+    type: Workstation
+  name: Andrew Taylor
+  password: 1qaz2wsx!
   role: Employee
   software_licenses:
   - QuickBooks
+  - Office365
+  - Zoom
   - SAP
-  - Excel Advanced
-  upn: chris.martinez@corp.local
-- admin_rights:
-  - Domain Admin
-  department: IT
-  email: matthew.moore.admin@corp.com
+  - Slack
+  upn: andrew.taylor@corp.local
+- department: HR
+  email: sophia.davis@corp.com
   groups:
-  - Domain Admins
-  name: Admin.Matthew.Moore
-  password: Letmein987$
-  role: Employee
-  upn: admin.matthew.moore@corp.local
-- department: IT
-  email: matthew.moore@corp.com
-  groups:
-  - IT
-  - Private Banking
-  - Education
+  - HR
   machine:
-    hostname: IT-LAP-7497
-    ip: 10.0.3.172
+    hostname: HR-LAP-9806
+    ip: 10.0.1.168
     type: Laptop
-  name: Matthew Moore
-  password: Spring2025$
+  name: Sophia Davis
+  password: Summer2023#
   role: Employee
   software_licenses:
   - Zoom
-  - Visual Studio
-  - Office365
-  - Docker
-  - AWS
-  upn: matthew.moore@corp.local
-- department: Support
-  email: mia.gonzalez@corp.com
+  - Workday
+  upn: sophia.davis@corp.local
+- department: Operations
+  email: michael.brown@corp.com
   groups:
-  - Support
+  - Operations
+  - Real Estate
+  - Healthcare
   machine:
-    hostname: SUP-DES-2005
-    ip: 10.0.1.109
-    type: Desktop
-  name: Mia Gonzalez
-  password: Password123!
+    hostname: OPE-WOR-4549
+    ip: 10.0.1.129
+    type: Workstation
+  name: Michael Brown
+  password: Winter2024!
   role: Employee
   software_licenses:
   - Slack
   - Office365
-  - Zoom
-  upn: mia.gonzalez@corp.local
-- department: Marketing
-  email: lily.johnson@corp.com
+  upn: michael.brown@corp.local
+- department: Support
+  email: james.anderson@corp.com
   groups:
-  - Marketing
+  - Support
   - Management
   - Healthcare
   machine:
-    hostname: MAR-WOR-4597
-    ip: 10.0.1.151
+    hostname: SUP-WOR-9561
+    ip: 10.0.1.114
     type: Workstation
-  name: Lily Johnson
-  password: Abc123!
-  role: Director
+  name: James Anderson
+  password: Password123!
+  role: Manager
   software_licenses:
-  - Adobe Creative Suite
-  - Slack
-  - Hootsuite
-  upn: lily.johnson@corp.local
-- department: Research
-  email: grace.johnson@corp.com
-  groups:
-  - Research
-  machine:
-    hostname: RES-DES-7483
-    ip: 10.0.1.194
-    type: Desktop
-  name: Grace Johnson
-  password: Spring2025$
-  role: Employee
-  software_licenses:
-  - Office365
   - Zoom
-  - Slack
-  upn: grace.johnson@corp.local
+  - Office365
+  upn: james.anderson@corp.local
 - department: Marketing
-  email: jane.hernandez@corp.com
+  email: mia.white@corp.com
   groups:
   - Marketing
-  - Education
-  - Private Banking
+  - Asset Management
+  - Dragon's Den
   machine:
-    hostname: MAR-DES-7924
-    ip: 10.0.1.160
-    type: Desktop
-  name: Jane Hernandez
-  password: Qwerty456$
+    hostname: MAR-WOR-4405
+    ip: 10.0.1.178
+    type: Workstation
+  name: Mia White
+  password: Letmein987$
   role: Employee
   software_licenses:
-  - Hootsuite
+  - Zoom
   - Slack
+  - Hootsuite
   - Adobe Creative Suite
-  upn: jane.hernandez@corp.local
+  - Office365
+  upn: mia.white@corp.local
 - department: Support
-  email: john.garcia@corp.com
+  email: benjamin.martinez@corp.com
   groups:
   - Support
-  - Asset Management
+  - Real Estate
   machine:
-    hostname: SUP-WOR-1110
-    ip: 10.0.1.182
+    hostname: SUP-WOR-3224
+    ip: 10.0.1.170
     type: Workstation
-  name: John Garcia
-  password: Password123!
+  name: Benjamin Martinez
+  password: MySecret2022$
   role: Employee
   software_licenses:
-  - Slack
   - Office365
   - Zoom
-  upn: john.garcia@corp.local
-- department: Marketing
-  email: harper.jones@corp.com
+  upn: benjamin.martinez@corp.local
+- department: Operations
+  email: benjamin.wilson@corp.com
   groups:
-  - Marketing
-  - Education
+  - Operations
   machine:
-    hostname: MAR-WOR-5756
-    ip: 10.0.1.173
+    hostname: OPE-WOR-9360
+    ip: 10.0.1.197
     type: Workstation
-  name: Harper Jones
+  name: Benjamin Wilson
   password: Summer2023#
   role: Employee
   software_licenses:
   - Office365
+  - Slack
+  upn: benjamin.wilson@corp.local
+- department: IT
+  groups:
+  - Domain Admins
+  name: Adm.Isabella
+  password: Autumn2021!
+  role: Employee
+  upn: adm.isabella@corp.local
+- department: IT
+  email: isabella.davis@corp.com
+  groups:
+  - IT
+  - Shark Tank
+  - Corporate Banking
+  machine:
+    hostname: IT-DES-7276
+    ip: 10.0.3.119
+    type: Desktop
+  name: Isabella Davis
+  password: Qwerty456$
+  role: Employee
+  software_licenses:
+  - Docker
+  - AWS
+  - Office365
+  - Visual Studio
+  - Zoom
+  - Slack
+  upn: isabella.davis@corp.local
+- department: Sales
+  email: harper.thompson@corp.com
+  groups:
+  - Sales
+  machine:
+    hostname: SAL-DES-8684
+    ip: 10.0.1.152
+    type: Desktop
+  name: Harper Thompson
+  password: Letmein987$
+  role: Employee
+  software_licenses:
+  - Slack
+  - Zoom
+  upn: harper.thompson@corp.local
+- department: Operations
+  email: isabella.jackson@corp.com
+  groups:
+  - Operations
+  - Management
+  - Education
+  machine:
+    hostname: OPE-LAP-9107
+    ip: 10.0.1.199
+    type: Laptop
+  name: Isabella Jackson
+  password: Login654#
+  role: Director
+  software_licenses:
+  - Office365
+  - Slack
+  - Zoom
+  upn: isabella.jackson@corp.local
+- department: Marketing
+  email: benjamin.davis@corp.com
+  groups:
+  - Marketing
+  machine:
+    hostname: MAR-LAP-3270
+    ip: 10.0.1.187
+    type: Laptop
+  name: Benjamin Davis
+  password: P@ssw0rd!
+  role: Employee
+  software_licenses:
   - Hootsuite
+  - Slack
+  upn: benjamin.davis@corp.local
+- department: Engineering
+  email: lily.smith@corp.com
+  groups:
+  - Engineering
+  machine:
+    hostname: ENG-LAP-7252
+    ip: 10.0.1.136
+    type: Laptop
+  name: Lily Smith
+  password: Passw0rd!
+  role: Employee
+  software_licenses:
+  - Zoom
+  - Office365
+  - Slack
+  upn: lily.smith@corp.local
+- department: Research
+  email: sarah.johnson@corp.com
+  groups:
+  - Research
+  - Management
+  - Shark Tank
+  machine:
+    hostname: RES-WOR-3607
+    ip: 10.0.1.185
+    type: Workstation
+  name: Sarah Johnson
+  password: Admin789#
+  role: Director
+  software_licenses:
+  - Slack
+  - Zoom
+  upn: sarah.johnson@corp.local
+- department: Sales
+  email: laura.johnson@corp.com
+  groups:
+  - Sales
+  - E-commerce
+  - Shark Tank
+  machine:
+    hostname: SAL-LAP-7262
+    ip: 10.0.1.192
+    type: Laptop
+  name: Laura Johnson
+  password: Passw0rd!
+  role: Employee
+  software_licenses:
+  - Office365
+  - Zoom
+  - HubSpot
+  upn: laura.johnson@corp.local
+- department: Operations
+  email: alexander.jackson@corp.com
+  groups:
+  - Operations
+  machine:
+    hostname: OPE-DES-2573
+    ip: 10.0.1.194
+    type: Desktop
+  name: Alexander Jackson
+  password: Login654#
+  role: Employee
+  software_licenses:
+  - Zoom
+  - Office365
+  upn: alexander.jackson@corp.local
+- department: Finance
+  email: jane.jackson@corp.com
+  groups:
+  - Finance
+  machine:
+    hostname: FIN-DES-5337
+    ip: 10.0.1.115
+    type: Desktop
+  name: Jane Jackson
+  password: Login654#
+  role: Employee
+  software_licenses:
+  - QuickBooks
+  - Slack
+  upn: jane.jackson@corp.local
+- department: Operations
+  email: robert.gonzalez@corp.com
+  groups:
+  - Operations
+  - Management
+  - Corporate Banking
+  machine:
+    hostname: OPE-WOR-1749
+    ip: 10.0.1.136
+    type: Workstation
+  name: Robert Gonzalez
+  password: Admin789#
+  role: Manager
+  software_licenses:
+  - Zoom
+  - Office365
+  upn: robert.gonzalez@corp.local
+- department: Marketing
+  email: emily.martin@corp.com
+  groups:
+  - Marketing
+  machine:
+    hostname: MAR-DES-8857
+    ip: 10.0.1.116
+    type: Desktop
+  name: Emily Martin
+  password: Passw0rd!
+  role: Employee
+  software_licenses:
   - Adobe Creative Suite
-  upn: harper.jones@corp.local
+  - Hootsuite
+  - Office365
+  upn: emily.martin@corp.local
+- department: HR
+  email: grace.flores@corp.com
+  groups:
+  - HR
+  - Investment Banking
+  machine:
+    hostname: HR-DES-5717
+    ip: 10.0.1.130
+    type: Desktop
+  name: Grace Flores
+  password: 1qazZAQ!
+  role: Employee
+  software_licenses:
+  - BambooHR
+  - Workday
+  upn: grace.flores@corp.local
+- department: Sales
+  email: daniel.davis@corp.com
+  groups:
+  - Sales
+  machine:
+    hostname: SAL-WOR-8469
+    ip: 10.0.1.101
+    type: Workstation
+  name: Daniel Davis
+  password: Winter2024!
+  role: Employee
+  software_licenses:
+  - Office365
+  - Zoom
+  upn: daniel.davis@corp.local

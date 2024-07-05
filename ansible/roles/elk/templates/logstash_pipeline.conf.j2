@@ -9,6 +9,7 @@ output {
     hosts => {{ elasticsearch_url | to_json }}
     user => "elastic"
     password => "{{ elastic_password }}"
-    ssl => false
+    ssl => true,
+    ssl_certificate_verification => false
     }
 }

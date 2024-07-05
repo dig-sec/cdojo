@@ -13,12 +13,10 @@ def load_data(file_path: str) -> Dict[str, Any]:
         print(f"Error loading data: {e}")
         return {}
 
-def generate_email(firstname: str, lastname: str, domain: str, is_admin: bool = False) -> str:
+def generate_email(firstname: str, lastname: str, domain: str) -> str:
     email_domain = domain.lower().replace(".local", "")
     if not email_domain.endswith(".com"):
         email_domain += ".com"
-    if is_admin:
-        return f"{firstname.lower()}.{lastname.lower()}.admin@{email_domain}"
     return f"{firstname.lower()}.{lastname.lower()}@{email_domain}"
 
 def generate_random_date(start_date: datetime, end_date: datetime) -> str:
@@ -136,6 +134,8 @@ def generate_users(data: Dict[str, Any]) -> List[Dict[str, Any]]:
         while unique_upn in upn_set:
             unique_upn = f"{firstname.lower()}.{lastname.lower()}{counter}@{domain}"
             counter += 1
+        if len(unique_upn) > 20  and unique_upn.startswith('adm.'):
+            unique_upn = f"{firstname.lower()}@{domain}"
         upn_set.add(unique_upn)
         return unique_upn
 
@@ -158,21 +158,15 @@ def generate_users(data: Dict[str, Any]) -> List[Dict[str, Any]]:
         
         if "IT" in department:
             admin_user = user.copy()
-            admin_user["name"] = f"Admin.{firstname}.{lastname}"
-            admin_user["email"] = generate_email(firstname, lastname, data['domain'], is_admin=True)
-            admin_user["upn"] = generate_unique_upn(f"Admin.{firstname}", lastname, data['domain'])
+            admin_user["name"] = f"Adm.{firstname}"
+            admin_user["upn"] = generate_unique_upn(f"Adm.{firstname}", lastname, data['domain'])
             admin_user["password"] = random.choice(data['common_passwords'])
             admin_user["groups"] = ["Domain Admins"]
-            admin_user["admin_rights"] = ["Domain Admin"]
+            admin_user.pop("email")
             admin_user.pop("machine")
             admin_user.pop("software_licenses")
             users.append(admin_user)
-
-        if role in ["Director", "VP", "C-Level"] and department == "IT":
-            user["admin_rights"] = ["Local Admin"]
-        elif random.random() < 0.1:
-            user["admin_rights"] = ["Local Admin"]
-        
+       
         users.append(user)
 
     return users

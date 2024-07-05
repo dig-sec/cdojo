@@ -9,8 +9,8 @@ opnsense_admin_password: DomainVagrant123#
 root_domain: corp.local
 domain_name: corp
 
-secondary_root_domain: bank.local
-secondary_domain_name: bank
+secondary_root_domain: secure.local
+secondary_domain_name: secure
 
 windows_domain_controller_private_ip: 10.0.1.10
 windows_domain_controller_hostname: dc01
@@ -42,7 +42,7 @@ adcs_cert_authority_password: DomainVagrant123#
 # ADCS Web Enrollment Settings
 ca_web_enrollment: True
 
-# Monitoring
+## Monitoring
 es_version: 8.x
 elastic_stack_version: 8.14.1
 es_cluster_name: "monitoring"
@@ -61,6 +61,15 @@ kibana_host: "localhost"
 fleet_port: 8220
 
 logstash_port: 5044
+
+# Winlogbeat
+logstash_ip: 10.0.1.250
+logstash_winlogbeat_port: 5044
+winlogbeat_download_url_base: 'https://artifacts.elastic.co/downloads/beats/winlogbeat'
+file_ext: '.zip'
+winlogbeat_download_file: 'winlogbeat-8.14.2-windows-x86_64'
+winlogbeat_install_location: "C:/Program Files/Winlogbeat"
+
 
 # # Ansible WinRM Configuration
 # ansible_winrm_server_cert_validation: ignore

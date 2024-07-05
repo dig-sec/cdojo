@@ -1,0 +1,23 @@
+---
+- name: Create shared folder
+  win_file:
+    path: C:\SharedFolder
+    state: directory
+
+- name: Set file system permissions
+  win_acl:
+    path: C:\SharedFolder
+    user: Everyone
+    rights: ReadAndExecute,Modify
+    type: allow
+    state: present
+
+- name: Share folder
+  win_share:
+    name: SharedFolder
+    path: C:\SharedFolder
+    description: "Shared folder"
+    full: Administrators
+    read: Everyone
+    change: Users
+    state: present

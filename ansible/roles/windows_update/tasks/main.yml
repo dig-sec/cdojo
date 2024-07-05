@@ -1,0 +1,12 @@
+---
+- name: Run Windows Update
+  win_updates:
+    category_names:
+      - CriticalUpdates
+      - SecurityUpdates
+      - UpdateRollups
+      - FeaturePacks
+      - ServicePacks
+    state: installed
+    ignore_errors: yes
+    reboot: yes

@@ -1,0 +1,82 @@
+winlogbeat.event_logs:
+  - name: Security
+    event_id: -4689, -5158, -5157 
+  - name: Application
+    ignore_older: 720h
+  - name: System
+  - name: "Windows PowerShell"
+    event_id: -501 
+  - name: "Microsoft-Windows-TaskScheduler/Operational"
+  - name: "Microsoft-Windows-PowerShell/Operational"
+    event_id: -4105, -4106
+  - name: Microsoft-Windows-Windows Defender/Operational
+  - name: Microsoft-Windows-Windows Firewall With Advanced Security/Firewall
+    include_xml: true
+  - name: "Microsoft-Windows-Sysmon/Operational"
+processors:
+- drop_event.when.or:
+  - equals.event_data.NewProcessName: 'C:\Users\<username>\AppData\Local\slack\app-3.1.0\slack.exe'
+  - equals.event_data.NewProcessName: 'C:\Users\<username>\AppData\Local\slack\Update.exe'
+  - equals.event_data.NewProcessName: 'C:\Users\<username>\AppData\Roaming\Foxit Software\Addon\Foxit Reader\FoxitReaderUpdater.exe'
+  - equals.event_data.NewProcessName: 'C:\Users\<username>\AppData\Local\Temp\SkypeSetup.exe'
+  - contains.event_data.NewProcessName: 'C:\Users\<username>\AppData\Local\GoToMeeting\'
+  - contains.event_data.NewProcessName: 'C:\Users\<username>\AppData\Local\Temp\LogMeInUpdates\GoToMeeting'
+  - contains.event_data.NewProcessName: 'AppData\Local\Google\Chrome\User Data\SwReporter\'
+  - contains.event_data.NewProcessName: '\g2viewer.exe'
+  - contains.event_data.NewProcessName: 'C:\Users\<username>\AppData\Local\GoToMyPC\gotomypc_'
+  - contains.event_data.NewProcessName: 'C:\Users\<username>\AppData\Local\Temp\LogMeInUpdates\GoToMeeting'
+  - equals.event_data.NewProcessName: 'C:\Program Files (x86)\NVIDIA Corporation\Update Core\NvTmMon.exe'
+  - equals.event_data.NewProcessName: 'C:\Program Files (x86)\NVIDIA Corporation\Update Core\NvSHIM.exe'
+  - equals.event_data.NewProcessName: 'C:\Program Files (x86)\NVIDIA Corporation\NVIDIA GeForce Experience\NVIDIA Notification.exe'
+  - equals.event_data.NewProcessName: 'C:\Windows\System32\conhost.exe'
+  - contains.event_data.NewProcessName: 'C:\Windows\Microsoft.NET\Framework64\v2.0.50727'
+  - equals.event_data.NewProcessName: 'C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe'
+- drop_event.when.or:     
+  - equals.event_data.NewProcessName: 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'
+  - equals.event_data.NewProcessName: 'C:\Program Files (x86)\Google\Update\GoogleUpdate.exe'
+  - equals.event_data.NewProcessName: 'C:\Program Files (x86)\Mozilla Firefox\firefox.exe'
+  - equals.event_data.NewProcessName: 'C:\Program Files (x86)\Mozilla Firefox\updater.exe'
+  - equals.event_data.NewProcessName: 'C:\Program Files (x86)\Mozilla Firefox\pingsender.exe'
+  - equals.event_data.NewProcessName: 'C:\Program Files (x86)\Mozilla Maintenance Service\update\updater.exe'
+  - contains.event_data.NewProcessName: 'C:\Users\<username>\AppData\Local\Google\Chrome\User Data\SwReporter\'
+- drop_event.when.or:  
+  - equals.event_data.CommandLine: 'C:\Windows\system32\DllHost.exe /Processid:{AB8902B4-09CA-4BB6-B78D-A8F59079A8D5}'
+  - equals.event_data.CommandLine: 'C:\WINDOWS\system32\SearchFilterHost.exe" 0 540 544 552 65536 548'
+  - contains.event_data.CommandLine: 'C:\WINDOWS\system32\SearchFilterHost.exe'
+  - equals.event_data.CommandLine: 'cmd ver'
+- drop_event.when.or:  
+  - equals.event_data.DestAddress: '1.1.1.1'
+  - equals.event_data.DestAddress: '8.8.8.8'
+  - equals.event_data.DestAddress: '8.8.4.4'
+  - equals.event_data.DestAddress: '192.168.1.255'
+  - equals.event_data.DestAddress: '127.0.0.1'
+  - equals.event_data.DestAddress: '224.0.0.1'
+  - contains.event_data.DestAddress: '224.0.0.'
+  - equals.event_data.DestAddress: '224.0.0.251'
+  - equals.event_data.DestAddress: '239.255.255.250'
+  - equals.event_data.DestAddress: '255.255.255.255'
+  - equals.event_data.DestAddress: '::1'
+- drop_event.when.or:    
+  - equals.event_data.SourceAddress: '239.255.255.250' 
+  - equals.event_data.SourceAddress: '239.255.255.255' 
+  - equals.event_data.SourceAddress: '255.255.255.255' 
+  - equals.event_data.SourceAddress: '192.168.1.255'
+  - equals.event_data.SourceAddress: '224.0.0.251'
+  - equals.event_data.SourceAddress: '224.0.0.252'
+  - contains.event_data.SourceAddress: '224.0.0.'
+  - contains.event_data.SourceAddress: 'fe80::'
+  - equals.event_data.SourceAddress: '224.0.0.1'
+  - equals.event_data.SourceAddress: '::1'
+  - equals.event_data.SourceAddress: '1.1.1.1'
+  - equals.event_data.SourceAddress: '8.8.8.8'
+  - equals.event_data.SourceAddress: '8.8.4.4'
+- drop_event.when.or: 
+  - contains.event_data.Application: '\program files (x86)\dropbox\client\dropbox.exe'
+  - contains.event_data.Application: '\program files (x86)\google\chrome\application\chrome.exe'
+  - contains.event_data.Application: '\program files (x86)\mozilla firefox\firefox.exe'
+  - contains.event_data.Application: '\users\<username>\appdata\local\slack\app-'
+  - contains.event_data.Application: '\windows\system32\spoolsv.exe'
+settemplate.settings:
+  index.number_of_shards: 3
+output.logstash:
+  hosts: ["{{ logstash_ip }}:{{ logstash_winlogbeat_port }}"]

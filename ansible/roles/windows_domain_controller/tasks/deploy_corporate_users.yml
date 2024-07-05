@@ -19,6 +19,7 @@
     update_password: always
   until: create_account_result is not failed
   register: create_account_result
+  ignore_errors: true
   loop: "{{ user_data.users }}"
 
 - name: Create AD groups
@@ -26,6 +27,7 @@
     identity: "{{ item.name }}"
     description: "{{ item.description }}"
     scope: global
+  ignore_errors: true
   loop: "{{ group_data.group_data }}"
 
 # - name: Add members to the group
