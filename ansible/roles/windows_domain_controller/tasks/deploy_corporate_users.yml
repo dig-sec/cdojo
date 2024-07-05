@@ -4,6 +4,11 @@
     file: ../../creation/users.yml
     name: user_data
 
+- name: Load group data from file
+  include_vars:
+    file: ../../creation/group_data.yml
+    name: group_data
+
 - name: Create user account
   microsoft.ad.user:
     name: "{{ item.name }}"
@@ -16,13 +21,18 @@
   register: create_account_result
   loop: "{{ user_data.users }}"
 
-- name: Add user to groups
+- name: Create AD groups
   microsoft.ad.group:
-    name: "{{ item.1 | lower }}"
-    members: "{{ item.0.name }}"
-    state: present
-  loop: "{{ user_data.users | subelements('groups') }}"
-  loop_control:
-    label: "{{ item.0.name }} - {{ item.1 }}"
-  until: add_to_group_result is not failed
-  register: add_to_group_result
+    identity: "{{ item.name }}"
+    description: "{{ item.description }}"
+    scope: global
+  loop: "{{ group_data.group_data }}"
+
+# - name: Add members to the group
+#   microsoft.ad.group:
+#     name: "{{ item.name }}"
+#     scope: domainlocal
+#     members:
+#       add: 
+#         - "daniel.smith@corp.local"
+#   loop: "{{ group_data.group_data }}"

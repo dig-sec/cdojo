@@ -1,3 +1,2 @@
 ---
-- include_tasks: configure_dc_server.yml
 - include_tasks: configure_second_domain_dc_server.yml

@@ -1,8 +1,8 @@
 import random
 import yaml
-import ipaddress
 from typing import List, Dict, Any
 from datetime import datetime, timedelta
+import ipaddress
 import re
 
 def load_data(file_path: str) -> Dict[str, Any]:
@@ -14,7 +14,7 @@ def load_data(file_path: str) -> Dict[str, Any]:
         return {}
 
 def generate_email(firstname: str, lastname: str, domain: str, is_admin: bool = False) -> str:
-    email_domain = domain.lower().replace(".local", "").replace(".corp", "")
+    email_domain = domain.lower().replace(".local", "")
     if not email_domain.endswith(".com"):
         email_domain += ".com"
     if is_admin:
@@ -81,28 +81,10 @@ def create_files(folder_name: str, num_files: int = 5) -> List[Dict[str, Any]]:
             "size": f"{random.randint(10, 10000)}KB",
             "created": generate_random_date(start_date, end_date),
             "modified": generate_random_date(start_date, end_date),
-            "owner": None  # This will be set later
+            "owner": None
         })
     
     return files
-
-def generate_file_shares(groups: List[str]) -> Dict[str, Dict[str, List[Dict[str, Any]]]]:
-    file_shares = {
-        "Company-Wide": {
-            "Public": create_files("Public"),
-            "Templates": create_files("Templates"),
-            "Policies": create_files("Policies")
-        }
-    }
-    
-    for group in groups:
-        file_shares[group] = {
-            f"{group} Documents": create_files(f"{group}Docs"),
-            f"{group} Projects": create_files(f"{group}Projects"),
-            f"{group} Resources": create_files(f"{group}Resources")
-        }
-    
-    return file_shares
 
 def assign_role() -> str:
     roles = ["Employee", "Manager", "Director", "VP", "C-Level"]
@@ -141,9 +123,6 @@ def assign_software_licenses(department: str) -> List[str]:
     licenses = common_software + dept_software.get(department, [])
     return random.sample(licenses, random.randint(2, len(licenses)))
 
-def sanitize_name(name: str) -> str:
-    return re.sub(r'[^a-zA-Z0-9]', '', name)
-
 def generate_users(data: Dict[str, Any]) -> List[Dict[str, Any]]:
     users = []
     names = list(set([f"{fn} {ln}" for fn in data['first_names'] for ln in data['last_names']]))
@@ -177,16 +156,16 @@ def generate_users(data: Dict[str, Any]) -> List[Dict[str, Any]]:
             "software_licenses": assign_software_licenses(department)
         }
         
-        if department == "IT":
+        if "IT" in department:
             admin_user = user.copy()
-            admin_user["name"] = f"{firstname} {lastname} Admin"
+            admin_user["name"] = f"Admin.{firstname}.{lastname}"
             admin_user["email"] = generate_email(firstname, lastname, data['domain'], is_admin=True)
-            admin_user["upn"] = generate_unique_upn(firstname, lastname, data['domain'])
-            admin_user["name"] = sanitize_name(admin_user["name"])
+            admin_user["upn"] = generate_unique_upn(f"Admin.{firstname}", lastname, data['domain'])
             admin_user["password"] = random.choice(data['common_passwords'])
-            admin_user["groups"] = ["Domain Admins"] + admin_user["groups"]
-            admin_user["is_admin_account"] = True
+            admin_user["groups"] = ["Domain Admins"]
+            admin_user["admin_rights"] = ["Domain Admin"]
             admin_user.pop("machine")
+            admin_user.pop("software_licenses")
             users.append(admin_user)
 
         if role in ["Director", "VP", "C-Level"] and department == "IT":
@@ -197,6 +176,39 @@ def generate_users(data: Dict[str, Any]) -> List[Dict[str, Any]]:
         users.append(user)
 
     return users
+
+def generate_group_data(users: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    groups = {}
+
+    for user in users:
+        for group_name in user['groups']:
+            if group_name not in groups:
+                groups[group_name] = {"name": group_name, "description": f"{group_name} Group", "members": []}
+
+    for group_name, group_info in groups.items():
+        for user in users:
+            if group_name in user['groups']:
+                group_info["members"].append(user["upn"])
+
+    return list(groups.values())
+
+def generate_file_shares(groups: List[str], users: List[Dict[str, Any]]) -> Dict[str, Dict[str, List[Dict[str, Any]]]]:
+    file_shares = {
+        "Company-Wide": {
+            "Public": create_files("Public"),
+            "Templates": create_files("Templates"),
+            "Policies": create_files("Policies")
+        }
+    }
+    
+    for group in groups:
+        file_shares[group] = {
+            f"{group} Documents": create_files(f"{group}Docs"),
+            f"{group} Projects": create_files(f"{group}Projects"),
+            f"{group} Resources": create_files(f"{group}Resources")
+        }
+    
+    return file_shares
 
 def assign_file_owners(users: List[Dict[str, Any]], file_shares: Dict[str, Dict[str, List[Dict[str, Any]]]]):
     for group, folders in file_shares.items():
@@ -211,30 +223,39 @@ def main():
         return
 
     all_users = generate_users(data)
-    file_shares = generate_file_shares(data['groups'])
-    assign_file_owners(all_users, file_shares)
+    group_data = generate_group_data(all_users)
+    file_shares = generate_file_shares(data['groups'], all_users)
+    assign_file_owners(all_users, file_shares)  
 
     environment = {
         "Domain": data['domain'],
         "Users": all_users,
         "File_shares": file_shares,
-        "Subnets": data['subnets']
+        "Groups": group_data  
     }
-    environment_output = yaml.dump(environment, default_flow_style=False, sort_keys=False)
+    
+    # with open('environment.yml', 'w') as file:
+    #     yaml.dump(environment, file, default_flow_style=False)
 
-    # Output users to users.yml
-    output_data = {'users': all_users}
+    # environment_output = yaml.dump(environment, default_flow_style=False, sort_keys=False)
+
+    # print("\n--- Environment ---")
+    # print(environment_output)
+
+    users_output_data = {'users': all_users}
 
     with open('users.yml', 'w') as file:
-        yaml.dump(output_data, file, default_flow_style=False)
+        yaml.dump(users_output_data, file, default_flow_style=False)
 
-    # Output file shares to file_shares.yml
-    output_data = {'file_shares': file_shares}
+    file_shares_output_data = {'file_shares': file_shares}
     with open('file_shares.yml', 'w') as file:
-        yaml.dump(file_shares, file, default_flow_style=False)
+        yaml.dump(file_shares_output_data, file, default_flow_style=False)
 
-    print("\n--- Environment ---")
-    print(environment_output)
+    group_data_output_data = {'group_data': group_data}
+    with open('group_data.yml', 'w') as file:
+        yaml.dump(group_data_output_data, file, default_flow_style=False)
+
 
 if __name__ == "__main__":
     main()
+

@@ -1,0 +1,200 @@
+group_data:
+- description: Support Group
+  members:
+  - samuel.thomas@corp.local
+  - grace.moore@corp.local
+  - laura.jones@corp.local
+  - mia.gonzalez@corp.local
+  - john.garcia@corp.local
+  name: Support
+- description: E-commerce Group
+  members:
+  - samuel.thomas@corp.local
+  - laura.harris@corp.local
+  - benjamin.thomas@corp.local
+  - michael.martin@corp.local
+  - charlotte.rodriguez@corp.local
+  - samuel.martin@corp.local
+  - sophia.miller@corp.local
+  - ava.flores@corp.local
+  name: E-commerce
+- description: Shark Tank Group
+  members:
+  - samuel.thomas@corp.local
+  - ethan.brown@corp.local
+  - benjamin.lopez@corp.local
+  - samuel.martin@corp.local
+  - ava.thompson@corp.local
+  name: Shark Tank
+- description: Management Group
+  members:
+  - grace.moore@corp.local
+  - olivia.smith@corp.local
+  - matthew.jones@corp.local
+  - grace.white@corp.local
+  - grace.thompson@corp.local
+  - ava.miller@corp.local
+  - robert.harris@corp.local
+  - william.johnson@corp.local
+  - andrew.thompson@corp.local
+  - ava.flores@corp.local
+  - lily.johnson@corp.local
+  name: Management
+- description: Domain Admins Group
+  members:
+  - admin.laura.harris@corp.local
+  - admin.olivia.smith@corp.local
+  - admin.grace.thompson@corp.local
+  - admin.charlotte.rodriguez@corp.local
+  - admin.ava.thompson@corp.local
+  - admin.matthew.moore@corp.local
+  name: Domain Admins
+- description: IT Group
+  members:
+  - laura.harris@corp.local
+  - olivia.smith@corp.local
+  - grace.thompson@corp.local
+  - charlotte.rodriguez@corp.local
+  - ava.thompson@corp.local
+  - matthew.moore@corp.local
+  name: IT
+- description: Retail Banking Group
+  members:
+  - laura.harris@corp.local
+  - ava.miller@corp.local
+  - ethan.brown@corp.local
+  - mia.thompson@corp.local
+  - andrew.thompson@corp.local
+  - emily.thompson@corp.local
+  - harper.johnson@corp.local
+  name: Retail Banking
+- description: Research Group
+  members:
+  - benjamin.flores@corp.local
+  - robert.harris@corp.local
+  - chris.johnson@corp.local
+  - michael.rodriguez@corp.local
+  - grace.johnson@corp.local
+  name: Research
+- description: HR Group
+  members:
+  - harper.williams@corp.local
+  - michael.martin@corp.local
+  - grace.white@corp.local
+  - mia.thompson@corp.local
+  name: HR
+- description: Manufacturing Group
+  members:
+  - harper.williams@corp.local
+  - grace.white@corp.local
+  - mia.brown@corp.local
+  - andrew.thompson@corp.local
+  - chris.johnson@corp.local
+  name: Manufacturing
+- description: Operations Group
+  members:
+  - benjamin.thomas@corp.local
+  - mia.thomas@corp.local
+  - benjamin.anderson@corp.local
+  - sophia.miller@corp.local
+  name: Operations
+- description: Education Group
+  members:
+  - benjamin.thomas@corp.local
+  - mia.thomas@corp.local
+  - ava.miller@corp.local
+  - laura.jones@corp.local
+  - matthew.moore@corp.local
+  - jane.hernandez@corp.local
+  - harper.jones@corp.local
+  name: Education
+- description: Engineering Group
+  members:
+  - john.hernandez@corp.local
+  - mia.brown@corp.local
+  - emily.johnson@corp.local
+  - william.johnson@corp.local
+  - michael.thomas@corp.local
+  - charlotte.jones@corp.local
+  name: Engineering
+- description: Dragon's Den Group
+  members:
+  - john.hernandez@corp.local
+  - isabella.garcia@corp.local
+  name: Dragon's Den
+- description: Real Estate Group
+  members:
+  - john.hernandez@corp.local
+  - benjamin.jackson@corp.local
+  - michael.martin@corp.local
+  - grace.thompson@corp.local
+  - robert.lopez@corp.local
+  name: Real Estate
+- description: Sales Group
+  members:
+  - james.jackson@corp.local
+  - chris.wilson@corp.local
+  - sophia.jones@corp.local
+  - ava.miller@corp.local
+  - benjamin.lopez@corp.local
+  - samuel.martin@corp.local
+  - robert.lopez@corp.local
+  - isabella.garcia@corp.local
+  name: Sales
+- description: Asset Management Group
+  members:
+  - james.jackson@corp.local
+  - emily.thompson@corp.local
+  - sophia.miller@corp.local
+  - john.garcia@corp.local
+  name: Asset Management
+- description: Investment Banking Group
+  members:
+  - james.jackson@corp.local
+  - chris.johnson@corp.local
+  - benjamin.anderson@corp.local
+  - ava.thompson@corp.local
+  name: Investment Banking
+- description: Marketing Group
+  members:
+  - benjamin.jackson@corp.local
+  - grace.jones@corp.local
+  - emily.thompson@corp.local
+  - ava.flores@corp.local
+  - harper.johnson@corp.local
+  - lily.johnson@corp.local
+  - jane.hernandez@corp.local
+  - harper.jones@corp.local
+  name: Marketing
+- description: Private Banking Group
+  members:
+  - olivia.smith@corp.local
+  - grace.thompson@corp.local
+  - matthew.moore@corp.local
+  - jane.hernandez@corp.local
+  name: Private Banking
+- description: Finance Group
+  members:
+  - matthew.jones@corp.local
+  - ethan.brown@corp.local
+  - andrew.thompson@corp.local
+  - chris.martinez@corp.local
+  name: Finance
+- description: Healthcare Group
+  members:
+  - chris.wilson@corp.local
+  - mia.thompson@corp.local
+  - william.johnson@corp.local
+  - chris.martinez@corp.local
+  - lily.johnson@corp.local
+  name: Healthcare
+- description: Insurance Group
+  members:
+  - mia.thomas@corp.local
+  - michael.thomas@corp.local
+  name: Insurance
+- description: Corporate Banking Group
+  members:
+  - benjamin.anderson@corp.local
+  - isabella.garcia@corp.local
+  name: Corporate Banking

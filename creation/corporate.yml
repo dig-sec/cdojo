@@ -1,4 +1,4 @@
-domain: "corporate.local"
+domain: "corp.local"
 num_users: 50
 
 first_names:
