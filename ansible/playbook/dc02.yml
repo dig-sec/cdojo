@@ -1,6 +1,6 @@
 - hosts: dc02
   gather_facts: false
 
-  tasks:
-    - import_role:
-        name: windows_common
+  roles:
+    - windows_common
+    - windows_secondary_domain_controller

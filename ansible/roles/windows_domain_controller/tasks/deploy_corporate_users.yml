@@ -1,0 +1,28 @@
+---
+- name: Load user data from file
+  include_vars:
+    file: ../../creation/users.yml
+    name: user_data
+
+- name: Create user account
+  microsoft.ad.user:
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    firstname: "{{ item.name.split(' ')[0] }}"
+    surname: "{{ item.name.split(' ')[1] | default('') }}"
+    upn: "{{ item.name.split(' ')[0] }}.{{ item.name.split(' ')[1] | default('') }}@{{ root_domain }}"
+    update_password: always
+  until: create_account_result is not failed
+  register: create_account_result
+  loop: "{{ user_data.users }}"
+
+- name: Add user to groups
+  microsoft.ad.group:
+    name: "{{ item.1 | lower }}"
+    members: "{{ item.0.name }}"
+    state: present
+  loop: "{{ user_data.users | subelements('groups') }}"
+  loop_control:
+    label: "{{ item.0.name }} - {{ item.1 }}"
+  until: add_to_group_result is not failed
+  register: add_to_group_result

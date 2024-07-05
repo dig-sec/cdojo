@@ -3,7 +3,7 @@
 This script streamlines the installation and configuration of the Cyber Dojo virtual environment using Vagrant and libvirt on Fedora-based systems.
 
 <p align="center">
-    <img src="docs/images/cyber-dojo.png" alt="Logo" width="40%" style="display: block; margin: 0 auto">
+    <img src="docs/images/cyber-dojo.png" alt="Logo" width="20%" style="display: block; margin: 0 auto">
 </p>
 
 

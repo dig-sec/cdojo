@@ -1,3 +1,6 @@
+domain: "corporate.local"
+num_users: 50
+
 first_names:
   - John
   - Jane

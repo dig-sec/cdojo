@@ -168,3 +168,13 @@
 
 - name: Ensure Logstash is restarted if configuration changed
   meta: flush_handlers
+
+- name: Store passwords and tokens in a file
+  template:
+    src: passwords.yml.j2
+    dest: /root/passwords.yml
+  become: yes
+  vars:
+    elastic_password: "{{ elastic_password }}"
+    kibana_system_password: "{{ kibana_system_password }}"
+  delegate_to: localhost

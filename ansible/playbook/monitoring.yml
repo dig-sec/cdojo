@@ -1,3 +1,4 @@
+---
 - hosts: monitoring
   gather_facts: false
 

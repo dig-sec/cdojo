@@ -2,3 +2,4 @@ pypsrp
 pywinrm
 requests
 httpx
+pyyaml

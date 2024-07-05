@@ -3,11 +3,7 @@ import yaml
 import ipaddress
 from typing import List, Dict, Any
 from datetime import datetime, timedelta
-
-CONFIG = {
-    'num_users': 100,
-    'domain': 'example.com',
-}
+import re
 
 def load_data(file_path: str) -> Dict[str, Any]:
     try:
@@ -17,8 +13,13 @@ def load_data(file_path: str) -> Dict[str, Any]:
         print(f"Error loading data: {e}")
         return {}
 
-def generate_email(firstname: str, lastname: str, domain: str) -> str:
-    return f"{firstname.lower()}.{lastname.lower()}@{domain}"
+def generate_email(firstname: str, lastname: str, domain: str, is_admin: bool = False) -> str:
+    email_domain = domain.lower().replace(".local", "").replace(".corp", "")
+    if not email_domain.endswith(".com"):
+        email_domain += ".com"
+    if is_admin:
+        return f"{firstname.lower()}.{lastname.lower()}.admin@{email_domain}"
+    return f"{firstname.lower()}.{lastname.lower()}@{email_domain}"
 
 def generate_random_date(start_date: datetime, end_date: datetime) -> str:
     time_between_dates = end_date - start_date
@@ -140,19 +141,34 @@ def assign_software_licenses(department: str) -> List[str]:
     licenses = common_software + dept_software.get(department, [])
     return random.sample(licenses, random.randint(2, len(licenses)))
 
+def sanitize_name(name: str) -> str:
+    return re.sub(r'[^a-zA-Z0-9]', '', name)
+
 def generate_users(data: Dict[str, Any]) -> List[Dict[str, Any]]:
     users = []
     names = list(set([f"{fn} {ln}" for fn in data['first_names'] for ln in data['last_names']]))
     random.shuffle(names)
+    upn_set = set()
 
-    for i in range(min(CONFIG['num_users'], len(names))):
+    def generate_unique_upn(firstname: str, lastname: str, domain: str) -> str:
+        base_upn = f"{firstname.lower()}.{lastname.lower()}@{domain}"
+        unique_upn = base_upn
+        counter = 1
+        while unique_upn in upn_set:
+            unique_upn = f"{firstname.lower()}.{lastname.lower()}{counter}@{domain}"
+            counter += 1
+        upn_set.add(unique_upn)
+        return unique_upn
+
+    for i in range(min(data['num_users'], len(names))):
         firstname, lastname = names[i].split()
         role = assign_role()
         department = assign_department(data['groups'])
         
         user = {
             "name": f"{firstname} {lastname}",
-            "email": generate_email(firstname, lastname, CONFIG['domain']),
+            "email": generate_email(firstname, lastname, data['domain']),
+            "upn": generate_unique_upn(firstname, lastname, data['domain']),
             "role": role,
             "department": department,
             "password": random.choice(data['common_passwords']),
@@ -163,8 +179,10 @@ def generate_users(data: Dict[str, Any]) -> List[Dict[str, Any]]:
         
         if department == "IT":
             admin_user = user.copy()
-            admin_user["name"] = f"{firstname} {lastname} (Admin)"
-            admin_user["email"] = generate_email(f"{firstname}_adm", lastname, CONFIG['domain'])
+            admin_user["name"] = f"{firstname} {lastname} Admin"
+            admin_user["email"] = generate_email(firstname, lastname, data['domain'], is_admin=True)
+            admin_user["upn"] = generate_unique_upn(firstname, lastname, data['domain'])
+            admin_user["name"] = sanitize_name(admin_user["name"])
             admin_user["password"] = random.choice(data['common_passwords'])
             admin_user["groups"] = ["Domain Admins"] + admin_user["groups"]
             admin_user["is_admin_account"] = True
@@ -197,12 +215,23 @@ def main():
     assign_file_owners(all_users, file_shares)
 
     environment = {
-        "Domain": CONFIG['domain'],
+        "Domain": data['domain'],
         "Users": all_users,
         "File_shares": file_shares,
         "Subnets": data['subnets']
     }
     environment_output = yaml.dump(environment, default_flow_style=False, sort_keys=False)
+
+    # Output users to users.yml
+    output_data = {'users': all_users}
+
+    with open('users.yml', 'w') as file:
+        yaml.dump(output_data, file, default_flow_style=False)
+
+    # Output file shares to file_shares.yml
+    output_data = {'file_shares': file_shares}
+    with open('file_shares.yml', 'w') as file:
+        yaml.dump(file_shares, file, default_flow_style=False)
 
     print("\n--- Environment ---")
     print(environment_output)
