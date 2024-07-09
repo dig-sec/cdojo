@@ -17,5 +17,8 @@ xpack.security.http.ssl.keystore.path: certs/http.p12
 
 xpack.security.transport.ssl.enabled: true
 xpack.security.transport.ssl.verification_mode: certificate
-xpack.security.transport.ssl.keystore.path: certs/transport.p12
-xpack.security.transport.ssl.truststore.path: certs/transport.p12
+xpack.security.transport.ssl.keystore.path: /etc/elasticsearch/elastic-certificates.p12
+xpack.security.transport.ssl.truststore.path: /etc/elasticsearch/elastic-certificates.p12
+
+#xpack.security.transport.ssl.keystore.path: certs/transport.p12
+#xpack.security.transport.ssl.truststore.path: certs/transport.p12

@@ -22,7 +22,7 @@
 
 - name: Install Elasticsearch
   apt:
-    name: "elasticsearch"
+    name: "elasticsearch={{ elastic_stack_version }}"
     state: present
     update_cache: yes
   become: yes
@@ -65,6 +65,20 @@
     state: started
   become: yes
 
+- name: Generate SSL certificates
+  command: /usr/share/elasticsearch/bin/elasticsearch-certutil cert -out /etc/elasticsearch/elastic-certificates.p12 -pass ""
+  become: yes
+  args:
+    creates: /etc/elasticsearch/elastic-certificates.p12
+
+- name: Set proper permissions for SSL certificate
+  file:
+    path: /etc/elasticsearch/elastic-certificates.p12
+    owner: elasticsearch
+    group: elasticsearch
+    mode: '0600'
+  become: yes
+
 - name: Reset password for elastic user
   shell: "/usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic -b -s"
   register: reset_elastic_password
@@ -85,9 +99,19 @@
     kibana_system_password: "{{ reset_kibana_system_password.stdout_lines[-1] }}"
   become: yes
 
+- name: Generate and Retrieve Kibana Enrollment Token
+  shell: |
+    /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana
+  register: enrollment_token_output
+  become: yes
+  
+- name: Extract Enrollment Token
+  set_fact:
+    enrollment_token: "{{ enrollment_token_output.stdout }}" 
+
 - name: Output new passwords
   debug:
-    msg: "Elastic password: {{ elastic_password }}, Kibana_system password: {{ kibana_system_password }}"
+    msg: "Elastic password: {{ elastic_password }}, Kibana_system password: {{ kibana_system_password }}, Enrollment Token: {{ enrollment_token }}"
 
 - name: Install Kibana
   become: yes
@@ -95,6 +119,15 @@
     name: kibana
     state: present
     update_cache: yes
+
+- name: Copy SSL certificate to Kibana
+  copy:
+    src: /etc/elasticsearch/elastic-certificates.p12
+    dest: /etc/kibana/elastic-certificates.p12
+    owner: kibana
+    group: kibana
+    mode: '0600'
+  become: yes
 
 - name: Configure Kibana
   template:
@@ -132,6 +165,15 @@
     update_cache: yes
   become: yes
 
+- name: Copy SSL certificate to Logstash
+  copy:
+    src: /etc/elasticsearch/elastic-certificates.p12
+    dest: /etc/logstash/elastic-certificates.p12
+    owner: logstash
+    group: logstash
+    mode: '0600'
+  become: yes
+
 - name: Create Logstash pipeline configuration
   template:
     src: logstash_pipeline.conf.j2
@@ -161,11 +203,6 @@
     state: started
   become: yes
 
-- name: Wait for Logstash to start
-  wait_for:
-    port: "{{ logstash_port }}"
-    delay: 10
-
 - name: Ensure Logstash is restarted if configuration changed
   meta: flush_handlers
 
@@ -177,4 +214,44 @@
   vars:
     elastic_password: "{{ elastic_password }}"
     kibana_system_password: "{{ kibana_system_password }}"
+    enrollment_token: "{{ enrollment_token }}"
   delegate_to: localhost
+
+- name: Download Elastic Agent
+  get_url:
+    url: "{{ elastic_agent_download_url }}"
+    dest: "/tmp/elastic-agent-{{ elastic_agent_version }}-linux-x86_64.tar.gz"
+
+- name: Extract Elastic Agent
+  unarchive:
+    src: "/tmp/elastic-agent-{{ elastic_agent_version }}-linux-x86_64.tar.gz"
+    dest: "{{ elastic_agent_install_dir }}"
+    remote_src: yes
+
+- name: Create Fleet Policy
+  uri:
+    url: "https://{{ kibana_host }}:{{ kibana_port }}/api/fleet/agent_policies"
+    method: POST
+    body_format: json
+    body: "{{ policy_settings | combine({'name': fleet_policy_name, 'description': fleet_policy_description, 'namespace': 'default'}) }}"
+    headers:
+      kbn-xsrf: "fleet"
+  register: policy_response
+  when: not lookup('elastic_agent_policy', fleet_policy_name)
+  changed_when: false
+
+- name: Enroll Agent with Policy
+  shell: |
+    {{ elastic_agent_install_dir }}/elastic-agent install --url=https://{{ kibana_host }}:{{ kibana_port }} \
+    --enrollment-token={{ enrollment_token }} --policy-id={{ policy_id }}
+
+- name: Start Elastic Agent Service
+  service:
+    name: elastic-agent
+    state: started
+    enabled: yes 
+
+- name: Remove Elastic Agent download
+  file:
+    path: "/tmp/elastic-agent-{{ elastic_agent_version }}-linux-x86_64.tar.gz"
+    state: absent

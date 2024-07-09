@@ -55,10 +55,16 @@ elasticsearch_ca_path: /etc/elasticsearch/certs/http_ca.crt
 
 kibana_version: "8.x"
 kibana_server_host: "0.0.0.0"
-kibana_server_port: 5601
-
+kibana_port: 5601
 kibana_host: "localhost"
 fleet_port: 8220
+fleet_policy_name: "MyFleetPolicy"
+fleet_policy_description: "My custom Fleet policy"
+policy_settings: 
+  #enrollment_token: "your-enrollment-token"  # Get this from Kibana
+  elastic_agent_download_url: "https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-8.14.2-linux-x86_64.tar.gz"
+  elastic_agent_version: "8.14.2"
+  elastic_agent_install_dir: "/opt" 
 
 logstash_port: 5044
 
@@ -69,15 +75,3 @@ winlogbeat_download_url_base: 'https://artifacts.elastic.co/downloads/beats/winl
 file_ext: '.zip'
 winlogbeat_download_file: 'winlogbeat-8.14.2-windows-x86_64'
 winlogbeat_install_location: "C:/Program Files/Winlogbeat"
-
-
-# # Ansible WinRM Configuration
-# ansible_winrm_server_cert_validation: ignore
-# ansible_winrm_scheme: http
-# ansible_winrm_transport: basic
-# ansible_port: 5985
-
-# # Ansible SSH Configuration
-# ansible_ssh_user: vagrant
-# ansible_ssh_pass: vagrant
-# ansible_ssh_port: 22

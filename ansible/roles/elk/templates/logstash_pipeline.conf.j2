@@ -9,7 +9,8 @@ output {
     hosts => {{ elasticsearch_url | to_json }}
     user => "elastic"
     password => "{{ elastic_password }}"
-    ssl => true,
+    ssl => true
     ssl_certificate_verification => false
+    cacert => "/etc/logstash/elastic-certificates.p12"
     }
 }
