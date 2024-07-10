@@ -25,6 +25,7 @@
     name: "elasticsearch={{ elastic_stack_version }}"
     state: present
     update_cache: yes
+    allow_downgrade: yes
   become: yes
 
 - name: Configure Elasticsearch
@@ -47,36 +48,11 @@
     - /var/log/elasticsearch
   become: yes
 
-- name: Increase system limits for elasticsearch
-  pam_limits:
-    domain: elasticsearch
-    limit_type: "{{ item.limit_type }}"
-    limit_item: "{{ item.limit_item }}"
-    value: "{{ item.value }}"
-  loop:
-    - { limit_type: '-', limit_item: 'nofile', value: 65535 }
-    - { limit_type: '-', limit_item: 'memlock', value: unlimited }
-  become: yes
-
 - name: Ensure Elasticsearch is started and enabled
   systemd:
     name: elasticsearch
     enabled: yes
     state: started
-  become: yes
-
-- name: Generate SSL certificates
-  command: /usr/share/elasticsearch/bin/elasticsearch-certutil cert -out /etc/elasticsearch/elastic-certificates.p12 -pass ""
-  become: yes
-  args:
-    creates: /etc/elasticsearch/elastic-certificates.p12
-
-- name: Set proper permissions for SSL certificate
-  file:
-    path: /etc/elasticsearch/elastic-certificates.p12
-    owner: elasticsearch
-    group: elasticsearch
-    mode: '0600'
   become: yes
 
 - name: Reset password for elastic user
@@ -122,11 +98,12 @@
 
 - name: Copy SSL certificate to Kibana
   copy:
-    src: /etc/elasticsearch/elastic-certificates.p12
-    dest: /etc/kibana/elastic-certificates.p12
+    src: /etc/elasticsearch/certs/http_ca.crt
+    dest: /etc/kibana/elastic_http_ca.crt
     owner: kibana
     group: kibana
     mode: '0600'
+    remote_src: yes
   become: yes
 
 - name: Configure Kibana
@@ -167,11 +144,12 @@
 
 - name: Copy SSL certificate to Logstash
   copy:
-    src: /etc/elasticsearch/elastic-certificates.p12
+    src: /etc/elasticsearch/certs/transport.p12
     dest: /etc/logstash/elastic-certificates.p12
     owner: logstash
     group: logstash
     mode: '0600'
+    remote_src: yes
   become: yes
 
 - name: Create Logstash pipeline configuration
@@ -209,7 +187,7 @@
 - name: Store passwords and tokens in a file
   template:
     src: passwords.yml.j2
-    dest: /root/passwords.yml
+    dest: ./elk_passwords.yml
   become: yes
   vars:
     elastic_password: "{{ elastic_password }}"
@@ -222,36 +200,92 @@
     url: "{{ elastic_agent_download_url }}"
     dest: "/tmp/elastic-agent-{{ elastic_agent_version }}-linux-x86_64.tar.gz"
 
+- name: Create Installation Directory
+  file:
+    path: "{{ elastic_agent_install_dir }}"
+    state: directory
+    mode: '0755'
+  become: yes
+
 - name: Extract Elastic Agent
   unarchive:
     src: "/tmp/elastic-agent-{{ elastic_agent_version }}-linux-x86_64.tar.gz"
     dest: "{{ elastic_agent_install_dir }}"
     remote_src: yes
+  become: yes
+
+- name: Setup Fleet in Kibana
+  uri:
+    url: "http://{{ kibana_host }}:{{ kibana_port }}/api/fleet/setup"
+    method: POST
+    body_format: json
+    body: '{"forceRecreate": false}'
+    headers:
+      kbn-xsrf: "true"
+    status_code: [200, 400]  # 400 if already set up
+  register: fleet_setup
+  until: fleet_setup.status in [200, 400]
+  retries: 10
+  delay: 10
+
+- name: Ensure Fleet is set up in Kibana
+  uri:
+    url: "http://{{ kibana_host }}:{{ kibana_port }}/api/fleet/setup"
+    method: POST
+    body_format: json
+    body: '{"forceRecreate":false}'
+    headers:
+      kbn-xsrf: "true"
+    status_code: [200, 400]
+  register: fleet_setup
+  until: fleet_setup.status in [200, 400]
+  retries: 10
+  delay: 10
 
 - name: Create Fleet Policy
   uri:
-    url: "https://{{ kibana_host }}:{{ kibana_port }}/api/fleet/agent_policies"
+    url: "http://{{ kibana_host }}:{{ kibana_port }}/api/fleet/agent_policies"
     method: POST
     body_format: json
     body: "{{ policy_settings | combine({'name': fleet_policy_name, 'description': fleet_policy_description, 'namespace': 'default'}) }}"
     headers:
       kbn-xsrf: "fleet"
+    validate_certs: no
   register: policy_response
-  when: not lookup('elastic_agent_policy', fleet_policy_name)
-  changed_when: false
+  when: policy_response is not defined or policy_response.status != 200
+  changed_when: true
+
+- name: Set Policy ID (if policy was created)
+  set_fact:
+    policy_id: "{{ policy_response.json.item.id }}"
+  when: policy_response.status == 200  
+
+- name: Set Policy ID
+  set_fact:
+    policy_id: "{{ policy_response.json.item.id }}"
+  when: policy_response is defined and policy_response.status == 200
 
 - name: Enroll Agent with Policy
   shell: |
     {{ elastic_agent_install_dir }}/elastic-agent install --url=https://{{ kibana_host }}:{{ kibana_port }} \
     --enrollment-token={{ enrollment_token }} --policy-id={{ policy_id }}
+  when: policy_id is defined 
+
+- name: Cleanup installation tarball
+  file:
+    path: "/tmp/elastic-agent-{{ elastic_agent_version }}-linux-x86_64.tar.gz"
+    state: absent
+  become: yes
 
 - name: Start Elastic Agent Service
   service:
     name: elastic-agent
     state: started
     enabled: yes 
+  become: yes
 
 - name: Remove Elastic Agent download
   file:
     path: "/tmp/elastic-agent-{{ elastic_agent_version }}-linux-x86_64.tar.gz"
     state: absent
+  become: yes

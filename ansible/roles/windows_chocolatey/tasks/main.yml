@@ -1,3 +1,4 @@
+---
 - name: Ensure chocolatey is installed
   win_chocolatey:
     name:
@@ -20,7 +21,6 @@
   - python
   - git
   - 7zip
-  - sysinternals
   - wget
   - pstools
   ignore_errors: yes

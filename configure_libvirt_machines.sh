@@ -1,3 +1,7 @@
+# vagrant box list
+# vagrant box remove windows_2022 --provider libvirt
+# sudo vagrant box remove metasploitable3-win2k8 --provider virtualbox
+
 # # Download windows server 2019
 # https://app.vagrantup.com/StefanScherer/boxes/windows_2019/versions/2021.05.15/providers/virtualbox/unknown/vagrant.box
 # # Download windows server 2022
@@ -21,6 +25,7 @@ MACHINES=(
     ["windows_2022"]="https://app.vagrantup.com/StefanScherer/boxes/windows_2022/versions/2021.08.23/providers/virtualbox/unknown/vagrant.box"
     ["windows_10"]="https://app.vagrantup.com/StefanScherer/boxes/windows_10/versions/2021.12.09/providers/virtualbox/unknown/vagrant.box"
     ["windows_11"]="https://app.vagrantup.com/StefanScherer/boxes/windows_11/versions/2021.12.09/providers/virtualbox/unknown/vagrant.box"
+    ["metasploitable3-win2k8"]="https://app.vagrantup.com/rapid7/boxes/metasploitable3-win2k8/versions/0.1.0-weekly/providers/virtualbox/unknown/vagrant.box"
 )
 
 # Create folder machines
@@ -42,4 +47,6 @@ for machine in "${!MACHINES[@]}"; do
     vagrant mutate "$machine.box" libvirt
     # Add the box to vagrant
     vagrant box add --name "$machine" "$machine.box"
+    # Remove virtualbox box versions
+    vagrant box remove "$machine" --provider virtualbox    
 done

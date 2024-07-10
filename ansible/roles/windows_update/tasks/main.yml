@@ -1,12 +1,11 @@
 ---
-- name: Run Windows Update
-  win_updates:
-    category_names:
-      - CriticalUpdates
-      - SecurityUpdates
-      - UpdateRollups
-      - FeaturePacks
-      - ServicePacks
-    state: installed
-    ignore_errors: yes
+- name: Enable update service
+  ansible.windows.win_service:
+    name: Windows Update
+    state: started
+    start_mode: auto
+
+- name: Install all updates and reboot as many times as needed
+  ansible.windows.win_updates:
+    category_names: '*'
     reboot: yes

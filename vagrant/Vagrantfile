@@ -87,9 +87,18 @@ Vagrant.configure("2") do |config|
         end
 
         if group_name == 'windows'
-          # Default scripts
           vm_config.vm.provision "shell", path: "scripts/Install-WMF3Hotfix.ps1", privileged: false
           vm_config.vm.provision "shell", path: "scripts/ConfigureRemotingForAnsible.ps1", privileged: false
+
+        if private_net_details = details.dig('network', 'private_network')
+          ip = private_net_details['ip']
+          gateway = private_net_details['gateway']
+          if ip && gateway
+            vm_config.vm.provision "shell", path: "scripts/Configure-NetworkGateway.ps1", 
+                                            args: ["-IP", ip, "-Gateway", gateway], 
+                                            privileged: true
+          end
+        end        
 
           # Host custom scripts
           if details['scripts']

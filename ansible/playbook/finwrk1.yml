@@ -1,6 +1,6 @@
 ---
-- name: Configure Windows 11 Client
-  hosts: win11-client
+- name: Configure finwrk1 Windows 11 Client
+  hosts: finwrk1
   gather_facts: false
 
 

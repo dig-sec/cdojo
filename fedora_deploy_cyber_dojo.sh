@@ -206,11 +206,11 @@ main() {
     install_vagrant_plugin winrm
     install_vagrant_plugin winrm-elevated
     install_vagrant_plugin vagrant-hostmanager
-    install_vagrant_plugin mutate
+    install_vagrant_plugin mutate    
 
     # Install Ansible collections
     echo "Installing Ansible collections..."
-    ansible-galaxy collection install ansible.windows puzzle.opnsense microsoft.ad community.general community.windows
+    ansible-galaxy collection install ansible.windows puzzle.opnsense microsoft.ad community.general community.windows chocolatey.chocolatey
 
     # Add user to libvirt and qemu groups and restart libvirtd
     sudo usermod -aG libvirt "$USER"

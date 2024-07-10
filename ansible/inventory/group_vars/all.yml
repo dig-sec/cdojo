@@ -15,6 +15,7 @@ secondary_domain_name: secure
 windows_domain_controller_private_ip: 10.0.1.10
 windows_domain_controller_hostname: dc01
 windows_domain_controller_fqdn: "{{ windows_domain_controller_hostname }}.{{ root_domain }}"
+dns_domain: "{{ windows_domain_controller_private_ip }}"
 
 domain_administrator: Administrator
 domain_administrator_password: DomainVagrant123#
@@ -28,7 +29,7 @@ dhcp_dns_ip: 10.0.1.10
 
 
 # Timezone settings
-win_timezone: "Coordinated Universal Time" #"Eastern Standard Time"
+win_timezone: "Coordinated Universal Time"
 
 # Windows Server Settings
 # win_local_administrator: Administrator
@@ -37,6 +38,7 @@ win_timezone: "Coordinated Universal Time" #"Eastern Standard Time"
 # ADCS Settings
 adcs_host: adcs01
 adcs_common_name: "{{ domain_name }}-adcs-CA"
+ca_common_name: "{{ adcs_common_name }}" 
 adcs_cert_authority_password: DomainVagrant123#
 
 # ADCS Web Enrollment Settings
@@ -51,22 +53,30 @@ es_network_host: "0.0.0.0"
 es_port: 9200
 elasticsearch_host: "localhost"
 elasticsearch_url: "https://{{ elasticsearch_host }}:{{ es_port }}"
-elasticsearch_ca_path: /etc/elasticsearch/certs/http_ca.crt
+elasticsearch_ca_path: "/etc/elasticsearch/certs/http_ca.crt"
+elasticsearch_keystore_password: ""
+elastic_username: "elastic"
 
 kibana_version: "8.x"
 kibana_server_host: "0.0.0.0"
 kibana_port: 5601
 kibana_host: "localhost"
-fleet_port: 8220
-fleet_policy_name: "MyFleetPolicy"
-fleet_policy_description: "My custom Fleet policy"
-policy_settings: 
-  #enrollment_token: "your-enrollment-token"  # Get this from Kibana
-  elastic_agent_download_url: "https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-8.14.2-linux-x86_64.tar.gz"
-  elastic_agent_version: "8.14.2"
-  elastic_agent_install_dir: "/opt" 
 
+fleet_port: 8220
+fleet_policy_name: "Default Fleet Policy"
+fleet_policy_description: "Default policy for Elastic Agents"
+policy_settings:
+  agent:
+    monitoring:
+      enabled: true
+  integrations: []  # Add your desired integrations here
+  
 logstash_port: 5044
+
+elastic_agent_download_url: "https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-8.14.2-linux-x86_64.tar.gz"
+elastic_agent_version: "8.14.2"
+elastic_agent_install_dir: "/opt/elastic-agent"
+
 
 # Winlogbeat
 logstash_ip: 10.0.1.250

@@ -1,3 +1,153 @@
-# Setup ADCS
-- ansible.builtin.import_tasks: install_adcs.yml
-#- ansible.builtin.import_tasks: create_templates.yml
+---    
+- name: Install ADCS features
+  win_feature:
+    name:
+      - AD-Certificate
+      - ADCS-Cert-Authority
+      - ADCS-Web-Enrollment
+    state: present
+    include_sub_features: yes
+    include_management_tools: yes
+  register: adcs_features
+
+- name: Reboot if required after installing ADCS features
+  win_reboot:
+    connect_timeout: 15
+    post_reboot_delay: 15
+  when: adcs_features.reboot_required
+
+- name: Install ADCS Certification Authority
+  ansible.windows.win_powershell:
+    script: |
+      param (
+          [String]
+          $domain_username,
+          [String]
+          $domain_password,
+          [String]
+          $ca_common_name
+      )
+      $pass = ConvertTo-SecureString $domain_password -AsPlainText -Force
+      $Cred = New-Object System.Management.Automation.PSCredential ($domain_username, $pass)
+      try {
+        Install-AdcsCertificationAuthority -CAType EnterpriseRootCA -CACommonName $ca_common_name -Credential $Cred -Force
+        $Ansible.Changed = $true
+      } catch {
+        $ErrorMessage = $_.Exception.Message
+        $Ansible.Changed = $false
+        throw "CA Installation failed: $ErrorMessage"
+      }
+    parameters:
+      domain_username: "{{ domain_administrator }}"
+      domain_password: "{{ domain_administrator_password }}"
+      ca_common_name: "{{ ca_common_name }}"
+  register: ca_installation
+  failed_when: ca_installation.failed or ('ERROR_DS_RANGE_CONSTRAINT' in ca_installation.stderr)
+
+- name: Debug CA installation result
+  debug:
+    var: ca_installation
+
+- name: Check CA installation status
+  win_shell: |
+    $CAStatus = Get-ADCSCertificationAuthority
+    if ($CAStatus) {
+      Write-Output "CA installed successfully: $($CAStatus.CAServerName)"
+    } else {
+      Write-Error "CA installation failed or not found"
+  register: ca_status
+  ignore_errors: yes
+
+- debug:
+    var: ca_status
+
+- name: Enable Web Enrollment
+  ansible.windows.win_powershell:
+    script: |
+      try {
+        Install-AdcsWebEnrollment -Force
+        $Ansible.Changed = $true
+      } catch {
+        throw $_
+      }
+  when: ca_web_enrollment
+
+- name: Reboot Server if required
+  win_reboot:
+    connect_timeout: 15
+    post_reboot_delay: 15
+  when: adcs_features.reboot_required
+
+- name: Install ADCSTemplate Module
+  win_copy:
+    src: "files/ADCSTemplates"
+    dest: "C:\\Program Files\\WindowsPowerShell\\Modules"
+
+- name: Create a directory for templates
+  win_file:
+    path: C:\setup
+    state: directory
+
+- name: Copy templates json
+  win_copy:
+    src: "files/{{ item }}.json"
+    dest: "C:\\setup\\{{ item }}.json"
+  loop:
+    - ESC1
+    - ESC2
+    - ESC3
+    - ESC3-CRA
+    - ESC4
+
+- name: Ensure ADCSAdministration module is present
+  win_psmodule:
+    name: ADCSAdministration
+    state: present
+
+- name: Install templates
+  win_shell: |
+    Import-Module ADCSAdministration
+    $template = Get-ADCSTemplate -DisplayName "{{ item }}" -ErrorAction SilentlyContinue
+    if (-not $template) {
+      New-ADCSTemplate -DisplayName "{{ item }}" -JSON (Get-Content C:\setup\{{ item }}.json -Raw) -Identity "{{ root_domain }}\Domain Users" -Publish
+    }
+  vars:
+    ansible_become: yes
+    ansible_become_method: runas
+    ansible_become_user: "{{ root_domain }}\\{{ domain_administrator }}"
+    ansible_become_password: "{{ domain_administrator_password }}"
+  loop:
+    - ESC1
+    - ESC2
+    - ESC3
+    - ESC3-CRA
+    - ESC4
+  register: template_install
+
+- name: Configure ATTRIBUTESUBJECTALTNAME2 on CA - ESC6
+  win_shell: |
+    $config = certutil -config "{{ adcs_host }}\{{ ca_common_name }}" -getreg policy\Editflags
+    if ($config -notcontains "EDITF_ATTRIBUTESUBJECTALTNAME2") {
+      certutil -config "{{ adcs_host }}\{{ ca_common_name }}" -setreg policy\Editflags +EDITF_ATTRIBUTESUBJECTALTNAME2
+    }
+  vars:
+    ansible_become: yes
+    ansible_become_method: runas
+    ansible_become_user: "{{ domain_administrator }}"
+    ansible_become_password: "{{ domain_administrator_password }}"
+
+- name: Log ADCS setup process
+  win_shell: |
+    $LogPath = "C:\ADCSSetupLog.txt"
+    "ADCS installation and configuration completed" | Out-File -FilePath $LogPath
+    "CA Common Name: {{ ca_common_name }}" | Out-File -FilePath $LogPath -Append
+    "Web Enrollment Enabled: {{ ca_web_enrollment }}" | Out-File -FilePath $LogPath -Append
+    "Templates installed: {{ template_install.results | map(attribute='item') | join(', ') }}" | Out-File -FilePath $LogPath -Append
+  register: setup_log
+
+- name: Display setup log
+  debug:
+    var: setup_log.stdout_lines
+
+- name: Refresh Group Policy
+  ansible.windows.win_command: gpupdate /force

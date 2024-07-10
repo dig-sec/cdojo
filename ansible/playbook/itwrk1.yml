@@ -1,6 +1,6 @@
 ---
-- name: Configure Windows 11 Client
-  hosts: win11-client
+- name: Configure itwrk1 Windwos 10 Client
+  hosts: itwrk1
   gather_facts: false
 
 
