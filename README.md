@@ -24,9 +24,13 @@ This script streamlines the installation and configuration of the Cyber Dojo vir
 1. **Download:**
 2. **Make Executable:** Give the script execution permissions: `chmod +x deploy_cyber_dojo.sh`
 3. **Run as Root:** Execute the script with root privileges: `sudo ./deploy_cyber_dojo.sh`
+4. **Update variables:** Custom vars are configured in ansible inventory folder under all.yml
+5. **Generate custom enviorment:** Run generate_company.py in the creation folder to generate custom environment
 
-** Good info **
+
+**Opnsense firewall will have local port forwarding**
 vm_config.vm.network "forwarded_port", guest: 443, host: 9443
+
 
 **Contributing**
 
