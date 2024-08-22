@@ -1,941 +1,941 @@
 file_shares:
   Company-Wide:
     Policies:
-    - created: '2024-04-15'
-      modified: '2023-04-30'
-      name: Contract_Template_2024.pdf
-      owner: Grace Flores
-      size: 1050KB
-      type: pdf
-    - created: '2024-05-30'
-      modified: '2024-06-23'
-      name: Training_Module_3.pptx
-      owner: Andrew Harris
-      size: 7674KB
+    - created: '2024-11-26'
+      modified: '2023-10-07'
+      name: Company_Overview_2024.pptx
+      owner: Isabella Martinez
+      size: 9730KB
       type: pptx
-    - created: '2023-02-19'
-      modified: '2024-05-29'
-      name: Project_PRJ-958_Presentation.pptx
-      owner: Grace Flores
-      size: 8583KB
-      type: pptx
-    - created: '2024-11-05'
-      modified: '2023-03-23'
-      name: Annual_Report_2023.pdf
-      owner: Olivia Jackson
-      size: 664KB
-      type: pdf
-    - created: '2024-12-05'
-      modified: '2024-05-05'
-      name: Annual_Report_2023.pdf
-      owner: Laura Thomas
-      size: 212KB
+    - created: '2024-08-04'
+      modified: '2023-03-30'
+      name: Sales_Forecast_Q2_2024.xlsx
+      owner: Jessica Jackson
+      size: 9382KB
+      type: xlsx
+    - created: '2024-02-23'
+      modified: '2023-11-21'
+      name: Budget_2023.xlsx
+      owner: Matthew Rodriguez
+      size: 1615KB
+      type: xlsx
+    - created: '2023-12-12'
+      modified: '2024-07-27'
+      name: Employee_Schedule_Jul_2023.xlsx
+      owner: Mia Jones
+      size: 5742KB
+      type: xlsx
+    - created: '2023-03-07'
+      modified: '2023-02-07'
+      name: Annual_Report_2024.pdf
+      owner: Adm.Matthew
+      size: 2226KB
       type: pdf
     Public:
-    - created: '2023-06-01'
-      modified: '2024-07-08'
-      name: Training_Module_3.pptx
-      owner: Matthew Miller
-      size: 1321KB
-      type: pptx
-    - created: '2024-02-29'
-      modified: '2023-08-27'
-      name: Budget_2023.xlsx
-      owner: Benjamin Wilson
-      size: 3326KB
+    - created: '2023-04-12'
+      modified: '2023-04-16'
+      name: Inventory_List_2023-07-10.xlsx
+      owner: Jessica Jackson
+      size: 2110KB
       type: xlsx
-    - created: '2023-06-13'
-      modified: '2023-10-17'
-      name: Safety_Guidelines_Rev2.7.pdf
-      owner: Alexander Johnson
-      size: 1707KB
-      type: pdf
-    - created: '2024-11-22'
-      modified: '2024-07-10'
-      name: Project_Proposal_2024-03-18.docx
-      owner: Ethan Johnson
-      size: 484KB
-      type: docx
-    - created: '2024-12-16'
-      modified: '2023-01-11'
-      name: Meeting_Minutes_2023-12-31.docx
-      owner: Emily Martin
-      size: 9838KB
-      type: docx
+    - created: '2024-05-09'
+      modified: '2023-01-18'
+      name: Training_Module_8.pptx
+      owner: Jessica Thompson
+      size: 4288KB
+      type: pptx
+    - created: '2023-07-20'
+      modified: '2023-04-11'
+      name: Employee_Schedule_Nov_2023.xlsx
+      owner: Robert Harris
+      size: 1461KB
+      type: xlsx
+    - created: '2024-12-22'
+      modified: '2023-06-11'
+      name: Quarterly_Review_Q2_2024.pptx
+      owner: Adm.Matthew
+      size: 4121KB
+      type: pptx
+    - created: '2024-10-25'
+      modified: '2024-02-11'
+      name: Company_Overview_2023.pptx
+      owner: Laura Martinez
+      size: 1188KB
+      type: pptx
     Templates:
-    - created: '2023-11-05'
-      modified: '2023-05-15'
-      name: Training_Module_9.pptx
-      owner: Harper Thompson
-      size: 683KB
-      type: pptx
-    - created: '2023-03-24'
-      modified: '2023-03-19'
-      name: Annual_Report_2024.pdf
-      owner: Laura Jackson
-      size: 8658KB
+    - created: '2024-10-26'
+      modified: '2023-02-02'
+      name: Employee_Schedule_Feb_2023.xlsx
+      owner: Isabella Martinez
+      size: 977KB
+      type: xlsx
+    - created: '2024-10-03'
+      modified: '2023-05-20'
+      name: Contract_Template_2023.pdf
+      owner: Robert Jackson
+      size: 218KB
       type: pdf
-    - created: '2024-09-02'
-      modified: '2023-01-31'
-      name: Templates_Report_Q3_2023.docx
-      owner: James Anderson
-      size: 4142KB
-      type: docx
-    - created: '2023-11-13'
-      modified: '2024-11-26'
+    - created: '2023-02-04'
+      modified: '2024-08-05'
       name: Budget_2023.xlsx
-      owner: James Wilson
-      size: 8945KB
+      owner: Adm.Matthew
+      size: 3297KB
       type: xlsx
-    - created: '2024-08-19'
-      modified: '2023-04-04'
-      name: Budget_2024.xlsx
-      owner: Matthew Rodriguez
-      size: 354KB
-      type: xlsx
+    - created: '2024-06-21'
+      modified: '2024-03-12'
+      name: Project_Proposal_2024-02-07.docx
+      owner: Andrew Lopez
+      size: 588KB
+      type: docx
+    - created: '2023-12-14'
+      modified: '2023-02-22'
+      name: Templates_Report_Q2_2023.docx
+      owner: Isabella Martinez
+      size: 5172KB
+      type: docx
   Engineering:
     Engineering Documents:
-    - created: '2023-04-06'
-      modified: '2023-12-21'
-      name: Employee_Schedule_Jan_2023.xlsx
-      owner: Charlotte Garcia
-      size: 5654KB
-      type: xlsx
-    - created: '2024-09-30'
-      modified: '2023-02-02'
-      name: Weekly_Update_2024-07-17.docx
-      owner: Matthew Miller
-      size: 5009KB
+    - created: '2023-01-25'
+      modified: '2024-08-20'
+      name: EngineeringDocs_Report_Q1_2024.docx
+      owner: Jane Brown
+      size: 4118KB
       type: docx
-    - created: '2024-11-14'
-      modified: '2024-08-25'
-      name: Safety_Guidelines_Rev5.7.pdf
-      owner: Lily Smith
-      size: 9398KB
-      type: pdf
-    - created: '2024-10-05'
-      modified: '2024-05-13'
-      name: Contract_Template_2023.pdf
-      owner: Charlotte Garcia
-      size: 5190KB
-      type: pdf
-    - created: '2024-08-07'
-      modified: '2023-11-21'
-      name: Employee_Schedule_Mar_2024.xlsx
-      owner: Matthew Miller
-      size: 2697KB
+    - created: '2023-06-30'
+      modified: '2023-12-11'
+      name: Budget_2023.xlsx
+      owner: Jane Garcia
+      size: 2623KB
       type: xlsx
+    - created: '2023-09-23'
+      modified: '2024-02-07'
+      name: Inventory_List_2023-06-30.xlsx
+      owner: Harper White
+      size: 6735KB
+      type: xlsx
+    - created: '2024-05-30'
+      modified: '2023-07-10'
+      name: Employee_Handbook_v1.2.pdf
+      owner: Andrew Harris
+      size: 6758KB
+      type: pdf
+    - created: '2024-12-03'
+      modified: '2024-04-24'
+      name: Safety_Guidelines_Rev3.1.pdf
+      owner: Michael Martinez
+      size: 7145KB
+      type: pdf
     Engineering Projects:
-    - created: '2023-07-08'
-      modified: '2024-03-30'
+    - created: '2024-03-14'
+      modified: '2023-05-09'
+      name: Quarterly_Review_Q3_2023.pptx
+      owner: Emily Moore
+      size: 7342KB
+      type: pptx
+    - created: '2023-02-15'
+      modified: '2023-01-07'
       name: Company_Overview_2023.pptx
-      owner: Charlotte Garcia
-      size: 8562KB
+      owner: Michael Martinez
+      size: 3016KB
       type: pptx
-    - created: '2023-03-18'
-      modified: '2023-10-09'
-      name: Budget_2024.xlsx
-      owner: Matthew Miller
-      size: 2009KB
-      type: xlsx
-    - created: '2024-12-21'
-      modified: '2024-03-03'
-      name: Weekly_Update_2024-12-25.docx
-      owner: Lily Smith
-      size: 857KB
-      type: docx
-    - created: '2023-09-24'
-      modified: '2023-09-29'
-      name: Employee_Schedule_Oct_2023.xlsx
-      owner: Lily Smith
-      size: 9713KB
-      type: xlsx
-    - created: '2024-09-23'
-      modified: '2024-07-28'
-      name: Employee_Schedule_Feb_2023.xlsx
-      owner: Matthew Miller
-      size: 6620KB
-      type: xlsx
-    Engineering Resources:
-    - created: '2023-07-17'
-      modified: '2024-12-28'
-      name: Project_PRJ-688_Presentation.pptx
-      owner: Charlotte Garcia
-      size: 3968KB
+    - created: '2023-04-21'
+      modified: '2023-02-13'
+      name: Annual_Report_2023.pdf
+      owner: Jane Brown
+      size: 2058KB
+      type: pdf
+    - created: '2023-07-15'
+      modified: '2023-11-30'
+      name: Project_PRJ-127_Presentation.pptx
+      owner: Jane Garcia
+      size: 8977KB
       type: pptx
-    - created: '2023-12-23'
-      modified: '2024-02-24'
-      name: EngineeringResources_Report_Q1_2023.docx
-      owner: Matthew Miller
-      size: 2005KB
-      type: docx
-    - created: '2024-11-03'
-      modified: '2024-02-22'
-      name: Meeting_Minutes_2024-08-03.docx
-      owner: Matthew Miller
-      size: 3570KB
-      type: docx
-    - created: '2023-07-08'
-      modified: '2023-06-21'
+    - created: '2024-03-14'
+      modified: '2023-04-22'
       name: Contract_Template_2023.pdf
-      owner: Charlotte Garcia
-      size: 9048KB
+      owner: Jane Brown
+      size: 7513KB
       type: pdf
-    - created: '2024-07-10'
-      modified: '2024-11-27'
-      name: Employee_Handbook_v4.1.pdf
-      owner: Matthew Miller
-      size: 5444KB
+    Engineering Resources:
+    - created: '2024-09-02'
+      modified: '2024-09-11'
+      name: Project_PRJ-106_Presentation.pptx
+      owner: Jane Garcia
+      size: 1515KB
+      type: pptx
+    - created: '2024-09-20'
+      modified: '2024-06-27'
+      name: Safety_Guidelines_Rev3.9.pdf
+      owner: Michael Martinez
+      size: 2097KB
       type: pdf
+    - created: '2024-03-27'
+      modified: '2023-06-07'
+      name: Sales_Forecast_Q1_2023.xlsx
+      owner: Michael Martinez
+      size: 2039KB
+      type: xlsx
+    - created: '2024-11-25'
+      modified: '2023-12-17'
+      name: Meeting_Minutes_2024-01-22.docx
+      owner: Emily Moore
+      size: 7718KB
+      type: docx
+    - created: '2024-12-22'
+      modified: '2024-03-26'
+      name: Project_PRJ-716_Presentation.pptx
+      owner: Jane Brown
+      size: 2049KB
+      type: pptx
   Finance:
     Finance Documents:
-    - created: '2024-02-26'
-      modified: '2024-07-17'
-      name: Weekly_Update_2023-04-16.docx
-      owner: Matthew Garcia
-      size: 8102KB
-      type: docx
-    - created: '2023-08-31'
-      modified: '2024-06-12'
-      name: Quarterly_Review_Q4_2023.pptx
-      owner: Jane Jackson
-      size: 5931KB
+    - created: '2023-06-11'
+      modified: '2024-08-23'
+      name: Quarterly_Review_Q4_2024.pptx
+      owner: David Rodriguez
+      size: 5077KB
       type: pptx
-    - created: '2023-02-19'
-      modified: '2024-09-29'
-      name: FinanceDocs_Report_Q3_2024.docx
-      owner: Sophia Martin
-      size: 4650KB
-      type: docx
-    - created: '2023-11-17'
-      modified: '2024-05-25'
-      name: Training_Module_2.pptx
-      owner: Sophia Martin
-      size: 9781KB
+    - created: '2024-06-17'
+      modified: '2023-12-13'
+      name: Quarterly_Review_Q3_2023.pptx
+      owner: Laura Harris
+      size: 6452KB
       type: pptx
-    - created: '2023-07-08'
-      modified: '2023-06-17'
-      name: Budget_2023.xlsx
-      owner: Andrew Taylor
-      size: 7961KB
+    - created: '2024-12-18'
+      modified: '2023-06-05'
+      name: Sales_Forecast_Q3_2023.xlsx
+      owner: Mia Jones
+      size: 673KB
       type: xlsx
+    - created: '2024-01-10'
+      modified: '2024-04-16'
+      name: Project_PRJ-445_Presentation.pptx
+      owner: Robert Martin
+      size: 1817KB
+      type: pptx
+    - created: '2024-08-12'
+      modified: '2023-09-09'
+      name: Project_PRJ-929_Presentation.pptx
+      owner: Lily Jackson
+      size: 8739KB
+      type: pptx
     Finance Projects:
-    - created: '2023-02-13'
-      modified: '2023-04-26'
-      name: FinanceProjects_Report_Q2_2024.docx
-      owner: Andrew Taylor
-      size: 1203KB
-      type: docx
-    - created: '2023-09-19'
-      modified: '2024-02-07'
-      name: Company_Overview_2024.pptx
-      owner: Sophia White
-      size: 3328KB
-      type: pptx
-    - created: '2024-06-18'
-      modified: '2024-03-18'
-      name: Quarterly_Review_Q2_2024.pptx
-      owner: Sophia Martin
-      size: 4828KB
-      type: pptx
-    - created: '2023-01-06'
-      modified: '2024-03-23'
-      name: Safety_Guidelines_Rev4.4.pdf
-      owner: Jane Jackson
-      size: 912KB
+    - created: '2024-05-20'
+      modified: '2023-07-02'
+      name: Annual_Report_2024.pdf
+      owner: Robert Martin
+      size: 3921KB
       type: pdf
-    - created: '2023-02-09'
-      modified: '2023-03-15'
-      name: Sales_Forecast_Q4_2024.xlsx
-      owner: Matthew Garcia
-      size: 125KB
+    - created: '2023-07-26'
+      modified: '2024-10-06'
+      name: Employee_Schedule_Feb_2023.xlsx
+      owner: Lily Jackson
+      size: 4997KB
       type: xlsx
+    - created: '2024-09-29'
+      modified: '2024-07-23'
+      name: Annual_Report_2024.pdf
+      owner: Laura Harris
+      size: 1848KB
+      type: pdf
+    - created: '2024-01-26'
+      modified: '2023-02-11'
+      name: Project_PRJ-812_Presentation.pptx
+      owner: David Rodriguez
+      size: 9843KB
+      type: pptx
+    - created: '2024-09-01'
+      modified: '2024-10-23'
+      name: Quarterly_Review_Q4_2024.pptx
+      owner: David Rodriguez
+      size: 4086KB
+      type: pptx
     Finance Resources:
-    - created: '2023-08-30'
-      modified: '2024-12-13'
-      name: Inventory_List_2023-03-02.xlsx
-      owner: Sophia White
-      size: 7452KB
+    - created: '2024-05-02'
+      modified: '2024-04-30'
+      name: Project_PRJ-580_Presentation.pptx
+      owner: Laura Harris
+      size: 3360KB
+      type: pptx
+    - created: '2024-06-07'
+      modified: '2023-01-27'
+      name: Inventory_List_2024-03-04.xlsx
+      owner: Lily Jackson
+      size: 985KB
       type: xlsx
-    - created: '2024-04-29'
-      modified: '2023-05-16'
-      name: Meeting_Minutes_2024-10-15.docx
-      owner: Jane Jackson
-      size: 3148KB
-      type: docx
-    - created: '2023-08-25'
-      modified: '2023-03-03'
-      name: Safety_Guidelines_Rev2.9.pdf
-      owner: Andrew Taylor
-      size: 3394KB
+    - created: '2023-08-14'
+      modified: '2023-09-09'
+      name: Annual_Report_2024.pdf
+      owner: Robert Martin
+      size: 1872KB
       type: pdf
-    - created: '2023-07-11'
-      modified: '2023-12-17'
-      name: Contract_Template_2023.pdf
-      owner: Andrew Taylor
-      size: 8658KB
-      type: pdf
-    - created: '2023-08-11'
-      modified: '2024-11-01'
-      name: Employee_Handbook_v3.7.pdf
-      owner: Jane Jackson
-      size: 8949KB
-      type: pdf
+    - created: '2024-07-12'
+      modified: '2023-09-20'
+      name: Company_Overview_2023.pptx
+      owner: Robert Martin
+      size: 4380KB
+      type: pptx
+    - created: '2024-12-21'
+      modified: '2024-01-26'
+      name: Training_Module_8.pptx
+      owner: Mia Moore
+      size: 9111KB
+      type: pptx
   HR:
     HR Documents:
-    - created: '2023-02-05'
-      modified: '2024-08-12'
-      name: Meeting_Minutes_2024-02-20.docx
-      owner: Sophia Davis
-      size: 2136KB
+    - created: '2023-05-21'
+      modified: '2024-02-11'
+      name: HRDocs_Report_Q1_2023.docx
+      owner: Jessica Thompson
+      size: 1588KB
       type: docx
-    - created: '2023-11-08'
-      modified: '2024-12-09'
-      name: Budget_2024.xlsx
-      owner: John Garcia
-      size: 4192KB
+    - created: '2024-12-27'
+      modified: '2024-09-26'
+      name: Employee_Schedule_May_2024.xlsx
+      owner: Jessica Thompson
+      size: 3588KB
       type: xlsx
-    - created: '2024-10-01'
-      modified: '2023-07-30'
-      name: Contract_Template_2024.pdf
-      owner: John Garcia
-      size: 8521KB
-      type: pdf
-    - created: '2023-07-20'
-      modified: '2024-07-22'
-      name: Employee_Schedule_Aug_2024.xlsx
-      owner: Grace Flores
-      size: 8404KB
+    - created: '2024-05-23'
+      modified: '2024-05-21'
+      name: Employee_Schedule_Sep_2024.xlsx
+      owner: Jessica Thompson
+      size: 6499KB
       type: xlsx
-    - created: '2023-07-25'
-      modified: '2024-06-22'
-      name: Meeting_Minutes_2024-01-14.docx
-      owner: Grace Flores
-      size: 3536KB
+    - created: '2023-08-11'
+      modified: '2024-07-15'
+      name: Project_PRJ-412_Presentation.pptx
+      owner: Andrew Miller
+      size: 1667KB
+      type: pptx
+    - created: '2024-07-23'
+      modified: '2023-12-01'
+      name: Meeting_Minutes_2024-01-01.docx
+      owner: James Miller
+      size: 8923KB
       type: docx
     HR Projects:
-    - created: '2024-03-12'
-      modified: '2023-05-08'
-      name: Annual_Report_2024.pdf
-      owner: Harper Brown
-      size: 3743KB
-      type: pdf
-    - created: '2024-08-26'
-      modified: '2024-04-21'
-      name: Quarterly_Review_Q2_2024.pptx
-      owner: Harper Brown
-      size: 3445KB
-      type: pptx
-    - created: '2023-10-16'
-      modified: '2023-11-28'
-      name: Annual_Report_2023.pdf
-      owner: John Garcia
-      size: 8464KB
-      type: pdf
-    - created: '2024-02-16'
-      modified: '2023-08-04'
-      name: Project_PRJ-526_Presentation.pptx
-      owner: Grace Flores
-      size: 7294KB
-      type: pptx
-    - created: '2023-06-08'
-      modified: '2024-03-06'
-      name: Quarterly_Review_Q1_2024.pptx
-      owner: Harper Brown
-      size: 1984KB
-      type: pptx
-    HR Resources:
-    - created: '2023-12-17'
-      modified: '2024-04-10'
+    - created: '2023-04-13'
+      modified: '2024-12-27'
+      name: HRProjects_Report_Q4_2023.docx
+      owner: Robert Harris
+      size: 118KB
+      type: docx
+    - created: '2024-07-31'
+      modified: '2023-09-09'
       name: Company_Overview_2023.pptx
-      owner: Grace Flores
-      size: 3933KB
+      owner: James Miller
+      size: 119KB
       type: pptx
-    - created: '2024-08-07'
-      modified: '2023-10-05'
-      name: Meeting_Minutes_2024-06-23.docx
-      owner: Alexander Johnson
-      size: 980KB
-      type: docx
-    - created: '2024-04-30'
-      modified: '2024-07-06'
-      name: Annual_Report_2024.pdf
-      owner: James Jackson
-      size: 1608KB
+    - created: '2023-02-13'
+      modified: '2023-01-03'
+      name: Employee_Handbook_v4.2.pdf
+      owner: Jessica White
+      size: 4860KB
       type: pdf
-    - created: '2023-09-07'
-      modified: '2024-01-26'
-      name: Project_Proposal_2023-09-01.docx
-      owner: Grace Flores
-      size: 5209KB
-      type: docx
-    - created: '2024-05-01'
-      modified: '2024-07-20'
-      name: Inventory_List_2024-03-10.xlsx
-      owner: Alexander Johnson
-      size: 6678KB
+    - created: '2023-10-13'
+      modified: '2023-01-22'
+      name: Sales_Forecast_Q4_2024.xlsx
+      owner: James Miller
+      size: 5667KB
       type: xlsx
+    - created: '2023-10-14'
+      modified: '2024-03-01'
+      name: Annual_Report_2023.pdf
+      owner: James Miller
+      size: 6000KB
+      type: pdf
+    HR Resources:
+    - created: '2024-10-21'
+      modified: '2023-11-02'
+      name: Training_Module_5.pptx
+      owner: Jessica Davis
+      size: 8457KB
+      type: pptx
+    - created: '2023-10-28'
+      modified: '2024-04-13'
+      name: Annual_Report_2024.pdf
+      owner: James Miller
+      size: 2533KB
+      type: pdf
+    - created: '2023-12-25'
+      modified: '2023-04-24'
+      name: HRResources_Report_Q4_2023.docx
+      owner: Jessica Davis
+      size: 8574KB
+      type: docx
+    - created: '2023-11-10'
+      modified: '2023-08-27'
+      name: Meeting_Minutes_2024-06-17.docx
+      owner: Jessica Davis
+      size: 5389KB
+      type: docx
+    - created: '2024-04-21'
+      modified: '2024-03-31'
+      name: Safety_Guidelines_Rev1.4.pdf
+      owner: Jessica Davis
+      size: 6889KB
+      type: pdf
   IT:
     IT Documents:
-    - created: '2024-05-14'
-      modified: '2023-05-10'
-      name: Employee_Handbook_v3.1.pdf
-      owner: Isabella Davis
-      size: 4038KB
+    - created: '2023-12-08'
+      modified: '2024-04-12'
+      name: Project_PRJ-631_Presentation.pptx
+      owner: Daniel Taylor
+      size: 6557KB
+      type: pptx
+    - created: '2023-12-24'
+      modified: '2024-02-03'
+      name: Contract_Template_2024.pdf
+      owner: Jessica Jackson
+      size: 2320KB
       type: pdf
-    - created: '2023-12-04'
-      modified: '2023-09-14'
-      name: Sales_Forecast_Q4_2023.xlsx
-      owner: James Wilson
-      size: 7595KB
-      type: xlsx
-    - created: '2023-07-13'
-      modified: '2023-08-19'
-      name: Safety_Guidelines_Rev5.9.pdf
-      owner: James Wilson
-      size: 9414KB
-      type: pdf
-    - created: '2023-05-23'
-      modified: '2023-12-26'
-      name: Safety_Guidelines_Rev1.1.pdf
-      owner: Isabella Davis
-      size: 3012KB
-      type: pdf
-    - created: '2023-01-09'
-      modified: '2024-02-29'
-      name: Annual_Report_2024.pdf
-      owner: James Wilson
-      size: 3427KB
+    - created: '2024-05-08'
+      modified: '2023-05-31'
+      name: Project_PRJ-832_Presentation.pptx
+      owner: Sarah Williams
+      size: 1517KB
+      type: pptx
+    - created: '2024-09-16'
+      modified: '2023-11-04'
+      name: Weekly_Update_2023-11-11.docx
+      owner: Sarah Williams
+      size: 7281KB
+      type: docx
+    - created: '2024-12-06'
+      modified: '2023-08-13'
+      name: Employee_Handbook_v5.0.pdf
+      owner: Jessica Jackson
+      size: 7949KB
       type: pdf
     IT Projects:
-    - created: '2023-03-09'
-      modified: '2023-05-29'
-      name: Budget_2024.xlsx
-      owner: Isabella Davis
-      size: 9819KB
-      type: xlsx
-    - created: '2024-03-27'
-      modified: '2023-04-13'
-      name: Budget_2023.xlsx
-      owner: James Wilson
-      size: 7645KB
-      type: xlsx
-    - created: '2024-10-06'
-      modified: '2023-06-23'
-      name: ITProjects_Report_Q1_2024.docx
-      owner: James Wilson
-      size: 2187KB
+    - created: '2024-01-28'
+      modified: '2024-07-24'
+      name: Annual_Report_2024.pdf
+      owner: Daniel Taylor
+      size: 9383KB
+      type: pdf
+    - created: '2024-09-03'
+      modified: '2024-03-30'
+      name: Project_PRJ-231_Presentation.pptx
+      owner: Jessica Jackson
+      size: 3665KB
+      type: pptx
+    - created: '2023-08-09'
+      modified: '2023-06-16'
+      name: Project_Proposal_2023-09-17.docx
+      owner: Sarah Williams
+      size: 7579KB
       type: docx
-    - created: '2023-02-03'
-      modified: '2024-05-12'
-      name: Budget_2024.xlsx
-      owner: Isabella Davis
-      size: 5855KB
-      type: xlsx
-    - created: '2023-01-24'
-      modified: '2023-07-14'
-      name: Safety_Guidelines_Rev5.4.pdf
-      owner: James Wilson
-      size: 4693KB
+    - created: '2024-12-10'
+      modified: '2023-07-20'
+      name: Employee_Handbook_v3.2.pdf
+      owner: Sarah Williams
+      size: 8241KB
+      type: pdf
+    - created: '2023-09-07'
+      modified: '2024-04-19'
+      name: Safety_Guidelines_Rev4.9.pdf
+      owner: Matthew Rodriguez
+      size: 2347KB
       type: pdf
     IT Resources:
-    - created: '2024-12-26'
-      modified: '2023-01-01'
-      name: Project_Proposal_2024-08-25.docx
-      owner: James Wilson
-      size: 9596KB
+    - created: '2023-04-25'
+      modified: '2023-01-29'
+      name: Inventory_List_2023-12-01.xlsx
+      owner: Jessica Jackson
+      size: 6647KB
+      type: xlsx
+    - created: '2023-02-18'
+      modified: '2023-07-26'
+      name: ITResources_Report_Q3_2023.docx
+      owner: Matthew Rodriguez
+      size: 8711KB
       type: docx
-    - created: '2024-10-18'
-      modified: '2023-07-12'
-      name: Weekly_Update_2023-02-13.docx
-      owner: Isabella Davis
-      size: 8859KB
-      type: docx
-    - created: '2024-11-03'
-      modified: '2023-09-27'
-      name: Project_Proposal_2024-12-04.docx
-      owner: James Wilson
-      size: 3141KB
-      type: docx
-    - created: '2023-01-09'
-      modified: '2023-01-31'
-      name: Project_PRJ-855_Presentation.pptx
-      owner: Isabella Davis
-      size: 7514KB
+    - created: '2023-12-08'
+      modified: '2024-06-19'
+      name: Contract_Template_2023.pdf
+      owner: Matthew Rodriguez
+      size: 5925KB
+      type: pdf
+    - created: '2023-04-29'
+      modified: '2024-12-11'
+      name: Quarterly_Review_Q2_2023.pptx
+      owner: Matthew Rodriguez
+      size: 9694KB
       type: pptx
-    - created: '2023-03-28'
-      modified: '2023-07-23'
-      name: Sales_Forecast_Q1_2024.xlsx
-      owner: James Wilson
-      size: 7119KB
+    - created: '2024-11-09'
+      modified: '2023-12-17'
+      name: Budget_2023.xlsx
+      owner: Daniel Taylor
+      size: 6806KB
       type: xlsx
   Marketing:
     Marketing Documents:
-    - created: '2023-09-07'
-      modified: '2023-05-08'
-      name: Project_PRJ-168_Presentation.pptx
-      owner: Benjamin Davis
-      size: 2284KB
+    - created: '2023-11-03'
+      modified: '2023-01-01'
+      name: Project_PRJ-728_Presentation.pptx
+      owner: John Gonzalez
+      size: 5627KB
       type: pptx
-    - created: '2024-09-05'
-      modified: '2024-12-12'
-      name: Employee_Schedule_Jun_2024.xlsx
-      owner: Benjamin Davis
-      size: 8691KB
-      type: xlsx
-    - created: '2023-07-07'
-      modified: '2024-12-05'
-      name: Budget_2023.xlsx
-      owner: Mia White
-      size: 7295KB
-      type: xlsx
-    - created: '2024-03-01'
-      modified: '2024-02-19'
-      name: Company_Overview_2024.pptx
-      owner: Emily Martin
-      size: 805KB
-      type: pptx
-    - created: '2023-09-25'
-      modified: '2023-04-29'
-      name: Contract_Template_2024.pdf
-      owner: Samuel Jones
-      size: 5432KB
+    - created: '2024-10-29'
+      modified: '2023-09-22'
+      name: Annual_Report_2024.pdf
+      owner: Laura Martinez
+      size: 2995KB
       type: pdf
+    - created: '2023-01-28'
+      modified: '2023-01-18'
+      name: Project_Proposal_2023-09-18.docx
+      owner: Ava Smith
+      size: 2150KB
+      type: docx
+    - created: '2023-10-15'
+      modified: '2023-06-27'
+      name: Budget_2024.xlsx
+      owner: Robert Jackson
+      size: 8250KB
+      type: xlsx
+    - created: '2023-06-25'
+      modified: '2023-03-02'
+      name: Company_Overview_2023.pptx
+      owner: Sophia Harris
+      size: 1120KB
+      type: pptx
     Marketing Projects:
-    - created: '2023-08-08'
-      modified: '2024-11-29'
-      name: Project_PRJ-988_Presentation.pptx
-      owner: Mia White
-      size: 875KB
+    - created: '2023-06-09'
+      modified: '2024-09-03'
+      name: Company_Overview_2023.pptx
+      owner: Robert Jackson
+      size: 4184KB
       type: pptx
-    - created: '2023-03-13'
-      modified: '2023-10-11'
-      name: Project_PRJ-106_Presentation.pptx
-      owner: Benjamin Davis
-      size: 4377KB
-      type: pptx
-    - created: '2024-08-19'
-      modified: '2024-11-19'
-      name: Training_Module_10.pptx
-      owner: Emily Martin
-      size: 5455KB
-      type: pptx
-    - created: '2023-01-19'
-      modified: '2024-12-30'
-      name: Training_Module_6.pptx
-      owner: Benjamin Davis
-      size: 222KB
-      type: pptx
-    - created: '2024-04-14'
-      modified: '2023-01-07'
-      name: Training_Module_1.pptx
-      owner: Benjamin Davis
-      size: 460KB
-      type: pptx
-    Marketing Resources:
-    - created: '2023-05-07'
-      modified: '2023-05-16'
+    - created: '2023-01-03'
+      modified: '2024-11-17'
       name: Contract_Template_2023.pdf
-      owner: Benjamin Davis
-      size: 907KB
+      owner: Ava Smith
+      size: 6001KB
       type: pdf
-    - created: '2024-03-22'
-      modified: '2023-12-16'
-      name: Project_PRJ-935_Presentation.pptx
-      owner: Samuel Jones
-      size: 6386KB
+    - created: '2023-09-29'
+      modified: '2024-06-07'
+      name: Employee_Schedule_Feb_2023.xlsx
+      owner: John Gonzalez
+      size: 7530KB
+      type: xlsx
+    - created: '2023-01-06'
+      modified: '2023-08-03'
+      name: Project_Proposal_2024-12-27.docx
+      owner: Robert Jackson
+      size: 4265KB
+      type: docx
+    - created: '2023-01-18'
+      modified: '2024-03-12'
+      name: Budget_2024.xlsx
+      owner: Ava Smith
+      size: 7493KB
+      type: xlsx
+    Marketing Resources:
+    - created: '2023-04-15'
+      modified: '2024-02-22'
+      name: Contract_Template_2024.pdf
+      owner: Ethan Thompson
+      size: 6855KB
+      type: pdf
+    - created: '2023-02-09'
+      modified: '2023-02-19'
+      name: Budget_2024.xlsx
+      owner: Ava Smith
+      size: 8732KB
+      type: xlsx
+    - created: '2024-01-27'
+      modified: '2024-10-28'
+      name: Quarterly_Review_Q3_2023.pptx
+      owner: Ethan Thompson
+      size: 3572KB
       type: pptx
-    - created: '2024-11-08'
-      modified: '2023-07-01'
-      name: MarketingResources_Report_Q4_2024.docx
-      owner: Benjamin Davis
-      size: 3221KB
-      type: docx
-    - created: '2023-08-06'
-      modified: '2024-01-27'
-      name: Weekly_Update_2024-11-01.docx
-      owner: Mia Brown
-      size: 9375KB
-      type: docx
-    - created: '2024-04-04'
-      modified: '2023-09-03'
-      name: Safety_Guidelines_Rev1.8.pdf
-      owner: Benjamin Davis
-      size: 7659KB
+    - created: '2024-09-28'
+      modified: '2023-06-06'
+      name: Contract_Template_2024.pdf
+      owner: Sophia Harris
+      size: 3883KB
+      type: pdf
+    - created: '2023-04-22'
+      modified: '2023-01-21'
+      name: Contract_Template_2024.pdf
+      owner: Laura Martinez
+      size: 3730KB
       type: pdf
   Operations:
     Operations Documents:
-    - created: '2024-08-19'
-      modified: '2024-01-18'
-      name: Contract_Template_2023.pdf
-      owner: Robert Gonzalez
-      size: 6522KB
-      type: pdf
-    - created: '2024-03-02'
-      modified: '2023-01-02'
-      name: Company_Overview_2023.pptx
-      owner: Robert Gonzalez
-      size: 4039KB
-      type: pptx
-    - created: '2023-03-03'
-      modified: '2024-02-28'
+    - created: '2024-06-02'
+      modified: '2024-05-24'
       name: Sales_Forecast_Q1_2023.xlsx
-      owner: Isabella Jackson
-      size: 9716KB
+      owner: Isabella Martinez
+      size: 477KB
       type: xlsx
-    - created: '2023-03-06'
-      modified: '2024-09-28'
-      name: OperationsDocs_Report_Q3_2023.docx
-      owner: Olivia Jackson
-      size: 4181KB
-      type: docx
-    - created: '2023-10-25'
-      modified: '2023-06-26'
-      name: Project_Proposal_2023-01-13.docx
-      owner: Robert Martinez
-      size: 5672KB
+    - created: '2023-02-07'
+      modified: '2024-10-30'
+      name: Company_Overview_2023.pptx
+      owner: Andrew Brown
+      size: 682KB
+      type: pptx
+    - created: '2024-01-07'
+      modified: '2023-10-11'
+      name: Sales_Forecast_Q4_2023.xlsx
+      owner: Isabella Martinez
+      size: 6123KB
+      type: xlsx
+    - created: '2024-07-07'
+      modified: '2024-11-09'
+      name: Training_Module_10.pptx
+      owner: Andrew Lopez
+      size: 4284KB
+      type: pptx
+    - created: '2023-11-27'
+      modified: '2023-05-13'
+      name: OperationsDocs_Report_Q1_2023.docx
+      owner: Andrew Brown
+      size: 2763KB
       type: docx
     Operations Projects:
-    - created: '2024-11-28'
-      modified: '2023-08-26'
-      name: Meeting_Minutes_2023-09-28.docx
-      owner: Isabella Jackson
-      size: 4390KB
+    - created: '2024-04-18'
+      modified: '2024-03-15'
+      name: OperationsProjects_Report_Q1_2023.docx
+      owner: Andrew Lopez
+      size: 6226KB
       type: docx
-    - created: '2023-07-10'
-      modified: '2024-05-08'
-      name: Employee_Schedule_Oct_2024.xlsx
-      owner: Alexander Jackson
-      size: 7204KB
+    - created: '2024-03-19'
+      modified: '2023-12-19'
+      name: Inventory_List_2024-02-01.xlsx
+      owner: Andrew Lopez
+      size: 9655KB
       type: xlsx
-    - created: '2024-06-22'
-      modified: '2024-10-17'
-      name: Contract_Template_2024.pdf
-      owner: Alexander Jackson
-      size: 4010KB
+    - created: '2023-09-29'
+      modified: '2024-08-30'
+      name: Budget_2023.xlsx
+      owner: Andrew Brown
+      size: 8540KB
+      type: xlsx
+    - created: '2024-01-11'
+      modified: '2023-05-11'
+      name: Safety_Guidelines_Rev2.5.pdf
+      owner: Andrew Brown
+      size: 6389KB
       type: pdf
-    - created: '2024-03-02'
-      modified: '2023-11-01'
-      name: Quarterly_Review_Q2_2023.pptx
-      owner: Benjamin Wilson
-      size: 4903KB
+    - created: '2024-05-28'
+      modified: '2024-11-15'
+      name: Project_PRJ-405_Presentation.pptx
+      owner: Isabella Martinez
+      size: 6246KB
       type: pptx
-    - created: '2024-01-04'
-      modified: '2023-11-25'
-      name: Project_Proposal_2023-08-09.docx
-      owner: Olivia Hernandez
-      size: 111KB
-      type: docx
     Operations Resources:
-    - created: '2023-12-28'
-      modified: '2023-07-10'
-      name: Weekly_Update_2023-10-11.docx
-      owner: Michael Brown
-      size: 3021KB
-      type: docx
-    - created: '2024-04-25'
-      modified: '2023-04-17'
-      name: Weekly_Update_2024-03-27.docx
-      owner: Benjamin Gonzalez
-      size: 6996KB
-      type: docx
     - created: '2023-02-24'
-      modified: '2024-08-08'
-      name: Budget_2024.xlsx
-      owner: Michael Brown
-      size: 3899KB
-      type: xlsx
-    - created: '2024-07-29'
-      modified: '2024-12-08'
-      name: OperationsResources_Report_Q1_2023.docx
-      owner: Samuel White
-      size: 5194KB
-      type: docx
-    - created: '2023-06-01'
-      modified: '2023-11-10'
-      name: Employee_Handbook_v3.6.pdf
-      owner: Matthew Rodriguez
-      size: 2233KB
+      modified: '2023-03-17'
+      name: Contract_Template_2024.pdf
+      owner: Isabella Martinez
+      size: 6904KB
       type: pdf
+    - created: '2024-05-08'
+      modified: '2024-05-07'
+      name: Sales_Forecast_Q1_2024.xlsx
+      owner: Andrew Lopez
+      size: 792KB
+      type: xlsx
+    - created: '2024-10-22'
+      modified: '2023-09-24'
+      name: Project_Proposal_2023-08-13.docx
+      owner: Andrew Lopez
+      size: 9675KB
+      type: docx
+    - created: '2023-04-14'
+      modified: '2024-02-13'
+      name: Inventory_List_2023-11-19.xlsx
+      owner: Isabella Martinez
+      size: 9914KB
+      type: xlsx
+    - created: '2023-10-09'
+      modified: '2024-06-25'
+      name: Employee_Schedule_Sep_2024.xlsx
+      owner: Andrew Lopez
+      size: 2161KB
+      type: xlsx
   Research:
     Research Documents:
-    - created: '2023-04-10'
-      modified: '2024-09-15'
-      name: Safety_Guidelines_Rev4.4.pdf
-      owner: Samuel Brown
-      size: 8682KB
-      type: pdf
-    - created: '2024-02-17'
-      modified: '2024-03-30'
-      name: Weekly_Update_2024-08-17.docx
-      owner: Samuel Brown
-      size: 3044KB
-      type: docx
-    - created: '2024-04-07'
-      modified: '2023-07-17'
-      name: Annual_Report_2023.pdf
-      owner: William Wilson
-      size: 4929KB
-      type: pdf
-    - created: '2024-03-26'
-      modified: '2024-04-15'
-      name: Contract_Template_2024.pdf
-      owner: William Wilson
-      size: 6637KB
-      type: pdf
-    - created: '2024-06-07'
-      modified: '2023-07-13'
-      name: Quarterly_Review_Q3_2024.pptx
-      owner: Andrew Harris
-      size: 7043KB
+    - created: '2023-05-12'
+      modified: '2024-09-27'
+      name: Quarterly_Review_Q4_2023.pptx
+      owner: Grace Jones
+      size: 9378KB
       type: pptx
+    - created: '2023-05-06'
+      modified: '2024-11-02'
+      name: Project_PRJ-831_Presentation.pptx
+      owner: Charlotte Moore
+      size: 3385KB
+      type: pptx
+    - created: '2023-09-29'
+      modified: '2023-06-04'
+      name: Annual_Report_2024.pdf
+      owner: Grace Thomas
+      size: 2832KB
+      type: pdf
+    - created: '2024-08-05'
+      modified: '2023-05-18'
+      name: Sales_Forecast_Q3_2023.xlsx
+      owner: Sophia Jackson
+      size: 1297KB
+      type: xlsx
+    - created: '2024-03-05'
+      modified: '2024-11-15'
+      name: Safety_Guidelines_Rev3.5.pdf
+      owner: Grace Jones
+      size: 2731KB
+      type: pdf
     Research Projects:
-    - created: '2024-02-18'
-      modified: '2024-07-31'
-      name: Safety_Guidelines_Rev2.8.pdf
-      owner: Sarah Johnson
-      size: 5209KB
-      type: pdf
-    - created: '2023-10-27'
-      modified: '2024-02-14'
-      name: Training_Module_3.pptx
-      owner: Laura Jackson
-      size: 2840KB
-      type: pptx
-    - created: '2023-12-08'
-      modified: '2024-05-18'
-      name: Sales_Forecast_Q1_2023.xlsx
-      owner: Sarah Johnson
-      size: 828KB
-      type: xlsx
-    - created: '2023-04-26'
-      modified: '2023-09-17'
-      name: Company_Overview_2023.pptx
-      owner: Andrew Harris
-      size: 188KB
-      type: pptx
-    - created: '2023-04-15'
-      modified: '2023-02-03'
-      name: Project_PRJ-296_Presentation.pptx
-      owner: William Wilson
-      size: 8607KB
-      type: pptx
-    Research Resources:
+    - created: '2023-07-27'
+      modified: '2024-11-28'
+      name: Weekly_Update_2024-01-14.docx
+      owner: Grace Thomas
+      size: 8435KB
+      type: docx
     - created: '2023-05-16'
-      modified: '2023-10-11'
-      name: Project_PRJ-477_Presentation.pptx
-      owner: Sarah Johnson
-      size: 562KB
-      type: pptx
-    - created: '2023-09-20'
-      modified: '2023-01-23'
-      name: Training_Module_7.pptx
-      owner: Sarah Johnson
-      size: 8591KB
-      type: pptx
-    - created: '2023-01-18'
-      modified: '2024-07-26'
-      name: Training_Module_4.pptx
-      owner: David Hernandez
-      size: 8080KB
-      type: pptx
-    - created: '2023-09-25'
-      modified: '2024-09-16'
-      name: Employee_Schedule_Jun_2024.xlsx
-      owner: Samuel Brown
-      size: 3628KB
+      modified: '2023-05-11'
+      name: Sales_Forecast_Q2_2023.xlsx
+      owner: Olivia Williams
+      size: 3089KB
       type: xlsx
-    - created: '2023-03-22'
+    - created: '2023-08-02'
+      modified: '2023-07-28'
+      name: ResearchProjects_Report_Q2_2024.docx
+      owner: Emily Martin
+      size: 5112KB
+      type: docx
+    - created: '2024-11-14'
+      modified: '2023-10-29'
+      name: Inventory_List_2023-05-14.xlsx
+      owner: Grace Jones
+      size: 4383KB
+      type: xlsx
+    - created: '2024-10-28'
+      modified: '2023-07-21'
+      name: Sales_Forecast_Q3_2024.xlsx
+      owner: Grace Jones
+      size: 212KB
+      type: xlsx
+    Research Resources:
+    - created: '2024-12-10'
+      modified: '2024-03-26'
+      name: Budget_2023.xlsx
+      owner: John Johnson
+      size: 7969KB
+      type: xlsx
+    - created: '2024-03-24'
       modified: '2024-09-17'
-      name: Project_PRJ-773_Presentation.pptx
-      owner: Samuel Brown
-      size: 272KB
+      name: Project_Proposal_2024-01-09.docx
+      owner: Emily Martin
+      size: 9366KB
+      type: docx
+    - created: '2023-05-09'
+      modified: '2024-12-21'
+      name: Training_Module_4.pptx
+      owner: Charlotte Moore
+      size: 922KB
       type: pptx
+    - created: '2024-07-06'
+      modified: '2024-08-29'
+      name: Inventory_List_2023-07-24.xlsx
+      owner: Charlotte Moore
+      size: 5757KB
+      type: xlsx
+    - created: '2024-09-02'
+      modified: '2023-06-29'
+      name: Weekly_Update_2023-02-18.docx
+      owner: Olivia Williams
+      size: 7164KB
+      type: docx
   Sales:
     Sales Documents:
-    - created: '2024-11-13'
-      modified: '2024-08-20'
-      name: Training_Module_6.pptx
-      owner: Harper Thompson
-      size: 1982KB
-      type: pptx
-    - created: '2023-04-30'
-      modified: '2023-12-11'
-      name: Budget_2023.xlsx
-      owner: Harper Moore
-      size: 1761KB
-      type: xlsx
-    - created: '2023-10-03'
-      modified: '2023-01-01'
-      name: Sales_Forecast_Q2_2023.xlsx
-      owner: Laura Johnson
-      size: 6938KB
-      type: xlsx
-    - created: '2024-12-13'
-      modified: '2024-11-07'
-      name: SalesDocs_Report_Q1_2023.docx
-      owner: Harper Moore
-      size: 1588KB
+    - created: '2023-09-25'
+      modified: '2023-06-22'
+      name: SalesDocs_Report_Q2_2023.docx
+      owner: Emily Rodriguez
+      size: 8710KB
       type: docx
-    - created: '2024-11-04'
-      modified: '2023-06-27'
-      name: Employee_Schedule_Jun_2023.xlsx
-      owner: Harper Moore
-      size: 873KB
+    - created: '2024-12-21'
+      modified: '2024-03-30'
+      name: Budget_2024.xlsx
+      owner: Lily Rodriguez
+      size: 9086KB
       type: xlsx
+    - created: '2024-07-09'
+      modified: '2024-11-22'
+      name: Employee_Schedule_Jun_2024.xlsx
+      owner: Emily Rodriguez
+      size: 1550KB
+      type: xlsx
+    - created: '2024-07-22'
+      modified: '2023-06-29'
+      name: Project_PRJ-393_Presentation.pptx
+      owner: Emily Rodriguez
+      size: 8718KB
+      type: pptx
+    - created: '2024-09-05'
+      modified: '2024-03-22'
+      name: Project_PRJ-442_Presentation.pptx
+      owner: Emily Rodriguez
+      size: 1063KB
+      type: pptx
     Sales Projects:
-    - created: '2024-06-21'
-      modified: '2024-03-28'
-      name: Weekly_Update_2023-10-11.docx
-      owner: Jane Martinez
-      size: 2400KB
-      type: docx
-    - created: '2023-02-14'
-      modified: '2024-05-09'
-      name: Safety_Guidelines_Rev4.1.pdf
-      owner: Laura Thomas
-      size: 6712KB
+    - created: '2024-11-17'
+      modified: '2023-08-15'
+      name: Safety_Guidelines_Rev1.8.pdf
+      owner: Emily Rodriguez
+      size: 8219KB
       type: pdf
-    - created: '2024-01-27'
-      modified: '2023-01-03'
-      name: Training_Module_9.pptx
-      owner: Daniel Davis
-      size: 2113KB
-      type: pptx
-    - created: '2024-03-21'
-      modified: '2023-10-20'
-      name: Sales_Forecast_Q4_2024.xlsx
-      owner: Laura Thomas
-      size: 1827KB
+    - created: '2023-12-28'
+      modified: '2024-11-14'
+      name: Budget_2023.xlsx
+      owner: Emily Rodriguez
+      size: 2396KB
       type: xlsx
-    - created: '2024-09-13'
-      modified: '2023-11-13'
-      name: Sales_Forecast_Q2_2024.xlsx
-      owner: Harper Moore
-      size: 2697KB
+    - created: '2024-05-14'
+      modified: '2023-06-23'
+      name: Project_Proposal_2024-07-26.docx
+      owner: Charlotte Martin
+      size: 4675KB
+      type: docx
+    - created: '2024-10-18'
+      modified: '2024-04-10'
+      name: Training_Module_1.pptx
+      owner: Lily Rodriguez
+      size: 4025KB
+      type: pptx
+    - created: '2023-05-29'
+      modified: '2023-04-04'
+      name: Employee_Schedule_Aug_2024.xlsx
+      owner: Emily Rodriguez
+      size: 6846KB
       type: xlsx
     Sales Resources:
-    - created: '2023-12-05'
-      modified: '2023-02-20'
-      name: Meeting_Minutes_2024-10-24.docx
-      owner: Laura Johnson
-      size: 690KB
+    - created: '2024-02-27'
+      modified: '2024-04-13'
+      name: Meeting_Minutes_2023-06-04.docx
+      owner: Lily Rodriguez
+      size: 6137KB
       type: docx
-    - created: '2023-04-13'
-      modified: '2023-08-16'
-      name: Sales_Forecast_Q4_2024.xlsx
-      owner: Laura Thomas
-      size: 1396KB
+    - created: '2024-05-14'
+      modified: '2024-01-21'
+      name: Budget_2023.xlsx
+      owner: Charlotte Martin
+      size: 3085KB
       type: xlsx
-    - created: '2023-08-14'
-      modified: '2024-11-23'
-      name: Employee_Schedule_Apr_2024.xlsx
-      owner: Harper Moore
-      size: 8428KB
-      type: xlsx
-    - created: '2024-04-08'
-      modified: '2023-06-12'
-      name: Employee_Schedule_Oct_2023.xlsx
-      owner: Laura Thomas
-      size: 102KB
-      type: xlsx
-    - created: '2023-11-22'
-      modified: '2024-03-09'
-      name: Project_PRJ-998_Presentation.pptx
-      owner: Jane Martinez
-      size: 8353KB
+    - created: '2023-07-13'
+      modified: '2024-10-13'
+      name: Project_Proposal_2023-07-21.docx
+      owner: Charlotte Martin
+      size: 7129KB
+      type: docx
+    - created: '2023-01-02'
+      modified: '2023-12-27'
+      name: Training_Module_1.pptx
+      owner: Charlotte Martin
+      size: 7282KB
       type: pptx
+    - created: '2024-07-01'
+      modified: '2023-11-03'
+      name: Sales_Forecast_Q1_2023.xlsx
+      owner: Lily Rodriguez
+      size: 7140KB
+      type: xlsx
   Support:
     Support Documents:
-    - created: '2023-11-26'
-      modified: '2023-06-12'
-      name: Training_Module_1.pptx
-      owner: Michael Taylor
-      size: 2023KB
+    - created: '2024-05-18'
+      modified: '2023-06-10'
+      name: Project_PRJ-354_Presentation.pptx
+      owner: David Thomas
+      size: 6385KB
       type: pptx
-    - created: '2024-08-07'
-      modified: '2024-02-13'
-      name: Safety_Guidelines_Rev2.2.pdf
-      owner: David Flores
-      size: 987KB
-      type: pdf
-    - created: '2024-02-21'
-      modified: '2024-12-30'
-      name: Inventory_List_2024-07-01.xlsx
-      owner: David Flores
-      size: 9910KB
+    - created: '2024-09-21'
+      modified: '2024-01-30'
+      name: Employee_Schedule_Nov_2024.xlsx
+      owner: Alexander Wilson
+      size: 5800KB
       type: xlsx
-    - created: '2023-11-04'
-      modified: '2024-11-17'
-      name: Meeting_Minutes_2023-10-20.docx
-      owner: David Flores
-      size: 1590KB
+    - created: '2023-09-24'
+      modified: '2023-06-20'
+      name: Project_PRJ-758_Presentation.pptx
+      owner: Olivia White
+      size: 7864KB
+      type: pptx
+    - created: '2023-03-07'
+      modified: '2023-06-09'
+      name: SupportDocs_Report_Q3_2024.docx
+      owner: Olivia White
+      size: 7685KB
       type: docx
-    - created: '2023-06-15'
-      modified: '2023-04-05'
-      name: Inventory_List_2023-09-21.xlsx
-      owner: Benjamin Martinez
-      size: 8482KB
-      type: xlsx
+    - created: '2023-06-27'
+      modified: '2023-02-15'
+      name: Meeting_Minutes_2023-12-26.docx
+      owner: James Gonzalez
+      size: 3029KB
+      type: docx
     Support Projects:
-    - created: '2024-07-31'
-      modified: '2023-10-10'
-      name: Company_Overview_2023.pptx
-      owner: David Flores
-      size: 3184KB
-      type: pptx
-    - created: '2023-02-22'
-      modified: '2024-11-11'
+    - created: '2024-08-11'
+      modified: '2023-05-21'
+      name: Meeting_Minutes_2024-01-08.docx
+      owner: James Gonzalez
+      size: 7637KB
+      type: docx
+    - created: '2024-01-05'
+      modified: '2023-03-28'
       name: Budget_2024.xlsx
-      owner: David Flores
-      size: 4977KB
+      owner: David Thomas
+      size: 9219KB
       type: xlsx
-    - created: '2023-05-12'
-      modified: '2023-09-07'
+    - created: '2023-07-13'
+      modified: '2024-01-23'
+      name: Quarterly_Review_Q4_2023.pptx
+      owner: James Gonzalez
+      size: 3710KB
+      type: pptx
+    - created: '2023-05-08'
+      modified: '2023-08-28'
       name: Training_Module_9.pptx
-      owner: Michael Taylor
-      size: 2833KB
+      owner: James Gonzalez
+      size: 5055KB
       type: pptx
-    - created: '2024-09-16'
-      modified: '2024-03-07'
-      name: Safety_Guidelines_Rev2.6.pdf
-      owner: David Flores
-      size: 8071KB
+    - created: '2023-04-10'
+      modified: '2023-03-21'
+      name: Annual_Report_2023.pdf
+      owner: Olivia White
+      size: 4440KB
       type: pdf
-    - created: '2024-06-20'
-      modified: '2023-07-27'
-      name: Project_PRJ-992_Presentation.pptx
-      owner: Benjamin Martinez
-      size: 5094KB
-      type: pptx
     Support Resources:
-    - created: '2023-08-28'
-      modified: '2024-01-05'
-      name: SupportResources_Report_Q3_2023.docx
-      owner: James Anderson
-      size: 3409KB
-      type: docx
-    - created: '2024-04-05'
-      modified: '2023-03-12'
-      name: SupportResources_Report_Q2_2023.docx
-      owner: David Flores
-      size: 5857KB
-      type: docx
-    - created: '2024-02-23'
-      modified: '2024-08-19'
-      name: Sales_Forecast_Q3_2023.xlsx
-      owner: Benjamin Martinez
-      size: 3686KB
+    - created: '2024-10-30'
+      modified: '2024-09-26'
+      name: Budget_2023.xlsx
+      owner: Olivia White
+      size: 269KB
       type: xlsx
-    - created: '2024-06-19'
-      modified: '2023-01-30'
-      name: Inventory_List_2023-09-10.xlsx
-      owner: Ethan Johnson
-      size: 3952KB
-      type: xlsx
-    - created: '2023-11-17'
-      modified: '2024-11-17'
-      name: Training_Module_8.pptx
-      owner: Grace Thompson
-      size: 3324KB
+    - created: '2024-10-26'
+      modified: '2023-08-05'
+      name: Project_PRJ-261_Presentation.pptx
+      owner: David Thomas
+      size: 9976KB
       type: pptx
+    - created: '2024-09-01'
+      modified: '2023-04-28'
+      name: Inventory_List_2023-04-18.xlsx
+      owner: Olivia White
+      size: 2800KB
+      type: xlsx
+    - created: '2023-10-17'
+      modified: '2023-08-31'
+      name: Training_Module_4.pptx
+      owner: David Thomas
+      size: 4451KB
+      type: pptx
+    - created: '2023-11-10'
+      modified: '2023-02-10'
+      name: Meeting_Minutes_2023-07-24.docx
+      owner: David Thomas
+      size: 5803KB
+      type: docx

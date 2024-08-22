@@ -29,7 +29,6 @@ dhcp_ip_mask: 24
 dhcp_lease_duration: 8
 dhcp_dns_ip: 10.0.1.10
 
-
 # Timezone settings
 win_timezone: "Coordinated Universal Time"
 

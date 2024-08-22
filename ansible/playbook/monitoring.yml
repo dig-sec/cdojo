@@ -3,5 +3,5 @@
   gather_facts: false
 
   roles:
-    #- linux_deb_common
+    - linux_deb_common
     - elk

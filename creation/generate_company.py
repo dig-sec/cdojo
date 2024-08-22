@@ -3,7 +3,6 @@ import yaml
 from typing import List, Dict, Any
 from datetime import datetime, timedelta
 import ipaddress
-import re
 
 def load_data(file_path: str) -> Dict[str, Any]:
     try:
@@ -146,8 +145,8 @@ def generate_users(data: Dict[str, Any]) -> List[Dict[str, Any]]:
         
         user = {
             "name": f"{firstname} {lastname}",
-            "email": generate_email(firstname, lastname, data['domain']),
-            "upn": generate_unique_upn(firstname, lastname, data['domain']),
+            "email": generate_email(firstname, lastname, data['primary_domain']),
+            "upn": generate_unique_upn(firstname, lastname, data['primary_domain']),
             "role": role,
             "department": department,
             "password": random.choice(data['common_passwords']),
@@ -159,7 +158,7 @@ def generate_users(data: Dict[str, Any]) -> List[Dict[str, Any]]:
         if "IT" in department:
             admin_user = user.copy()
             admin_user["name"] = f"Adm.{firstname}"
-            admin_user["upn"] = generate_unique_upn(f"Adm.{firstname}", lastname, data['domain'])
+            admin_user["upn"] = generate_unique_upn(f"Adm.{firstname}", lastname, data['primary_domain'])
             admin_user["password"] = random.choice(data['common_passwords'])
             admin_user["groups"] = ["Domain Admins"]
             admin_user.pop("email")
@@ -212,22 +211,33 @@ def assign_file_owners(users: List[Dict[str, Any]], file_shares: Dict[str, Dict[
                 file['owner'] = random.choice(group_users)['name']
 
 def main():
+    # Load custom company variables
     data = load_data('corporate_value_list.yml')
-    output_path = "../ansible/inventory/"
-    if not data:
-        return
+
+    # Load domain data
+    domain_data = load_data('../ansible/inventory/group_vars/all.yml')
+    data.update(domain_data)
 
     all_users = generate_users(data)
     group_data = generate_group_data(all_users)
     file_shares = generate_file_shares(data['groups'], all_users)
     assign_file_owners(all_users, file_shares)  
 
-    environment = {
-        "Domain": data['domain'],
-        "Users": all_users,
-        "File_shares": file_shares,
-        "Groups": group_data  
-    }
+    with open('users.yml', 'w') as file:
+        yaml.dump({'users': all_users}, file, default_flow_style=False)
+
+    with open('file_shares.yml', 'w') as file:
+        yaml.dump({'file_shares': file_shares}, file, default_flow_style=False)
+
+    with open('group_data.yml', 'w') as file:
+        yaml.dump({'group_data': group_data}, file, default_flow_style=False)
+
+    # environment = {
+    #     "Domain": data['primary_domain'],
+    #     "Users": all_users,
+    #     "File_shares": file_shares,
+    #     "Groups": group_data  
+    # }
     
     # with open('environment.yml', 'w') as file:
     #     yaml.dump(environment, file, default_flow_style=False)
@@ -237,20 +247,5 @@ def main():
     # print("\n--- Environment ---")
     # print(environment_output)
 
-    users_output_data = {'users': all_users}
-
-    with open('users.yml', 'w') as file:
-        yaml.dump(output_path + users_output_data, file, default_flow_style=False)
-
-    file_shares_output_data = {'file_shares': file_shares}
-    with open('file_shares.yml', 'w') as file:
-        yaml.dump(output_path + file_shares_output_data, file, default_flow_style=False)
-
-    group_data_output_data = {'group_data': group_data}
-    with open('group_data.yml', 'w') as file:
-        yaml.dump(output_path + group_data_output_data, file, default_flow_style=False)
-
-
 if __name__ == "__main__":
     main()
-
