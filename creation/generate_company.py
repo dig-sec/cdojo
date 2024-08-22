@@ -212,7 +212,8 @@ def assign_file_owners(users: List[Dict[str, Any]], file_shares: Dict[str, Dict[
                 file['owner'] = random.choice(group_users)['name']
 
 def main():
-    data = load_data('corporate.yml')
+    data = load_data('corporate_value_list.yml')
+    output_path = "../ansible/inventory/"
     if not data:
         return
 
@@ -239,15 +240,15 @@ def main():
     users_output_data = {'users': all_users}
 
     with open('users.yml', 'w') as file:
-        yaml.dump(users_output_data, file, default_flow_style=False)
+        yaml.dump(output_path + users_output_data, file, default_flow_style=False)
 
     file_shares_output_data = {'file_shares': file_shares}
     with open('file_shares.yml', 'w') as file:
-        yaml.dump(file_shares_output_data, file, default_flow_style=False)
+        yaml.dump(output_path + file_shares_output_data, file, default_flow_style=False)
 
     group_data_output_data = {'group_data': group_data}
     with open('group_data.yml', 'w') as file:
-        yaml.dump(group_data_output_data, file, default_flow_style=False)
+        yaml.dump(output_path + group_data_output_data, file, default_flow_style=False)
 
 
 if __name__ == "__main__":

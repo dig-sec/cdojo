@@ -1,25 +1,19 @@
 ---
 - name: Create A record for child domain in parent domain
   community.windows.win_dns_record:
-    name: "{{ lab.hosts[dc].hostname }}.{{ item.split('.')[0] }}"
+    name: "{{ windows_domain_controller_hostname }}.{{ item.split('.')[0] }}"
     type: "A"
     values:
-      - "{{ hostvars[dc].ansible_host }}"
-    zone: "{{ domain }}"
-  vars:
-    dc: "{{ lab.hosts.dc01.hostname }}"
-  loop: "{{ domains }}"
-  when: domain == '.'.join(item.split('.')[1:])
+      - "{{ windows_domain_controller_private_ip }}"
+    zone: "{{ root_domain }}"
+  loop: "{{ [secondary_root_domain, root_domain] }}"
+  when: domain_name == item.split('.')[1]
 
-- name: Disable the registration of the {{ nat_adapter }} interface (NAT address) in DNS
-  ansible.windows.win_shell: Get-NetAdapter {{ nat_adapter }} | Set-DNSClient -RegisterThisConnectionsAddress $False
-  when: two_adapters == "yes"
-
-- name: Set DNS client configuration to {{ dns_domain }}
+- name: Set DNS client configuration to the primary domain DNS server
   win_dns_client:
     adapter_names: "{{ domain_adapter }}"
     ipv4_addresses:
-      - "{{ hostvars[dns_domain].ansible_host }}"
+      - "{{ primary_domain_dns_server_ip }}"
     log_path: C:\dns_log.txt
 
 - name: Install Windows feature - AD Domain Services
@@ -65,13 +59,13 @@
           $Ansible.Changed = $false
       }
     parameters:
-      Password: "{{ parent_domain_password }}"
-      DomSafePassword: "{{ domain_password }}"
-      DomainAdmin: "Administrator@{{ parent_domain }}"
-      ParentDomainName: "{{ parent_domain }}"
-      ReplicationSourceDC: "{{ source_dc }}"
-      NewDomainNetbiosName: "{{ netbios_name }}"
-      NewDomainName: "{{ domain.split('.')[0] }}"
+      Password: "{{ domain_administrator_password }}"
+      DomSafePassword: "{{ adcs_cert_authority_password }}"
+      DomainAdmin: "{{ domain_administrator }}@{{ root_domain }}"
+      ParentDomainName: "{{ root_domain }}"
+      ReplicationSourceDC: "{{ windows_domain_controller_hostname }}"
+      NewDomainNetbiosName: "{{ secondary_domain_name }}"
+      NewDomainName: "{{ secondary_root_domain }}"
   register: child_result
 
 - name: Reboot if child domain was added
@@ -81,7 +75,7 @@
   when: child_result.changed
 
 - name: Enable the {{ domain_adapter }} interface (local) for DNS client requests
-  ansible.windows.win_shell: dnscmd . /resetlistenaddresses {{ hostvars[dict_key].ansible_host }}
+  ansible.windows.win_shell: dnscmd . /resetlistenaddresses {{ windows_domain_controller_hostname }}
   when: two_adapters == "yes"
 
 - name: Install ActiveDirectoryDSC PowerShell module
@@ -97,11 +91,11 @@
     Set-NetIPInterface -InterfaceAlias "{{ domain_adapter }}" -InterfaceMetric 10
   when: two_adapters == "yes"
 
-- name: Set DNS client configuration to {{ dns_domain }}
+- name: Set DNS client configuration to {{ windows_domain_controller_private_ip }}
   win_dns_client:
     adapter_names: "{{ domain_adapter }}"
     ipv4_addresses:
-      - "{{ hostvars[dns_domain].ansible_host }}"
+      - "{{ windows_domain_controller_private_ip }}"
     log_path: C:\dns_log.txt
 
 - name: Verify File Server Role is installed
@@ -112,10 +106,9 @@
 
 - name: Add member server to domain
   win_domain_membership:
-    dns_domain_name: "{{ member_domain }}"
-    domain_admin_user: "Administrator@{{ member_domain }}"
-    domain_admin_password: "{{ domain_password }}"
-    # domain_ou_path: "{{ member_domain_ou_path }}"
+    dns_domain_name: "{{ secondary_root_domain }}"
+    domain_admin_user: "{{ domain_administrator }}@{{ secondary_root_domain }}"
+    domain_admin_password: "{{ domain_administrator_password }}"
     state: domain
   register: domain_state
 

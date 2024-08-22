@@ -3,3 +3,4 @@ vagrant/.vagrant
 .vscode
 archive
 machines/*.box
+ansible/inventory/elk_passwords.yml

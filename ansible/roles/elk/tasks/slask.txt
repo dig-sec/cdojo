@@ -1,0 +1,27 @@
+---
+- name: Gather list of integrations to install
+  set_fact:
+    packages:
+      - { name: "fleet-server", version: "1.5.0" }
+      - { name: "windows", version: "1.42.1" }
+      - { name: "system", version: "1.48.0" }
+      - { name: "suricata", version: "2.20.0" }
+      - { name: "security_detection_engine", version: "8.11.2" }  
+
+- name: Build bulk request payload
+  set_fact:
+    bulk_request:
+      packages: "{{ packages }}"
+      force: False
+
+- name: Post bulk install request to Kibana
+  uri:
+    url: "http://{{ kibana_host }}:{{ kibana_port }}/api/fleet/epm/packages/_bulk"
+    method: POST
+    headers:
+      kbn-xsrf: "true"
+      Authorization: "Basic {{ (elastic_username + ':' + elastic_password) | b64encode }}"
+    body: "{{ bulk_request | to_json }}"
+    status_code: [200, 201, 409]
+    body_format: json
+  register: response
