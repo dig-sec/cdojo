@@ -5,9 +5,9 @@
     type: "A"
     values:
       - "{{ windows_domain_controller_private_ip }}"
-    zone: "{{ root_domain }}"
-  loop: "{{ [secondary_root_domain, root_domain] }}"
-  when: domain_name == item.split('.')[1]
+    zone: "{{ primary_domain }}"
+  loop: "{{ [secondary_domain, primary_domain] }}"
+  when: primary_domain_name == item.split('.')[1]
 
 - name: Set DNS client configuration to the primary domain DNS server
   win_dns_client:
@@ -61,11 +61,11 @@
     parameters:
       Password: "{{ domain_administrator_password }}"
       DomSafePassword: "{{ adcs_cert_authority_password }}"
-      DomainAdmin: "{{ domain_administrator }}@{{ root_domain }}"
-      ParentDomainName: "{{ root_domain }}"
+      DomainAdmin: "{{ domain_administrator }}@{{ primary_domain }}"
+      ParentDomainName: "{{ primary_domain }}"
       ReplicationSourceDC: "{{ windows_domain_controller_hostname }}"
       NewDomainNetbiosName: "{{ secondary_domain_name }}"
-      NewDomainName: "{{ secondary_root_domain }}"
+      NewDomainName: "{{ secondary_domain }}"
   register: child_result
 
 - name: Reboot if child domain was added
@@ -106,8 +106,8 @@
 
 - name: Add member server to domain
   win_domain_membership:
-    dns_domain_name: "{{ secondary_root_domain }}"
-    domain_admin_user: "{{ domain_administrator }}@{{ secondary_root_domain }}"
+    dns_domain_name: "{{ secondary_domain }}"
+    domain_admin_user: "{{ domain_administrator }}@{{ secondary_domain }}"
     domain_admin_password: "{{ domain_administrator_password }}"
     state: domain
   register: domain_state

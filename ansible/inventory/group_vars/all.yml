@@ -6,16 +6,17 @@ opnsense_admin_username: corp
 opnsense_admin_password: DomainVagrant123#
 
 # Domain settings
-root_domain: corp.local
-domain_name: corp
+primary_domain: corp.local
+primary_domain_name: corp
 
-secondary_root_domain: secure.local
+secondary_domain: secure.local
 secondary_domain_name: secure
-domain_adapter: "Ethernet Instance 0 2"
 
+# Windows Domain Controller Settings
+domain_adapter: "Ethernet Instance 0 2"
 windows_domain_controller_private_ip: 10.0.1.10
 windows_domain_controller_hostname: dc01
-windows_domain_controller_fqdn: "{{ windows_domain_controller_hostname }}.{{ root_domain }}"
+windows_domain_controller_fqdn: "{{ windows_domain_controller_hostname }}.{{ primary_domain }}"
 dns_domain: "{{ windows_domain_controller_private_ip }}"
 
 domain_administrator: Administrator
@@ -38,7 +39,7 @@ win_timezone: "Coordinated Universal Time"
 
 # ADCS Settings
 adcs_host: adcs01
-adcs_common_name: "{{ domain_name }}-adcs-CA"
+adcs_common_name: "{{ primary_domain_name }}-adcs-CA"
 ca_common_name: "{{ adcs_common_name }}" 
 adcs_cert_authority_password: DomainVagrant123#
 

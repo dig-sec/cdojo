@@ -114,7 +114,7 @@
   vars:
     ansible_become: yes
     ansible_become_method: runas
-    ansible_become_user: "{{ root_domain }}\\{{ domain_administrator }}"
+    ansible_become_user: "{{ primary_domain }}\\{{ domain_administrator }}"
     ansible_become_password: "{{ domain_administrator_password }}"
   loop:
     - ESC1

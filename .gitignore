@@ -1,6 +1,14 @@
+# Development
 vagrant/.vagrant
 .venv
 .vscode
 archive
+
+# Machines
 machines/*.box
+
+# Generated files
 ansible/inventory/elk_passwords.yml
+creation/file_shares.yml
+creation/users.yml
+creation/group_data.yml

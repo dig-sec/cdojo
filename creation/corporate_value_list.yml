@@ -1,4 +1,7 @@
-domain: "corp.local"
+# Fix domain import from all
+# primary_domain: "corp.local"
+# secondary_domain: "secure.local"
+
 num_users: 50
 
 first_names:

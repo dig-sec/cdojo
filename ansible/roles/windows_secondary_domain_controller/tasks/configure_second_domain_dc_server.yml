@@ -31,7 +31,7 @@
 
 - name: Create a new Windows domain
   microsoft.ad.domain:
-    dns_domain_name: "{{ secondary_root_domain }}"
+    dns_domain_name: "{{ secondary_domain }}"
     safe_mode_password: "{{ domain_administrator_password }}"
     install_dns: yes
     reboot: yes
@@ -53,8 +53,8 @@
 
 - name: Add host to domain controller
   microsoft.ad.domain_controller:
-    dns_domain_name: "{{ secondary_root_domain }}"
-    domain_admin_user: "{{ domain_administrator }}@{{ secondary_root_domain }}"
+    dns_domain_name: "{{ secondary_domain }}"
+    domain_admin_user: "{{ domain_administrator }}@{{ secondary_domain }}"
     domain_admin_password: "{{ domain_administrator_password }}"
     safe_mode_password: "{{ domain_administrator_password }}"
     state: domain_controller
@@ -78,7 +78,7 @@
 
 - name: Configure autologon for Domain Administrator
   community.windows.win_auto_logon:
-    username: "{{ secondary_root_domain }}\\{{ domain_administrator }}"
+    username: "{{ secondary_domain }}\\{{ domain_administrator }}"
     password: "{{ domain_administrator_password }}"
 
 - name: Ensure Administrator is part of Enterprise Admins

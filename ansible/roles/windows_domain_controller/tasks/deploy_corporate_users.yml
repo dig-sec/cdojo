@@ -15,7 +15,7 @@
     password: "{{ item.password }}"
     firstname: "{{ item.name.split(' ')[0] }}"
     surname: "{{ item.name.split(' ')[1] | default('') }}"
-    upn: "{{ item.name.split(' ')[0] }}.{{ item.name.split(' ')[1] | default('') }}@{{ root_domain }}"
+    upn: "{{ item.name.split(' ')[0] }}.{{ item.name.split(' ')[1] | default('') }}@{{ primary_domain }}"
     update_password: always
   until: create_account_result is not failed
   register: create_account_result
