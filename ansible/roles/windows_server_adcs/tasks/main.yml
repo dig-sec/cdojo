@@ -27,26 +27,86 @@
           [String]
           $ca_common_name
       )
+      $ErrorActionPreference = "Stop"
+      $VerbosePreference = "Continue"
+      
+      # Function to write verbose output
+      function Write-VerboseOutput {
+          param([string]$message)
+          Write-Verbose $message
+          $message | Out-File -Append -FilePath "C:\adcs_install_log.txt"
+      }
+      
+      Write-VerboseOutput "Starting ADCS installation process"
+      
+      # Verify domain connectivity
+      try {
+          $dc = (Get-ADDomainController -Discover -ForceDiscover).HostName[0]
+          Write-VerboseOutput "Successfully connected to domain controller: $dc"
+      } catch {
+          throw "Failed to connect to a domain controller: $_"
+      }
+      
+      # Verify time synchronization
+      $timeSource = w32tm /query /source
+      Write-VerboseOutput "Current time source: $timeSource"
+      
+      # Convert credentials
       $pass = ConvertTo-SecureString $domain_password -AsPlainText -Force
       $Cred = New-Object System.Management.Automation.PSCredential ($domain_username, $pass)
+      
+      # Validate CA common name
+      if ($ca_common_name.Length -gt 64) {
+          throw "CA Common Name is too long. Must be 64 characters or less."
+      }
+      
+      # Check for existing CA
+      $existingCA = Get-ADCSCertificationAuthority -ErrorAction SilentlyContinue
+      if ($existingCA) {
+          Write-VerboseOutput "Existing CA found: $($existingCA.CAServerName)"
+          throw "A Certification Authority is already installed on this server."
+      }
+      
+      # Install CA
       try {
-        Install-AdcsCertificationAuthority -CAType EnterpriseRootCA -CACommonName $ca_common_name -Credential $Cred -Force
-        $Ansible.Changed = $true
+          Write-VerboseOutput "Attempting to install ADCS Certification Authority"
+          $result = Install-AdcsCertificationAuthority -CAType EnterpriseRootCA -CACommonName $ca_common_name -Credential $Cred -Force -WhatIf
+          Write-VerboseOutput "Installation command executed. Result: $result"
+          $Ansible.Changed = $true
       } catch {
-        $ErrorMessage = $_.Exception.Message
-        $Ansible.Changed = $false
-        throw "CA Installation failed: $ErrorMessage"
+          $ErrorMessage = $_.Exception.Message
+          Write-VerboseOutput "CA Installation failed: $ErrorMessage"
+          $Ansible.Changed = $false
+          throw "CA Installation failed: $ErrorMessage"
+      }
+      
+      # Verify installation
+      $verifyCA = Get-ADCSCertificationAuthority -ErrorAction SilentlyContinue
+      if ($verifyCA) {
+          Write-VerboseOutput "CA installation verified: $($verifyCA.CAServerName)"
+      } else {
+          Write-VerboseOutput "CA installation could not be verified"
+          throw "CA installation could not be verified"
       }
     parameters:
       domain_username: "{{ domain_administrator }}"
       domain_password: "{{ domain_administrator_password }}"
       ca_common_name: "{{ ca_common_name }}"
   register: ca_installation
-  failed_when: ca_installation.failed or ('ERROR_DS_RANGE_CONSTRAINT' in ca_installation.stderr)
+  failed_when: ca_installation.failed
 
-- name: Debug CA installation result
+- name: Display CA installation log
+  ansible.windows.win_shell: Get-Content "C:\adcs_install_log.txt"
+  register: ca_install_log
+
+- name: Debug CA installation log
   debug:
-    var: ca_installation
+    var: ca_install_log.stdout_lines
+
+- name: Fail if CA installation encountered errors
+  fail:
+    msg: "CA installation failed. Check the installation log for details."
+  when: "'CA Installation failed' in ca_install_log.stdout"
 
 - name: Check CA installation status
   win_shell: |
