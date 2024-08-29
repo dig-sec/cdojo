@@ -32,10 +32,6 @@ dhcp_dns_ip: 10.0.1.10
 # Timezone settings
 win_timezone: "Coordinated Universal Time"
 
-# Windows Server Settings
-# win_local_administrator: Administrator
-# win_local_administrator_password: LocalVagrant!"#
-
 # ADCS Settings
 adcs_host: adcs01
 adcs_common_name: "{{ primary_domain_name }}-adcs-CA"
