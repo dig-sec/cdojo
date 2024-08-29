@@ -79,7 +79,7 @@
 
 - name: Configure autologon for Domain Administrator
   community.windows.win_auto_logon:
-    username: "{{ root_domain }}\\{{ domain_administrator }}"
+    username: "{{ primary_domain }}\\{{ domain_administrator }}"
     password: "{{ domain_administrator_password }}"
 
 - name: Ensure Administrator is part of Enterprise Admins

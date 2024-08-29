@@ -109,7 +109,7 @@
     Import-Module ADCSAdministration
     $template = Get-ADCSTemplate -DisplayName "{{ item }}" -ErrorAction SilentlyContinue
     if (-not $template) {
-      New-ADCSTemplate -DisplayName "{{ item }}" -JSON (Get-Content C:\setup\{{ item }}.json -Raw) -Identity "{{ root_domain }}\Domain Users" -Publish
+      New-ADCSTemplate -DisplayName "{{ item }}" -JSON (Get-Content C:\setup\{{ item }}.json -Raw) -Identity "{{ primary_domain }}\Domain Users" -Publish
     }
   vars:
     ansible_become: yes
