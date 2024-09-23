@@ -1,0 +1,82 @@
+---
+- name: Mullvad Gateway Role
+  hosts: all
+  become: yes
+  vars:
+    mullvad_account_number: "your_mullvad_account_number"
+    wireguard_private_key: "your_wireguard_private_key"
+    wireguard_address: "10.64.0.2/32"  # Replace with your Mullvad-assigned IP
+    wireguard_dns: "10.64.0.1"
+    mullvad_server: "se-got-wg-001.mullvad.net"  # Replace with your preferred Mullvad server
+    mullvad_public_key: "o46anA6XUKEv8WlnILeHbRQOzAe0/w0r6/o9NdmLfkI="  # Replace with the correct public key
+    internal_interface: "enp1s0"  # Replace with your internal network interface
+    external_interface: "enp2s0"  # Replace with your external network interface
+
+  tasks:
+    - name: Update and upgrade apt packages
+      apt:
+        upgrade: yes
+        update_cache: yes
+
+    - name: Install required packages
+      apt:
+        name:
+          - wireguard
+          - iptables-persistent
+          - net-tools
+        state: present
+
+    - name: Enable IP forwarding
+      sysctl:
+        name: net.ipv4.ip_forward
+        value: '1'
+        sysctl_set: yes
+        state: present
+        reload: yes
+
+    - name: Create WireGuard configuration directory
+      file:
+        path: /etc/wireguard
+        state: directory
+        mode: '0700'
+
+    - name: Create WireGuard configuration file
+      template:
+        src: wg0.conf.j2
+        dest: /etc/wireguard/wg0.conf
+        mode: '0600'
+
+    - name: Enable and start WireGuard service
+      systemd:
+        name: wg-quick@wg0
+        enabled: yes
+        state: started
+
+    - name: Set up iptables NAT rules
+      iptables:
+        table: nat
+        chain: POSTROUTING
+        out_interface: wg0
+        jump: MASQUERADE
+
+    - name: Set up iptables forward rules
+      iptables:
+        chain: FORWARD
+        in_interface: "{{ internal_interface }}"
+        out_interface: wg0
+        jump: ACCEPT
+
+    - name: Save iptables rules
+      command: netfilter-persistent save
+
+    - name: Create WireGuard config template
+      template:
+        src: wg0.conf.j2
+        dest: /etc/wireguard/wg0.conf
+        mode: '0600'
+
+  handlers:
+    - name: Restart WireGuard
+      systemd:
+        name: wg-quick@wg0
+        state: restarted

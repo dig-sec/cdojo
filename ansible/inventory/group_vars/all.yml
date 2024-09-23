@@ -43,7 +43,6 @@ ca_web_enrollment: True
 
 ## Monitoring
 es_version: 8.x
-elastic_stack_version: 8.14.1
 es_cluster_name: "monitoring"
 es_node_name: "node-1"
 es_network_host: "0.0.0.0"
@@ -115,14 +114,3 @@ winlogbeat_download_url_base: 'https://artifacts.elastic.co/downloads/beats/winl
 file_ext: '.zip'
 winlogbeat_download_file: 'winlogbeat-8.14.2-windows-x86_64'
 winlogbeat_install_location: "C:/Program Files/Winlogbeat"
-
-
-elastic_password: "Gmal9-bwWF504tLl-V0S"
-kibana_system_password: "irW9olYP+3aooLFlNqtE"
-enrollment_token: "eyJ2ZXIiOiI4LjE0LjAiLCJhZHIiOlsiMTAuMC4xLjI1MDo5MjAwIl0sImZnciI6ImVkNWY0YjgwYmRiOTA5OWIwY2ExYjAxNDc2ZTM1YzY5NzYzMzgyNzlhMjI5Y2RmYjViYmYzNzEyMzYxMzEzOTkiLCJrZXkiOiJYeHFRckpBQlNaQUZXVmJUMEcxRzpEU25xcTVlM1FSdWRjdW4zUUdoVU93In0="
-elastic_api_key: "WVJxUXJKQUJTWkFGV1ZiVDFXMGg6ZzZudUpHOFlTaENkV3hTUGFjRFRSZw=="
-
-fleet_server_host: "10.0.1.250"
-fleet_server_port: "443"
-service_token: "AAEAAWVsYXN0aWMvZmxlZXQtc2VydmVyL3Rva2VuLTE3MjA4OTA3NTQ0MzY6WHFaWTVGRjVTTXFaU2ZhU1RjSjIzdw"
-fleet_server_policy: "1fa3525d-89fc-4c2c-beda-723fce68fa1b"

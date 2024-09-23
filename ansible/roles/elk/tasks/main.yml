@@ -1,10 +1,11 @@
 ---
-- name: Install dependencies for Elasticsearch
+- name: Install dependencies
   apt:
     name: 
       - apt-transport-https
       - gnupg
     state: present
+    update_cache: yes
   become: yes
 
 - name: Add Elasticsearch GPG key
@@ -20,20 +21,21 @@
     update_cache: yes
   become: yes
 
-- name: Install Elasticsearch
+- name: Install Elasticsearch and Kibana
   apt:
-    name: "elasticsearch={{ elastic_stack_version }}"
+    name: 
+      - elasticsearch
+      - kibana
     state: present
     update_cache: yes
-    allow_downgrade: yes
   become: yes
 
 - name: Configure Elasticsearch
   template:
     src: elasticsearch.yml.j2
     dest: /etc/elasticsearch/elasticsearch.yml
-  become: yes
   notify: Restart Elasticsearch
+  become: yes
 
 - name: Ensure Elasticsearch directories have correct permissions
   file:
@@ -48,6 +50,7 @@
     - /var/log/elasticsearch
   become: yes
 
+
 - name: Ensure Elasticsearch is started and enabled
   systemd:
     name: elasticsearch
@@ -58,175 +61,47 @@
 - name: Reset password for elastic user
   shell: "/usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic -b -s"
   register: reset_elastic_password
+  retries: 3
+  delay: 10
+  until: reset_elastic_password.rc == 0
   become: yes
 
 - name: Store new elastic password
   set_fact:
     elastic_password: "{{ reset_elastic_password.stdout_lines[-1] }}"
-  become: yes
 
 - name: Reset password for kibana_system user
   shell: "/usr/share/elasticsearch/bin/elasticsearch-reset-password -u kibana_system -b -s"
   register: reset_kibana_system_password
+  retries: 3
+  delay: 10
+  until: reset_kibana_system_password.rc == 0
   become: yes
 
 - name: Store new kibana_system password
   set_fact:
     kibana_system_password: "{{ reset_kibana_system_password.stdout_lines[-1] }}"
-  become: yes
 
-- name: Generate and Retrieve Kibana Enrollment Token
-  shell: |
-    /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana
-  register: enrollment_token_output
-  become: yes
-  
-- name: Extract Enrollment Token
-  set_fact:
-    enrollment_token: "{{ enrollment_token_output.stdout }}" 
-
-- name: Generate API key for elastic user
-  uri:
-    url: "https://localhost:9200/_security/api_key"
-    method: POST
-    user: elastic
-    password: "{{ elastic_password }}"
-    force_basic_auth: yes
-    body_format: json
-    body:
-      name: "elastic_api_key"
-    headers:
-      Content-Type: "application/json"
-    validate_certs: no
-    return_content: yes
-  register: api_key_response
-
-- name: Store API key
-  set_fact:
-    elastic_api_key: "{{ api_key_response.json.encoded }}"
-  when: api_key_response.status == 200
-
-- name: Output new passwords
-  debug:
-    msg: "Elastic password: {{ elastic_password }}, Kibana_system password: {{ kibana_system_password }}, Enrollment Token: {{ enrollment_token }}, Elastic API Key: {{elastic_api_key}}"
-
-- name: Install Kibana
-  become: yes
-  apt:
+- name: Stop Kibana service if running
+  systemd:
     name: kibana
-    state: present
-    update_cache: yes
-
-- name: Configure Kibana
-  template:
-    src: kibana.yml.j2
-    dest: /etc/kibana/kibana.yml
+    state: stopped
   become: yes
-  vars:
-    kibana_system_password: "{{ kibana_system_password }}" 
-  notify: Restart Kibana
 
-- name: Ensure Kibana directories have correct permissions
+- name: Ensure Kibana config directory exists with correct permissions
   file:
-    path: "{{ item }}"
+    path: /etc/kibana
     state: directory
     owner: kibana
     group: kibana
-    mode: '0750'
-  loop:
-    - /etc/kibana
-    - /var/lib/kibana
-    - /var/log/kibana
-  become: yes
-
-- name: Ensure Kibana service is started and enabled
-  become: yes
-  systemd:
-    name: kibana
-    enabled: yes
-    state: started
-
-- name: Install Logstash
-  apt:
-    name: "logstash"
-    state: present
-    update_cache: yes
-  become: yes
-
-- name: Create Logstash pipeline configuration
-  template:
-    src: logstash_pipeline.conf.j2
-    dest: /etc/logstash/conf.d/logstash_pipeline.conf
-  become: yes
-  vars:
-    elastic_password: "{{ elastic_password }}"
-  notify: Restart Logstash
-
-- name: Ensure Logstash directories have correct permissions
-  file:
-    path: "{{ item }}"
-    state: directory
-    owner: logstash
-    group: logstash
-    mode: '0750'
-  loop:
-    - /etc/logstash
-    - /var/lib/logstash
-    - /var/log/logstash
-  become: yes
-
-- name: Ensure Logstash service is started and enabled
-  systemd:
-    name: logstash
-    enabled: yes
-    state: started
-  become: yes
-
-- name: Ensure Logstash is restarted if configuration changed
-  meta: flush_handlers
-
-- name: Store passwords and tokens in a file
-  template:
-    src: passwords.yml.j2
-    dest: ../inventory/elk_passwords.yml
-  become: yes
-  vars:
-    elastic_password: "{{ elastic_password }}"
-    kibana_system_password: "{{ kibana_system_password }}"
-    enrollment_token: "{{ enrollment_token }}"
-    elastic_api_key: "{{ elastic_api_key }}"
-  delegate_to: localhost
-
-- name: Create Installation Directory
-  file:
-    path: "{{ elastic_agent_install_dir }}"
-    state: directory
     mode: '0755'
-  become: true
+  become: yes
 
-# - name: Extract Elastic Agent
-#   unarchive:
-#     src: "/tmp/elastic-agent-{{ elastic_agent_version }}-linux-x86_64.tar.gz"
-#     dest: "{{ elastic_agent_install_dir }}"
-#     remote_src: yes
-#   become: true
-
-- name: Build bulk request payload
-  set_fact:
-    bulk_request:
-      packages: "{{ packages }}"
-      force: False
-
-- name: Post bulk install request to Kibana
-  uri:
-    url: "http://{{ kibana_host }}:{{ kibana_port }}/api/fleet/epm/packages/_bulk"
-    method: POST
-    headers:
-      kbn-xsrf: "true"
-      Authorization: "Basic {{ (elastic_username + ':' + elastic_password) | b64encode }}"
-    body: "{{ bulk_request | to_json }}"
-    status_code: [200, 201, 409]
-    body_format: json
-    validate_certs: no
-  retries: 5
-  delay: 30
+- name: Configure Kibana to use kibana_system user
+  template:
+    src: kibana.yml.j2
+    dest: /etc/kibana/kibana.yml
+  vars:
+    kibana_system_password: "{{ kibana_system_password }}"
+  notify: Restart Kibana
+  become: yes
