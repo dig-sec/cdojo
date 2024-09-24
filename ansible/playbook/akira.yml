@@ -1,0 +1,12 @@
+---
+- name: Run Akira Ransomware Simulation
+  hosts: windows
+  tasks:
+    - name: Download Akira Ransomware Simulation Script
+      win_get_url:
+        url: https://raw.githubusercontent.com/skandler/simulate-akira/refs/heads/main/akira_ransomware_simulation.ps1
+        dest: C:\Temp\akira_ransomware_simulation.ps1
+
+    - name: Execute Akira Ransomware Simulation Script
+      win_shell: |
+        powershell.exe -ExecutionPolicy Bypass -File C:\Temp\akira_ransomware_simulation.ps1

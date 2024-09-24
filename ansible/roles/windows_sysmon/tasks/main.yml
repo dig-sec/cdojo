@@ -1,0 +1,33 @@
+---
+- name: Ensure C:\Temp exists
+  win_file:
+    path: C:\Temp
+    state: directory
+
+- name: Download Sysmon
+  win_get_url:
+    url: https://download.sysinternals.com/files/Sysmon.zip
+    dest: C:\Temp\Sysmon.zip
+
+- name: Unzip Sysmon
+  win_unzip:
+    src: C:\Temp\Sysmon.zip
+    dest: C:\Temp
+    creates: C:\Temp\Sysmon.exe
+
+- name: Download Sysmon configuration
+  win_get_url:
+    url: https://raw.githubusercontent.com/SwiftOnSecurity/sysmon-config/master/sysmonconfig-export.xml
+    dest: C:\Temp\sysmonconfig.xml
+
+- name: Install Sysmon
+  win_shell: |
+    C:\Temp\Sysmon.exe -accepteula -i C:\Temp\sysmonconfig.xml
+  args:
+    creates: C:\Windows\Sysmon.exe
+
+- name: Ensure Sysmon service is running
+  win_service:
+    name: Sysmon
+    start_mode: auto
+    state: started

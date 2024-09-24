@@ -28,3 +28,9 @@
     src: winlogbeat.yml.j2
     dest: "{{ winlogbeat_install_location }}/{{ winlogbeat_download_file }}/winlogbeat.yml"
   notify: restart winlogbeat
+
+- name: Resetart WinLogBeat service
+  win_service:
+    name: winlogbeat
+    state: restarted
+  notify: restart winlogbeat

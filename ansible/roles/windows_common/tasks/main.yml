@@ -4,3 +4,4 @@
 # - ansible.builtin.import_tasks: common_installs.yml
 #- ansible.builtin.import_tasks: windows-disable-defender.yml
 #- ansible.builtin.import_tasks: disable_firewall.yml
+- ansible.builtin.import_tasks: enable_winrm.yml

@@ -25,3 +25,6 @@
     - windows_common
     - windows_domain_clients
     - windows_chocolatey
+    - windows_winlogbeat
+    - windows_sysmon
+    - windows_th_akira
